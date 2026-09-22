@@ -435,6 +435,32 @@ print(resultado)
 
 Es preferible pasar datos como argumentos y devolver resultados, en lugar de depender de variables globales.
 
+### 3.6 Nombres de archivos de programas
+
+Los archivos de Python deben guardarse con la extensión `.py`. Para que sean
+fáciles de localizar y entender, se recomienda:
+
+- escribir los nombres en minúsculas;
+- separar las palabras con guiones bajos (`snake_case`);
+- incluir, cuando sea útil, una referencia al ejercicio o a la tarea que
+	resuelve el programa.
+
+Por ejemplo:
+
+```text
+operaciones_1.py
+operaciones_media_numeros.py
+gestor_tareas.py
+```
+
+Es preferible evitar espacios, acentos y caracteres especiales en los nombres
+de archivo, ya que pueden causar dificultades al ejecutar programas desde la
+terminal o al compartirlos entre sistemas.
+
+La plantilla con `main()` mostrada en la sección anterior y esta convención de
+nombres siguen las recomendaciones de [Programa básico de Python de
+mclibre.org](https://www.mclibre.org/consultar/python/lecciones/python-plantilla.html).
+
 ### Actividad 3.1: modularizar
 
 Transforma un programa que calcule el área y el perímetro de un círculo en tres funciones: una para el área, otra para el perímetro y otra función `main()` para interactuar con la persona usuaria.
@@ -449,7 +475,9 @@ Una variable es un nombre asociado a un objeto almacenado en memoria. En Python 
 
 ### 4.1 Asignación
 
-El operador `=` asigna una referencia:
+En Python, una variable es una etiqueta asociada a un objeto. El operador `=`
+no expresa una igualdad matemática: asigna el resultado de la expresión de la
+derecha al nombre situado a la izquierda.
 
 ```python
 nombre = "Ana"
@@ -482,7 +510,9 @@ Aunque es posible, cambiar de tipo sin una razón clara puede dificultar la lect
 ancho, alto = 800, 600
 print(ancho, alto)
 
+primero, segundo = "A", "B"
 primero, segundo = segundo, primero
+print(primero, segundo)  # B A
 ```
 
 El desempaquetado también funciona con listas y tuplas si el número de elementos coincide:
@@ -539,6 +569,74 @@ if valor is None:
 ```
 
 Para comparar contenidos se usa `==`.
+
+### 4.7 Referencias compartidas y alias
+
+Cuando se asigna una lista, un diccionario o un conjunto a otra variable, las
+dos etiquetas pueden referirse al mismo objeto mutable:
+
+```python
+original = [1, 2]
+copia = original
+copia.append(3)
+
+print(original)  # [1, 2, 3]
+print(copia)     # [1, 2, 3]
+```
+
+Si se necesita una lista independiente, hay que crear una copia, por ejemplo
+con `original.copy()` o `list(original)`. En cambio, al reasignar una variable
+no se modifica el objeto al que apuntaba la otra:
+
+```python
+original = [1, 2]
+copia = original
+original = [9, 10]
+print(copia)     # [1, 2]
+```
+
+### 4.8 Borrar variables
+
+La instrucción `del` elimina la asociación de un nombre con su objeto. Usar el
+nombre después de borrarlo produce `NameError`:
+
+```python
+nombre = "Ana"
+del nombre
+# print(nombre)  # NameError
+```
+
+### 4.9 Asignaciones aumentadas
+
+Cuando una variable se modifica a partir de su propio valor se puede utilizar
+una asignación aumentada:
+
+```python
+contador = 0
+contador += 1       # equivale a contador = contador + 1
+contador *= 2       # equivale a contador = contador * 2
+```
+
+También existen `-=`, `/=`, `//=`, `%=`, `**=`, `&=`, `|=`, `^=`, `<<=` y `>>=`.
+Python no tiene operadores `++` ni `--`; para incrementar o decrementar se usa
+`+= 1` o `-= 1`.
+
+### 4.10 Nombres que conviene evitar
+
+No se deben utilizar palabras reservadas como `if`, `class` o `return` como
+nombres de variables. También conviene no sobrescribir nombres de funciones
+integradas, como `print`, `sum` o `list`, porque dejarían de poder utilizarse
+como funciones en ese ámbito:
+
+```python
+print = 3
+# print("Hola")  # TypeError: 'int' object is not callable
+del print         # recupera el nombre de la función integrada
+```
+
+La información de esta ampliación se basa en [Variables de
+Python](https://www.mclibre.org/consultar/python/lecciones/python-variables.html),
+de mclibre.org.
 
 ### Error frecuente: usar una variable antes de asignarla
 
@@ -897,7 +995,31 @@ Es mejor escribir `SEGUNDOS_POR_MINUTO = 60` que repetir el número `60` sin exp
 
 Una expresión combina valores, variables, operadores y llamadas para producir un resultado.
 
-### 8.1 Operadores aritméticos
+### 8.1 Tipos numéricos y operadores aritméticos
+
+Python trabaja principalmente con enteros (`int`), números decimales
+(`float`) y números complejos (`complex`). En los literales decimales se usa
+un punto, no una coma: `3.5` es un número decimal, mientras que `3,5` crea una
+pareja de valores.
+
+Los guiones bajos permiten mejorar la lectura de números largos sin cambiar su
+valor:
+
+```python
+poblacion = 48_000_000
+micras = 0.000_001
+```
+
+También se pueden escribir números en binario (`0b`), octal (`0o`) y
+hexadecimal (`0x`):
+
+```python
+binario = 0b1010       # 10
+octal = 0o12           # 10
+hexadecimal = 0xA      # 10
+```
+
+#### Operaciones básicas
 
 ```python
 a = 17
@@ -917,6 +1039,91 @@ print(a ** b)  # potencia: 1419857
 ```python
 print(-7 // 3)  # -3
 ```
+
+La división entera `//` devuelve el cociente redondeado hacia abajo, no el
+cociente truncado hacia cero. El resto `%` y el cociente están relacionados
+por la expresión `a == (a // b) * b + (a % b)`.
+
+```python
+print(11 // 3)       # 3
+print(11 % 3)        # 2
+print(divmod(11, 3)) # (3, 2)
+```
+
+`divmod()` devuelve en una tupla el cociente y el resto. Tanto `/` como `//`,
+`%` y `divmod()` producen un error `ZeroDivisionError` si el divisor es cero.
+
+#### Potencias y raíces
+
+El operador `**` calcula potencias. Los exponentes negativos producen el
+inverso y los exponentes fraccionarios permiten calcular raíces:
+
+```python
+print(2 ** 3)       # 8
+print(10 ** -2)     # 0.01
+print(9 ** 0.5)     # 3.0
+print(pow(2, 3, 5)) # 3: (2 ** 3) % 5
+```
+
+Hay que usar paréntesis cuando el signo negativo forma parte de la base:
+
+```python
+print(-2 ** 2)      # -4
+print((-2) ** 2)    # 4
+```
+
+#### Redondeo y precisión
+
+`round()` redondea un número. Su segundo argumento indica cuántas cifras
+decimales conservar y también puede ser negativo para redondear decenas,
+centenas, etc. En los casos exactamente intermedios, Python utiliza el
+redondeo al par más cercano.
+
+```python
+print(round(4.3527))      # 4
+print(round(4.3527, 2))   # 4.35
+print(round(4352, -2))    # 4400
+print(round(2.5))         # 2
+print(round(3.5))         # 4
+```
+
+Los `float` se almacenan normalmente en formato binario y algunos decimales
+no se pueden representar exactamente. Por eso un cálculo sencillo puede
+mostrar una pequeña diferencia:
+
+```python
+print(0.1 + 0.1 + 0.1)    # 0.30000000000000004
+```
+
+Para mostrar resultados al usuario se puede usar un formato como `:.2f`, pero
+no conviene redondear resultados intermedios que se reutilizarán en cálculos
+posteriores. Cuando se necesita exactitud decimal, se puede utilizar
+`decimal.Decimal`.
+
+#### Funciones matemáticas habituales
+
+Algunas operaciones frecuentes están disponibles como funciones integradas:
+
+```python
+print(abs(-7))                    # 7
+print(max(4, 8, 2))               # 8
+print(min(4, 8, 2))               # 2
+print(sum([1, 2, 3, 4]))           # 10
+```
+
+Para redondear hacia abajo o hacia arriba se puede importar el módulo `math`:
+
+```python
+import math
+
+print(math.floor(2.9))             # 2
+print(math.ceil(2.1))              # 3
+print(math.sqrt(25))               # 5.0
+```
+
+La información de esta ampliación se basa en [Números y operaciones
+aritméticas elementales](https://www.mclibre.org/consultar/python/lecciones/python-operaciones-matematicas.html),
+de mclibre.org.
 
 ### 8.2 Operadores de comparación
 
