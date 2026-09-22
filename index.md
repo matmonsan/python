@@ -29,11 +29,30 @@
 
 ## 1. Introducción y objetivos
 
+![Logo de Python](https://www.python.org/static/community_logos/python-logo-master-v3-TM.png)
+
 Python es un lenguaje de programación de propósito general, interpretado, de alto nivel y con una sintaxis diseñada para favorecer la legibilidad. Se utiliza en automatización, desarrollo web, análisis de datos, inteligencia artificial, ciencia, educación, administración de sistemas y creación de herramientas de escritorio.
 
 Este documento presenta los fundamentos necesarios para leer, escribir, ejecutar, probar, depurar y documentar programas en Python 3. Los ejemplos se han pensado para poder copiarse en un archivo `.py` y ejecutarse con una instalación estándar de Python, sin depender de librerías externas.
 
-Contenidos clave: variables, tipos de datos, literales, constantes, operadores y expresiones, conversiones de tipo, comentarios, entornos integrados de desarrollo, estructuras de control, selección, repetición, salto, control de excepciones, depuración, depurador y documentación.
+Contenidos clave:
+
+- Variables
+- Tipos de datos
+- Literales
+- Constantes
+- Operadores y expresiones
+- Conversiones de tipo
+- Comentarios
+- Entornos integrados de desarrollo
+- Estructuras de control
+- Selección
+- Repetición
+- Salto
+- Control de excepciones
+- Depuración
+- Depurador
+- Documentación
 
 ### Objetivos de aprendizaje
 
@@ -81,6 +100,20 @@ print("Hola, Python")
 
 Un programa es un conjunto ordenado de instrucciones que procesa datos para producir resultados. Aunque Python permite escribir programas muy pequeños, incluso un ejemplo de pocas líneas contiene varios elementos conceptuales.
 
+```mermaid
+graph TD
+    A[Programa]
+    A --> B[Código fuente]
+    B --> C[Instrucciones]
+    C --> D[Identificadores]
+    D --> E[Variables]
+    E --> F[Tipos de datos]
+    F --> G[Literales y constantes]
+    G --> H[Operadores y expresiones]
+    H --> I[Comentarios]
+    I --> J[Estructuras de control]
+```
+
 ### 2.1 Código fuente
 
 El código fuente es el texto que escribe la persona programadora. En Python suele guardarse en archivos con extensión `.py`:
@@ -106,6 +139,8 @@ if total > 30:        # selección
 ```
 
 Python utiliza el salto de línea para separar normalmente las instrucciones. También se puede usar un punto y coma, pero no es recomendable porque reduce la legibilidad.
+
+Las tabulaciones (o su equivalente en espacios) no separan instrucciones, sino que definen la indentación: el nivel de sangrado que delimita los bloques de código (por ejemplo, el cuerpo de un `if`, un `for` o una función). A diferencia de otros lenguajes que usan llaves `{}`, en Python la indentación es obligatoria y forma parte de la sintaxis. Se recomienda usar siempre 4 espacios y no mezclar tabulaciones con espacios, ya que Python puede rechazar el código con un error de indentación (`IndentationError` o `TabError`).
 
 ### 2.3 Identificadores
 
@@ -209,6 +244,29 @@ descuento = 0.10
 total = precio * unidades * (1 - descuento)
 print(f"Total: {total:.2f}")
 ```
+
+### Actividad 2.2: identificadores válidos
+
+Indica cuáles de los siguientes nombres son identificadores válidos en Python y, para los que no lo sean, explica por qué: `total_1`, `1total`, `Total`, `for`, `_precio`, `precio-unitario`.
+
+### Actividad 2.3: código fuente e instrucciones
+
+Escribe un pequeño programa (`.py`) que pida el nombre y la edad de una persona, y muestre un mensaje indicando si es mayor o menor de edad. Señala en un comentario qué líneas son de entrada, cuáles de procesamiento y cuáles de salida.
+
+### Actividad 2.4: depurar tipos de error
+
+El siguiente código contiene un error de sintaxis, uno de ejecución y uno lógico. Localízalos, clasifícalos y corrígelos:
+
+```python
+base = 4
+altura = 3
+area = base * altura / 2
+print("El área es: " area)
+```
+
+### Actividad 2.5: esquema propio
+
+A partir del esquema de la sección 2, elabora tu propio diagrama (en papel o en Mermaid) que represente los elementos de un programa distinto, por ejemplo uno que calcule el precio final de una compra con IVA. Incluye al menos: identificadores, tipos de datos, literales, operadores y estructuras de control.
 
 ---
 
