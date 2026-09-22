@@ -1,5 +1,9 @@
 # UD1.1: Introducción a la programación en Python
 
+**Autor:** Matías Montávez Sánchez
+
+**Módulo:** Programación y Automatización en Sistemas Informáticos y en Red
+
 ## Índice
 
 1. [Introducción y objetivos](#1-introducción-y-objetivos)
