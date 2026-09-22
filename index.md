@@ -185,6 +185,8 @@ print(keyword.kwlist)
 
 Entre ellas están `and`, `as`, `assert`, `break`, `class`, `continue`, `def`, `elif`, `else`, `except`, `False`, `finally`, `for`, `from`, `global`, `if`, `import`, `in`, `is`, `lambda`, `None`, `nonlocal`, `not`, `or`, `pass`, `raise`, `return`, `True`, `try`, `while`, `with` y `yield`.
 
+El listado completo y actualizado de palabras reservadas de Python 3 puede consultarse en la [documentación oficial de Python](https://docs.python.org/3/reference/lexical_analysis.html#keywords).
+
 ### 2.5 Entrada, procesamiento y salida
 
 Un esquema muy común es **entrada -> procesamiento -> salida**:
@@ -207,19 +209,28 @@ print(f"El área es {area:.2f}")
 
 ### 2.6 Sintaxis y semántica
 
-La **sintaxis** son las reglas de escritura. La **semántica** es el significado de lo escrito.
+La **sintaxis** son las reglas que definen si el texto de un programa está bien formado, es decir, si el intérprete es capaz de leerlo. Determina cosas como el orden de las palabras clave, el uso de paréntesis, comillas o dos puntos, y la indentación. Un fallo de sintaxis impide que el programa llegue a ejecutarse: el intérprete se detiene y muestra un `SyntaxError` antes de procesar ninguna instrucción.
+
+La **semántica** es el significado de lo que está escrito, es decir, qué hace realmente cada instrucción cuando se ejecuta. Un programa puede tener una sintaxis perfectamente correcta y aun así hacer algo distinto de lo que se pretendía, porque el significado de las instrucciones no coincide con la intención de quien programa.
+
+La diferencia se puede resumir así:
+
+- La sintaxis responde a la pregunta "¿está bien escrito?".
+- La semántica responde a la pregunta "¿hace lo que se quiere?".
+- Un error de sintaxis se detecta antes de ejecutar el programa.
+- Un error de semántica (o error lógico) solo se detecta observando el comportamiento o el resultado durante o después de la ejecución.
 
 ```python
 print("Hola")       # sintaxis y significado correctos
 ```
 
-El siguiente ejemplo tiene un error sintáctico porque falta cerrar el paréntesis:
+El siguiente ejemplo tiene un error sintáctico porque falta cerrar el paréntesis; el intérprete no consigue leer la instrucción:
 
 ```python
 # print("Hola"
 ```
 
-Este ejemplo es sintácticamente correcto, pero puede tener un error de significado si se esperaba calcular un área y se multiplican datos inadecuados:
+Este ejemplo es sintácticamente correcto (el intérprete lo ejecuta sin protestar), pero tiene un error semántico si la intención era sumar dos cantidades y multiplicar el número 10 tres veces produce un resultado distinto del esperado:
 
 ```python
 resultado = "10" * 3
@@ -233,6 +244,10 @@ Los errores más habituales son:
 1. **Errores de sintaxis:** el código no respeta las reglas del lenguaje.
 2. **Errores de ejecución:** el programa empieza, pero falla durante la ejecución, por ejemplo al dividir entre cero.
 3. **Errores lógicos:** el programa se ejecuta, pero produce un resultado incorrecto.
+
+![Errores mostrados en el editor y en el panel Problems de Visual Studio Code](https://code.visualstudio.com/assets/docs/python/linting/lint-messages.png)
+
+En Visual Studio Code, los errores y avisos se subrayan directamente en el código (normalmente en rojo los errores y en amarillo los avisos) y también aparecen listados en el panel **Problems**, donde se puede ver el mensaje completo, el archivo y la línea exacta en la que se producen.
 
 ```python
 # Sintaxis: falta el signo de cierre.
@@ -260,22 +275,64 @@ print(f"Total: {total:.2f}")
 
 ### Actividad 2.2: identificadores válidos
 
-Indica cuáles de los siguientes nombres son identificadores válidos en Python y, para los que no lo sean, explica por qué: `total_1`, `1total`, `Total`, `for`, `_precio`, `precio-unitario`.
+Indica cuáles de los siguientes nombres son identificadores válidos en Python y, para los que no lo sean, explica por qué: `total_1`, `1total`, `Total`, `for`, `_precio`, `precio-unitario`, `precio_unitario_€`, `class`, `Class`, `__init__`, `2do_intento`, `nombre completo`, `número_de_cuenta`, `total__final`, `def_valores`, `True`, `variable-2`, `_`, `mi.variable`, `while1`.
 
-### Actividad 2.3: código fuente e instrucciones
+### Actividad 2.3: entrada, procesamiento y salida
 
-Escribe un pequeño programa (`.py`) que pida el nombre y la edad de una persona, y muestre un mensaje indicando si es mayor o menor de edad. Señala en un comentario qué líneas son de entrada, cuáles de procesamiento y cuáles de salida.
+Observa el siguiente código y clasifica cada línea como entrada, procesamiento o salida escribiéndolo en un comentario al lado. Algunas líneas combinan más de una categoría y una de ellas no encaja en ninguna de las tres:
+
+```python
+import math
+
+nombre = input("¿Cómo te llamas? ")
+edad = int(input("¿Qué edad tienes? "))
+radio = float(input("Radio del círculo: "))
+
+mayor_edad = edad >= 18
+recargo = 0.05 if not mayor_edad else 0.0
+superficie = math.pi * radio ** 2
+superficie_con_recargo = superficie * (1 + recargo)
+
+mensaje = f"{nombre}, ¿eres mayor de edad? {mayor_edad}"
+
+print(mensaje)
+print(f"Superficie: {superficie:.2f}")
+print(f"Superficie con recargo: {superficie_con_recargo:.2f}")
+```
 
 ### Actividad 2.4: depurar tipos de error
 
-El siguiente código contiene un error de sintaxis, uno de ejecución y uno lógico. Localízalos, clasifícalos y corrígelos:
+El siguiente código mezcla varios problemas: errores de sintaxis, de indentación/tabulación, de ejecución y errores lógicos. Localízalos todos, indica de qué tipo es cada uno y corrígelos:
 
 ```python
-base = 4
-altura = 3
-area = base * altura / 2
-print("El área es: " area)
+def calcular_media(numeros):
+    suma = 0
+  for numero in numeros:
+        suma = suma + numero
+	media = suma / len(numeros)
+    return media
+
+
+def calcular_area_triangulo(base, altura)
+    area = base * altura / 2
+    return area
+
+
+notas = [4, 6, 8, 10]
+print("Media: " media)
+print("Área:", calcular_area_triangulo(4, 3))
+
+lista_vacia = []
+print("Media lista vacía:", calcular_media(lista_vacia))
 ```
+
+Pistas:
+
+- Hay una línea que mezcla espacios y tabulaciones en el mismo bloque.
+- Hay un bloque indentado con menos sangrado del que le corresponde.
+- Falta un símbolo indispensable en la definición de una función.
+- Una llamada a `print` referencia una variable que no existe con ese nombre.
+- Una de las funciones falla con una entrada concreta aunque el código sea sintácticamente correcto.
 
 ### Actividad 2.5: esquema propio
 
