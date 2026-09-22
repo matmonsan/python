@@ -19,15 +19,16 @@
 15. [Estructuras de salto](#15-estructuras-de-salto)
 16. [Control de excepciones](#16-control-de-excepciones)
 17. [Depuración y depurador](#17-depuración-y-depurador)
-18. [Documentación y documentación de programas](#18-documentación-y-documentación-de-programas)
-19. [Proyecto práctico integrador](#19-proyecto-práctico-integrador)
-20. [Ejercicios y actividades](#20-ejercicios-y-actividades)
-21. [Soluciones orientativas](#21-soluciones-orientativas)
-22. [Resumen y lista de comprobación](#22-resumen-y-lista-de-comprobación)
+18. [El depurador como herramienta de control de errores](#18-el-depurador-como-herramienta-de-control-de-errores)
+19. [Documentación y documentación de programas](#19-documentación-y-documentación-de-programas)
+20. [Proyecto práctico integrador](#20-proyecto-práctico-integrador-gestor-de-tareas-en-consola)
+21. [Ejercicios y actividades](#21-ejercicios-y-actividades)
+22. [Soluciones orientativas](#22-soluciones-orientativas)
+23. [Resumen y lista de comprobación](#23-resumen-y-lista-de-comprobación)
 
 ---
 
-## 1. Introducción y objetivos
+## 1. Introducción y objetivos [⬆](#índice)
 
 ![Logo de Python](https://www.python.org/static/community_logos/python-logo-master-v3-TM.png)
 
@@ -96,7 +97,7 @@ print("Hola, Python")
 
 ---
 
-## 2. Identificación de los elementos de un programa informático
+## 2. Identificación de los elementos de un programa informático [⬆](#índice)
 
 Un programa es un conjunto ordenado de instrucciones que procesa datos para producir resultados. Aunque Python permite escribir programas muy pequeños, incluso un ejemplo de pocas líneas contiene varios elementos conceptuales.
 
@@ -273,7 +274,7 @@ A partir del esquema de la sección 2, elabora tu propio diagrama (en papel o en
 
 ---
 
-## 3. Estructura y bloques fundamentales
+## 3. Estructura y bloques fundamentales [⬆](#índice)
 
 Python utiliza la indentación para delimitar bloques de código. Esto diferencia a Python de lenguajes que emplean llaves, y hace que la presentación visual del programa forme parte de su sintaxis.
 
@@ -372,7 +373,7 @@ Transforma un programa que calcule el área y el perímetro de un círculo en tr
 
 ---
 
-## 4. Variables
+## 4. Variables [⬆](#índice)
 
 Una variable es un nombre asociado a un objeto almacenado en memoria. En Python no se declara previamente el tipo de la variable: el tipo pertenece al objeto y el nombre puede volver a asociarse a otro objeto.
 
@@ -480,7 +481,7 @@ El orden de las instrucciones importa. Una variable debe existir antes de utiliz
 
 ---
 
-## 5. Tipos de datos
+## 5. Tipos de datos [⬆](#índice)
 
 Un tipo describe qué clase de valor representa un objeto y qué operaciones son válidas sobre él. Python ofrece tipos integrados y permite crear tipos propios mediante clases.
 
@@ -682,7 +683,7 @@ Asigna un tipo apropiado a cada dato: nombre de una persona, número de matrícu
 
 ---
 
-## 6. Literales
+## 6. Literales [⬆](#índice)
 
 Un literal es una notación escrita directamente en el código para representar un valor. No es lo mismo un literal que una variable: `25` es un literal entero, mientras que `edad` es un nombre que puede referirse a un objeto entero.
 
@@ -757,7 +758,7 @@ No deben utilizarse para ocultar una lógica compleja; si la expresión deja de 
 
 ---
 
-## 7. Constantes
+## 7. Constantes [⬆](#índice)
 
 Python no impone constantes inmutables mediante una palabra reservada. La convención consiste en escribir en mayúsculas los nombres cuyo valor no debería cambiar durante la ejecución:
 
@@ -814,7 +815,7 @@ Es mejor escribir `SEGUNDOS_POR_MINUTO = 60` que repetir el número `60` sin exp
 
 ---
 
-## 8. Operadores y expresiones
+## 8. Operadores y expresiones [⬆](#índice)
 
 Una expresión combina valores, variables, operadores y llamadas para producir un resultado.
 
@@ -966,7 +967,7 @@ Crea un programa que lea precio, unidades y porcentaje de descuento, calcule sub
 
 ---
 
-## 9. Conversiones de tipo
+## 9. Conversiones de tipo [⬆](#índice)
 
 La conversión transforma un valor en otro tipo cuando la operación es válida. La entrada de `input()` siempre devuelve una cadena, incluso si la persona escribe un número.
 
@@ -1049,7 +1050,7 @@ Escribe una función `leer_entero(mensaje, minimo, maximo)` que repita la petici
 
 ---
 
-## 10. Comentarios
+## 10. Comentarios [⬆](#índice)
 
 Los comentarios son texto para las personas que leen el código. El intérprete los ignora. Sirven para explicar intención, decisiones o advertencias, no para repetir literalmente lo que hace cada línea.
 
@@ -1107,7 +1108,7 @@ Deben revisarse antes de entregar el proyecto; un `TODO` olvidado puede indicar 
 
 ---
 
-## 11. Entornos integrados de desarrollo
+## 11. Entornos integrados de desarrollo [⬆](#índice)
 
 Un IDE (Integrated Development Environment, entorno integrado de desarrollo) reúne herramientas para escribir, ejecutar y mantener programas. Para Python, opciones habituales son Visual Studio Code, PyCharm, IDLE y JupyterLab.
 
@@ -1192,7 +1193,7 @@ Crea una carpeta de proyecto, genera `.venv`, selecciona el intérprete en el ID
 
 ---
 
-## 12. Uso de estructuras de control
+## 12. Uso de estructuras de control [⬆](#índice)
 
 Las estructuras de control determinan el orden en que se ejecutan las instrucciones. Sin ellas, un programa solo avanzaría de arriba abajo una vez.
 
@@ -1260,7 +1261,7 @@ si no:
 
 ---
 
-## 13. Selección y estructuras de selección
+## 13. Selección y estructuras de selección [⬆](#índice)
 
 Las estructuras de selección ejecutan uno u otro bloque según una condición.
 
@@ -1367,7 +1368,7 @@ Crea un menú con las opciones `1. Añadir`, `2. Consultar`, `3. Eliminar` y `4.
 
 ---
 
-## 14. Repetición y estructuras de repetición
+## 14. Repetición y estructuras de repetición [⬆](#índice)
 
 Los bucles permiten repetir acciones sin duplicar código.
 
@@ -1486,7 +1487,7 @@ Pide números hasta que se escriba `fin`. Guarda los válidos y muestra cantidad
 
 ---
 
-## 15. Estructuras de salto
+## 15. Estructuras de salto [⬆](#índice)
 
 Las estructuras de salto modifican el flujo habitual de un bucle o una función.
 
@@ -1567,7 +1568,7 @@ Los saltos son herramientas útiles, pero demasiados `break`, `continue` y retor
 
 ---
 
-## 16. Control de excepciones
+## 16. Control de excepciones [⬆](#índice)
 
 Una excepción es un evento que interrumpe el flujo normal porque se ha producido una situación excepcional: entrada inválida, archivo inexistente, división por cero o fallo de red.
 
@@ -1703,7 +1704,7 @@ Implementa un conversor de temperatura que acepte Celsius y Fahrenheit, rechace 
 
 ---
 
-## 17. Depuración y depurador
+## 17. Depuración y depurador [⬆](#índice)
 
 Depurar es localizar y corregir defectos. No consiste simplemente en leer el código al azar: requiere formular hipótesis, observar el comportamiento y comprobarlas con evidencia.
 
@@ -1788,7 +1789,7 @@ Hay que decidir qué ocurre con una lista vacía. El problema no se resuelve sol
 
 ---
 
-## 18. El depurador como herramienta de control de errores
+## 18. El depurador como herramienta de control de errores [⬆](#índice)
 
 El depurador permite ejecutar un programa paso a paso e inspeccionar su estado interno.
 
@@ -1885,7 +1886,7 @@ El resultado esperado es 60. Coloca un breakpoint dentro del bucle, observa el v
 
 ---
 
-## 18. Documentación y documentación de programas
+## 19. Documentación y documentación de programas [⬆](#índice)
 
 Documentar es explicar cómo usar, mantener y comprender un programa. Una buena documentación reduce el tiempo de incorporación y evita que las decisiones importantes dependan de conversaciones informales.
 
@@ -2001,7 +2002,7 @@ Escribe tres funciones relacionadas con una agenda. Añade anotaciones de tipo, 
 
 ---
 
-## 20. Proyecto práctico integrador: gestor de tareas en consola
+## 20. Proyecto práctico integrador: gestor de tareas en consola [⬆](#índice)
 
 El siguiente proyecto combina variables, tipos, funciones, listas, diccionarios, selección, repetición, excepciones, documentación y depuración. Permite añadir, listar, completar y eliminar tareas.
 
@@ -2137,7 +2138,7 @@ Amplía el proyecto con:
 
 ---
 
-## 21. Ejercicios y actividades
+## 21. Ejercicios y actividades [⬆](#índice)
 
 ### Nivel inicial
 
@@ -2213,7 +2214,7 @@ Desarrolla una aplicación de consola para gestionar calificaciones. Debe permit
 
 ---
 
-## 22. Soluciones orientativas
+## 22. Soluciones orientativas [⬆](#índice)
 
 Las soluciones siguientes muestran una posible estrategia. No son las únicas respuestas correctas.
 
@@ -2313,7 +2314,7 @@ def media(valores):
 
 ---
 
-## 23. Resumen y lista de comprobación
+## 23. Resumen y lista de comprobación [⬆](#índice)
 
 Antes de considerar terminado un programa Python, comprueba:
 
