@@ -100,7 +100,7 @@ print("Hola, Python")
 
 Un programa es un conjunto ordenado de instrucciones que procesa datos para producir resultados. Aunque Python permite escribir programas muy pequeños, incluso un ejemplo de pocas líneas contiene varios elementos conceptuales.
 
-```mermaid
+<div class="mermaid">
 graph TD
     A[Programa]
     A --> B[Código fuente]
@@ -112,7 +112,10 @@ graph TD
     G --> H[Operadores y expresiones]
     H --> I[Comentarios]
     I --> J[Estructuras de control]
-```
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true });</script>
 
 ### 2.1 Código fuente
 
