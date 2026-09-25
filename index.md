@@ -385,7 +385,48 @@ Cuando hay muchos niveles anidados, suele ser mejor reorganizar la lógica con c
 
 ### 3.3 Módulos y función `main`
 
-Un archivo `.py` puede usarse como programa ejecutable y como módulo importable. El patrón siguiente separa la definición de la ejecución:
+> **Idea clave:** un archivo Python puede ser un programa que se ejecuta o un
+> módulo que otro archivo importa. `main()` organiza la ejecución y evita que la
+> interacción se dispare accidentalmente al importar.
+
+#### Programa frente a módulo
+
+| Uso | Qué ocurre | Ejemplo |
+| --- | --- | --- |
+| **Programa** | Se ejecuta directamente y realiza una tarea completa. | `python saludos.py` |
+| **Módulo** | Otro archivo lo importa para reutilizar sus funciones. | `from saludos import saludar` |
+
+La ventaja es escribir la lógica una sola vez y reutilizarla desde una aplicación,
+una prueba automática o el intérprete interactivo.
+
+#### El problema de ejecutar código al importar
+
+Este archivo `saludos.py` parece correcto si se ejecuta directamente:
+
+```python
+def saludar(nombre):
+	return f"Hola, {nombre}"
+
+
+nombre = input("Nombre: ")
+print(saludar(nombre))
+```
+
+Pero si `programa.py` solo quiere reutilizar la función:
+
+```python
+from saludos import saludar
+
+print(saludar("Ana"))
+```
+
+Python también ejecutará el `input()` de `saludos.py` durante la importación.
+Aparecerá una pregunta por teclado antes de `Hola, Ana`, aunque no la hemos
+solicitado.
+
+#### La solución: separar definición y ejecución
+
+Colocamos la interacción dentro de `main()` y protegemos su llamada:
 
 ```python
 def saludar(nombre):
@@ -401,11 +442,69 @@ if __name__ == "__main__":
 	main()
 ```
 
-`__name__` vale `"__main__"` cuando el archivo se ejecuta directamente. Si se importa desde otro archivo, la llamada a `main()` no se produce automáticamente.
+> **Lectura de la condición:** ejecuta `main()` únicamente si este archivo es
+> el programa principal que se ha ejecutado directamente.
+
+| Situación | Valor de `__name__` | ¿Se llama a `main()`? |
+| --- | --- | --- |
+| `python saludos.py` | `"__main__"` | Sí |
+| `programa.py` importa `saludos` | `"saludos"` | No |
+
+#### Flujo completo entre dos archivos
+
+**`saludos.py`** contiene las funciones y su punto de entrada:
+
+```python
+def saludar(nombre, tratamiento="Hola"):
+	return f"{tratamiento}, {nombre}"
+
+
+def main():
+	nombre = input("Nombre: ")
+	print(saludar(nombre))
+
+
+if __name__ == "__main__":
+	main()
+```
+
+**`programa.py`** reutiliza la función:
+
+```python
+from saludos import saludar
+
+
+def main():
+	print(saludar("Ana"))
+	print(saludar("Luis", tratamiento="Buenos días"))
+
+
+if __name__ == "__main__":
+	main()
+```
+
+Al ejecutar `python programa.py`:
+
+1. Se cargan las funciones de `saludos.py`.
+2. No se ejecuta su `main()`, porque `__name__` vale `"saludos"`.
+3. Se ejecuta el `main()` de `programa.py`, que sí es el archivo principal.
+
+#### Reparto de responsabilidades
+
+- **Funciones:** tareas concretas y reutilizables.
+- **`main()`:** coordinación de entrada, llamadas y salida.
+- **Condición `if`:** único punto que inicia automáticamente el programa.
+- **Nivel superior del módulo:** definiciones y constantes, no acciones inesperadas.
+
+> **Error frecuente:** escribir `main()` directamente al final, sin la
+> condición. Así la interacción se inicia cada vez que otro archivo importa el
+> módulo.
 
 ### 3.4 Funciones como bloques reutilizables
 
-Una función agrupa instrucciones con un nombre y puede recibir parámetros y devolver un resultado:
+Una función agrupa instrucciones con un nombre, recibe parámetros y puede
+devolver un resultado. Es una forma de convertir una tarea compleja o repetida
+en un bloque que podemos llamar desde varios lugares.
 
 ```python
 def calcular_iva(precio, porcentaje=21):
@@ -417,7 +516,8 @@ iva = calcular_iva(100)
 print(iva)
 ```
 
-Las funciones reducen la duplicación, facilitan las pruebas y permiten dividir un problema grande en tareas pequeñas.
+Las funciones reducen la duplicación, facilitan las pruebas y permiten dividir
+un problema grande en tareas pequeñas.
 
 ### 3.5 Alcance de los nombres
 
@@ -461,9 +561,262 @@ La plantilla con `main()` mostrada en la sección anterior y esta convención de
 nombres siguen las recomendaciones de [Programa básico de Python de
 mclibre.org](https://www.mclibre.org/consultar/python/lecciones/python-plantilla.html).
 
-### Actividad 3.1: modularizar
+### 3.7 Cómo se ejecuta un programa Python
 
-Transforma un programa que calcule el área y el perímetro de un círculo en tres funciones: una para el área, otra para el perímetro y otra función `main()` para interactuar con la persona usuaria.
+Un programa Python se procesa de arriba abajo. Esta idea explica muchos errores
+de principiante: una función debe estar definida antes de llamarse, una variable
+debe recibir un valor antes de utilizarse y una condición se comprueba en el
+punto exacto en el que aparece. El intérprete no reordena las instrucciones.
+
+En un programa pequeño podemos imaginar el flujo así:
+
+1. Python lee una instrucción.
+2. Evalúa las expresiones que necesita.
+3. Ejecuta la acción resultante.
+4. Continúa con la siguiente instrucción, salvo que encuentre una decisión, un
+   bucle, una llamada a función o una excepción.
+
+```python
+print("1. Inicio")
+
+def duplicar(numero):
+	return numero * 2
+
+
+valor = duplicar(4)
+print("2. Resultado:", valor)
+print("3. Fin")
+```
+
+La definición de `duplicar` no ejecuta todavía su cuerpo: crea la función. El
+cuerpo se ejecuta cuando aparece `duplicar(4)`. Distinguir entre definir y
+llamar es fundamental para organizar programas en funciones.
+
+### 3.8 La indentación como parte de la sintaxis
+
+En muchos lenguajes las llaves indican dónde empieza y termina un bloque. En
+Python esa información la aporta la indentación. No es solo formato visual:
+cambiar el sangrado puede cambiar el significado del programa. Todas las
+instrucciones del mismo bloque deben comenzar en la misma columna.
+
+```python
+numero = 7
+
+if numero > 0:
+	print("El número es positivo")
+	if numero % 2 == 0:
+		print("Además es par")
+	else:
+		print("Además es impar")
+```
+
+En el ejemplo hay dos niveles: el primer `if` contiene al segundo, y este
+último contiene dos posibles bloques. Un `else` se relaciona con el `if` que
+está al mismo nivel de indentación. Para evitar errores:
+
+- configura el editor para insertar cuatro espacios al pulsar Tab;
+- no mezcles tabuladores y espacios;
+- mantén el mismo nivel para instrucciones hermanas;
+- reduce la profundidad extrayendo una función cuando un bloque sea difícil de
+  leer.
+
+### 3.9 Diseñar un bloque antes de escribirlo
+
+Antes de codificar conviene expresar cada bloque como una responsabilidad. Un
+programa que calcula una compra puede dividirse en `leer_precio()`,
+`calcular_total()`, `mostrar_resumen()` y `main()`. Así no se mezclan entrada,
+cálculos y salida, y se puede probar el cálculo sin responder preguntas por
+teclado. La regla práctica es que una función debería poder describirse con un
+verbo: calcular, validar, convertir, buscar o mostrar.
+
+```python
+def calcular_total(precio, unidades, iva=21):
+	subtotal = precio * unidades
+	importe_iva = subtotal * iva / 100
+	return subtotal + importe_iva
+
+
+def main():
+	precio = 12.5
+	unidades = 3
+	print(f"Total: {calcular_total(precio, unidades):.2f} euros")
+
+
+if __name__ == "__main__":
+	main()
+```
+
+`main()` coordina el programa, pero no debe convertirse en un lugar donde se
+acumule toda la lógica. Si aparece una nueva tarea, normalmente puede extraerse
+como otra función pequeña y comprobable.
+
+### 3.10 Parámetros, argumentos y valores devueltos
+
+El parámetro es el nombre de la definición; el argumento es el valor concreto de
+la llamada. En `calcular_total(precio, unidades)`, los parámetros son `precio` y
+`unidades`; en `calcular_total(12.5, 3)`, los argumentos son `12.5` y `3`.
+
+`return` termina la función y entrega un valor. `print()` solo muestra algo en
+pantalla y no sustituye a `return`:
+
+```python
+def sumar_y_devolver(a, b):
+	return a + b
+
+
+def sumar_y_mostrar(a, b):
+	print(a + b)
+
+
+resultado = sumar_y_devolver(2, 3)  # vale 5
+otro_resultado = sumar_y_mostrar(2, 3)  # muestra 5, pero vale None
+```
+
+Una función que calcula debería devolver el resultado; quien la llama decidirá
+si lo muestra, lo guarda o lo utiliza en otra operación. Esta separación permite
+reutilizar el código en una consola, una prueba automática o una interfaz.
+
+### 3.11 Alcance, flujo y errores habituales
+
+El alcance indica dónde se puede utilizar un nombre. Los nombres locales nacen
+dentro de una función y dejan de estar disponibles al terminar su ejecución.
+Una variable global puede ser visible en más lugares, pero depender demasiado de
+ella hace que las funciones sean difíciles de entender y probar.
+
+```python
+def crear_usuario():
+	nombre = "Lucía"
+	return nombre
+
+
+usuario = crear_usuario()
+# print(nombre)  # NameError: solo existe dentro de crear_usuario
+```
+
+Los errores más frecuentes al construir bloques son olvidar los dos puntos,
+indentar una línea en el nivel incorrecto, llamar a una función con argumentos
+incorrectos, confundir `print()` con `return` y ejecutar código de prueba al
+importar un módulo por no usar `main()`. Para localizar el problema, prueba
+primero cada función con datos sencillos, comprueba qué recibe y qué devuelve, y
+añade complejidad solo después de validar el bloque pequeño.
+
+### 3.12 Videotutoriales recomendados
+
+Aquí algunos videotutoriales en español:
+
+- [Indentación y bloques en Python](https://youtu.be/Bs_Eq7Vo5XU?si=ufuzahIgwe49QEsU).
+- [Funciones, parámetros y `return` en Python](https://youtu.be/g78juF9pB_w?si=rMB2W1JHnyIIJ5SJ).
+- [Módulos y `if __name__ == "__main__"`](https://youtu.be/wZKTUcTqekw?si=bhU2BagxSaOyjx9W).
+- [Alcance de variables y funciones en Python](https://youtu.be/Xn5-W5gXdak?si=0C_-3Wy2_h6DUW9I).
+
+> **Nivel inicial:** estas actividades no piden crear un programa desde cero.
+> Primero se observa, se ordena, se completa y se explica. La persona docente
+> puede resolver el primer ejemplo en la pizarra antes del trabajo individual.
+
+### Actividad 3.1: reconocer los bloques
+
+Observa este ejemplo y colorea o marca cada parte con una letra:
+
+```python
+def mostrar_mensaje():       # A
+	mensaje = "Bienvenido"    # B
+	print(mensaje)             # C
+
+
+mostrar_mensaje()            # D
+```
+
+Relaciona cada letra con una descripción:
+
+- definición de una función;
+- instrucción que guarda un texto;
+- instrucción que muestra un resultado;
+- llamada que hace que la función se ejecute.
+
+Después responde: ¿qué líneas se agrupan por la indentación? ¿Qué ocurriría si
+la línea `print(mensaje)` se escribiera sin sangrado?
+
+### Actividad 3.2: ordenar un programa
+
+Las siguientes tarjetas forman un programa, pero están desordenadas. Numéralas
+del 1 al 6 para indicar el orden correcto. No es necesario escribir código.
+
+```text
+[ ] Mostrar el saludo en pantalla.
+[ ] Definir una función llamada saludar.
+[ ] Pedir el nombre de la persona.
+[ ] Devolver el texto "Hola, " seguido del nombre.
+[ ] Llamar a la función saludar.
+[ ] Terminar el programa.
+```
+
+Explica por qué no tendría sentido llamar a `saludar` antes de definirla. Como
+ampliación, dibuja flechas entre las tarjetas que dependen unas de otras.
+
+### Actividad 3.3: leer la indentación
+
+Mira los dos fragmentos. Indica cuál está correctamente organizado y explica la
+razón usando las palabras **bloque**, **nivel** e **indentación**.
+
+```python
+# Fragmento A
+if hay entradas:
+	print("Comenzamos")
+	print("Hay trabajo")
+```
+
+```python
+# Fragmento B
+if hay entradas:
+	print("Comenzamos")
+print("Hay trabajo")
+```
+
+Después dibuja una llave o un recuadro alrededor de las instrucciones que
+pertenecen al `if`. No se pide corregir el código: el objetivo es entender qué
+instrucciones forman parte del bloque.
+
+### Actividad 3.4: programa o módulo
+
+Lee estas dos situaciones y marca **programa**, **módulo** o **ambos**:
+
+1. `saludos.py` se ejecuta con `python saludos.py` y pide un nombre.
+2. `saludos.py` contiene `saludar()` y otro archivo la importa.
+3. Un archivo contiene funciones reutilizables y también un `main()` protegido.
+
+Completa la tabla:
+
+| Situación | `__name__` vale | ¿Se ejecuta `main()`? |
+| --- | --- | --- |
+| Ejecución directa | `__________` | `__________` |
+| Importación desde otro archivo | `__________` | `__________` |
+
+Puedes consultar el ejemplo del apartado 3.3. La actividad se considera correcta
+si explicas con tus palabras por qué importar un módulo no debe abrir preguntas
+por teclado automáticamente.
+
+### Actividad 3.5: completar una plantilla con pistas
+
+Completa los huecos de esta plantilla usando únicamente estas palabras:
+`def`, `main`, `return`, `if`, `print`.
+
+```python
+_____ saludar(nombre):
+	_____ f"Hola, {nombre}"
+
+
+_____ _____():
+	_____ (saludar("Ana"))
+
+
+_____ __name__ == "__main__":
+	main()
+```
+
+Cuando termines, señala con tres colores distintos: la definición de una
+función, el valor que devuelve y el punto desde el que comienza el programa.
+Como comprobación oral, explica qué línea se ejecutaría primero al abrir el
+archivo y qué línea se ejecutaría al llamar a `saludar("Ana")`.
 
 ---
 
@@ -646,6 +999,162 @@ nombre = "Mario"
 ```
 
 El orden de las instrucciones importa. Una variable debe existir antes de utilizarse.
+
+### 4.11 Modelo mental: nombres, objetos y referencias
+
+Para comprender las variables de Python es más útil imaginar etiquetas y objetos
+que pensar en cajas que contienen valores. La asignación vincula un nombre con
+un objeto. Por eso dos nombres pueden apuntar al mismo objeto y observar una
+misma modificación.
+
+```python
+primera_lista = ["rojo", "verde"]
+segunda_lista = primera_lista
+segunda_lista.append("azul")
+print(primera_lista)  # también contiene "azul"
+```
+
+No se ha creado una segunda lista: se han creado dos nombres para la misma.
+Para obtener una lista independiente se copia el contenido:
+
+```python
+primera_lista = ["rojo", "verde"]
+segunda_lista = primera_lista.copy()
+segunda_lista.append("azul")
+print(primera_lista)  # ["rojo", "verde"]
+```
+
+La diferencia entre modificar y reasignar es esencial. `lista.append(...)`
+modifica el objeto; `lista = otra_lista` cambia el objeto asociado al nombre
+`lista`. Esta distinción aparece continuamente al pasar listas a funciones.
+
+### 4.12 Inmutabilidad y efectos de las operaciones
+
+Un objeto inmutable no puede cambiarse después de crearse. Cuando parece que
+una cadena cambia, en realidad se crea otra cadena y el nombre pasa a referirse
+a ella:
+
+```python
+saludo = "hola"
+saludo_mayusculas = saludo.upper()
+print(saludo)             # hola
+print(saludo_mayusculas)  # HOLA
+```
+
+Con una lista, métodos como `append`, `extend` o `sort` sí modifican el objeto.
+Algunos devuelven `None` porque su objetivo es modificar:
+
+```python
+numeros = [3, 1, 2]
+resultado = numeros.sort()
+print(numeros)   # [1, 2, 3]
+print(resultado) # None
+```
+
+Para recibir una lista nueva se puede usar `sorted(numeros)`. Conocer qué
+operaciones mutan y cuáles devuelven un objeto nuevo evita perder datos.
+
+### 4.13 Variables como contrato de lectura
+
+Un buen nombre comunica qué representa el dato, qué unidad utiliza y, cuando es
+necesario, qué estado expresa. `duracion_minutos`, `precio_sin_iva` y
+`esta_autenticado` son más informativos que `x`, `dato` o `valor`.
+
+```python
+distancia_km = 12.5
+tiempo_minutos = 30
+velocidad_media_kmh = distancia_km / (tiempo_minutos / 60)
+```
+
+Las variables booleanas suelen comenzar por `es_`, `tiene_` o `puede_`, porque
+su nombre se lee como una pregunta: `es_valido`, `tiene_permiso`,
+`puede_continuar`. Mantener un significado estable también ayuda a detectar
+errores: una variable llamada `edad` no debería convertirse después en un texto
+con el nombre de una persona.
+
+### 4.14 Asignación múltiple con seguridad
+
+El desempaquetado permite expresar relaciones entre valores, pero el número de
+nombres debe coincidir con el número de elementos. Si no coincide, Python produce
+`ValueError`.
+
+```python
+datos_servidor = ("localhost", 5432)
+host, puerto = datos_servidor
+print(f"Conectando a {host}:{puerto}")
+```
+
+Cuando se necesita recoger el resto de elementos se puede usar `*`:
+
+```python
+primero, *intermedios, ultimo = [10, 20, 30, 40, 50]
+print(primero, intermedios, ultimo)  # 10 [20, 30, 40] 50
+```
+
+Esta técnica es útil para procesar secuencias, pero conviene validar antes la
+entrada si su estructura puede variar.
+
+### 4.15 Errores de variables y cómo diagnosticarlos
+
+Los errores relacionados con nombres suelen ser fáciles de aislar leyendo el
+mensaje completo:
+
+- `NameError`: el nombre no existe o se escribió de forma distinta;
+- `UnboundLocalError`: se lee una variable local antes de asignarla;
+- `TypeError`: el tipo no permite la operación solicitada;
+- `ValueError`: el tipo es válido, pero el valor no tiene el formato esperado;
+- `AttributeError`: el objeto no posee el atributo o método indicado.
+
+```python
+texto = "25"
+# total = texto + 5          # TypeError
+total = int(texto) + 5       # conversión explícita
+print(total)
+```
+
+Para diagnosticar, observa el valor y el tipo justo antes de la operación:
+
+```python
+print(f"valor={texto!r}, tipo={type(texto).__name__}")
+```
+
+Después de corregirlo, prueba también una entrada vacía, un límite y un formato
+incorrecto para no depender solo del caso feliz.
+
+### 4.16 Videotutoriales recomendados
+
+- [Variables y asignación en Python](https://youtu.be/DN4PHRpbBmc?si=_mA6tvN9021N-LGj).
+- [Buenas prácticas para nombrar variables en Python](https://www.youtube.com/results?search_query=Python+convenciones+nombres+variables+PEP8+espa%C3%B1ol).
+
+### Actividad 4.1: ficha de variables
+
+Crea un programa que guarde nombre, edad, ciudad, altura y si la persona tiene
+permiso de conducir. Muestra el valor y el tipo de cada variable usando nombres
+descriptivos. Después modifica la edad y explica qué ocurre con la asociación.
+
+### Actividad 4.2: alias y copia
+
+Crea una lista de tareas y asigna sus valores a dos nombres distintos. Añade una
+tarea desde uno de ellos y observa el resultado. Repite usando `.copy()` y
+describe la diferencia entre compartir y copiar una lista.
+
+### Actividad 4.3: desempaquetar un registro
+
+Representa un producto con una tupla que contenga código, descripción, precio y
+stock. Desempaqueta sus cuatro elementos, calcula el valor total del stock y usa
+una asignación aumentada para incrementar el stock tras una reposición.
+
+### Actividad 4.4: detectar nombres problemáticos
+
+Revisa un programa que use nombres como `dato`, `x`, `list` y `print`. Sustitúyelos
+por nombres descriptivos y comprueba que no sobrescribes funciones integradas.
+Incluye una variable booleana cuyo nombre se lea como una pregunta.
+
+### Actividad 4.5: conversor validado
+
+Pide una distancia y una unidad (`km`, `m` o `cm`). Guarda cada dato en una
+variable clara, valida la unidad y convierte todo a metros. Controla entradas no
+numéricas y muestra también el tipo del valor convertido.
 
 ---
 
