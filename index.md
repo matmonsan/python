@@ -1,6 +1,6 @@
 ---
 title: "UD1.2: Introducción a la programación en Python"
-description: "<strong>Autor:</strong> Matías Montávez Sánchez |<br> <strong>Módulo:</strong> Programación y Automatización en Sistemas Informáticos y en Red"
+description: "<strong>Módulo:</strong> Programación y Automatización en Sistemas Informáticos y en Red <br> <strong>Autor:</strong> Matías Montávez Sánchez"
 ---
 
 # UD1.2: Introducción a la programación en Python
