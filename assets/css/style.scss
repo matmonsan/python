@@ -3,9 +3,14 @@
 @import "{{ site.theme }}";
 
 .page-header {
+  color: #606c71;
   background-image: url("../img/banner_python.jpg");
   background-size: cover;
   background-position: center;
+}
+
+.project-tagline {
+  opacity: 1;
 }
 
 .page-header .btn {
