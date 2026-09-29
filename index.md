@@ -835,58 +835,41 @@ Después de completar la plantilla:
 
 [⬆ Volver al índice](#índice)
 
-Una variable es un nombre asociado a un objeto almacenado en memoria. En Python no se declara previamente el tipo de la variable: el tipo pertenece al objeto y el nombre puede volver a asociarse a otro objeto.
+Una variable es un nombre que permite guardar y utilizar un valor durante la ejecución de un programa. En Python, una variable se crea al asignarle un valor por primera vez.
 
-### Variables en Matemáticas y en Programación
+### Variables en Matemáticas y en programación
 
-El concepto de «variable» proviene de las Matemáticas. En Matemáticas, una variable es un símbolo que forma parte de una expresión o de una fórmula. Normalmente las variables se representan mediante letras del alfabeto latino (`x`, `y`, `z`, `n`, `i`, `j`, etc.). Dependiendo del contexto, las variables significan cosas distintas. Por ejemplo:
+En Matemáticas, una variable representa una cantidad, conocida o desconocida, dentro de una expresión. Por ejemplo, en `x + 3 = 5`, se puede averiguar que `x` vale 2. En una fórmula como `y = x + 1`, en cambio, se pueden probar distintos valores de `x` y calcular el valor correspondiente de `y`.
 
-- En el caso del Álgebra, una variable representa una cantidad desconocida que se relaciona con otras y que en algunos casos podemos averiguar. Consideremos por ejemplo la ecuación `x + 3 = 5`. En este caso, la variable `x` representa una cantidad desconocida pero de la que se sabe que si se le suma 3 se obtiene 5. Resolviendo la ecuación, obtenemos inmediatamente que la variable `x` estaba representando realmente el número 2.
-- En el caso del Análisis matemático, una variable no representa una cantidad determinada, sino que representa todo un conjunto de valores. Consideremos por ejemplo la ecuación de la recta `y = x + 1`. En este caso, la variable `x` no representa ningún valor concreto, sino que puede tomar cualquier valor numérico positivo o negativo. Para cada valor de `x` podemos calcular el valor correspondiente de la variable `y`.
-
-En Programación también existe el concepto de «variable», parecido pero no idéntico al concepto matemático. En muchos lenguajes de programación, una variable se puede entender como una especie de caja en la que se puede guardar un valor. En esos lenguajes, el símbolo igualdad (`=`) hay que entenderlo como una asignación, no como una igualdad matemática: se calcula lo que hay a la derecha y se guarda en la variable que hay a la izquierda.
-
-En Python las variables son «etiquetas» que permiten hacer referencia a los datos, que se guardan en unas «cajas» llamadas objetos. Python es un lenguaje de programación orientado a objetos y su modelo de datos también está basado en objetos. Para cada dato que aparece en un programa, Python crea un objeto que tiene un identificador único, un tipo de datos y un valor. Así, las variables en Python no guardan los datos, sino que son simples nombres para poder hacer referencia a esos objetos.
+En programación, una variable es un nombre al que se asigna un valor para poder utilizarlo más adelante. El signo `=` indica una **asignación**, no una igualdad matemática: Python calcula lo que aparece a la derecha y asigna el resultado al nombre de la izquierda. Por eso `total = precio * unidades` se lee como «calcula el producto y guarda el resultado en `total`», no como una ecuación que haya que resolver.
 
 ### 4.1 Asignación
 
-En Python, una variable es una etiqueta asociada a un objeto. El operador `=`
-no expresa una igualdad matemática: asigna el resultado de la expresión de la
-derecha al nombre situado a la izquierda.
+Para crear una variable, escribe su nombre, el signo `=` y el valor que quieres asignarle:
 
 ```python
 nombre = "Ana"
 edad = 28
-activo = True
 ```
 
-La asignación se evalúa de derecha a izquierda. Primero se calcula el valor y después se vincula al nombre.
+La asignación puede guardar un valor escrito directamente o el resultado de un cálculo. Python evalúa primero lo que aparece a la derecha y luego guarda ese resultado con el nombre de la izquierda:
+En el intérprete interactivo, escribir el nombre muestra su valor. En un archivo `.py`, una línea que solo contiene un nombre no lo muestra en pantalla; para ello se utiliza `print()`. Esta diferencia importa al probar instrucciones en la consola y al ejecutar un programa guardado en un archivo.
 
 ```python
-total = 10 + 5 * 2
-print(total)  # 20
+horas = 2
+minutos = horas * 60
+print(minutos)  # 120
 ```
 
-Las variables en Python se crean cuando se definen por primera vez, es decir, cuando se les asigna un valor por primera vez. Para asignar un valor a una variable se utiliza el operador de igualdad (`=`). A la izquierda de la igualdad se escribe el nombre de la variable y a la derecha el valor que se quiere dar a la variable. Los números decimales se escriben con punto (`.`) y no con coma (`,`):
+En el intérprete interactivo, escribir el nombre muestra su valor. En un archivo `.py`, para mostrarlo en pantalla se utiliza `print()`.
 
 ```pycon
->>> x = 2.5
+>>> edad = 28
+>>> edad
+28
 ```
 
-La variable se escribe siempre a la izquierda de la igualdad. Si se escribe al revés, Python genera un mensaje de error. Si una variable no se ha definido previamente, escribir su nombre genera un mensaje de error:
-
-En el entorno interactivo de Python basta con escribir el nombre para mostrar su valor. También se pueden mostrar varios valores separados por comas; Python los presenta como una tupla:
-
-```pycon
->>> a = 2
->>> b = "pepe"
->>> a
-2
->>> a, b
-(2, 'pepe')
-```
-
-Si se va a almacenar texto, el texto debe escribirse entre comillas simples (`'`) o dobles (`"`), que son equivalentes. A las variables que almacenan texto se les suele llamar cadenas (de texto). Si no se escriben comillas, Python supone que estamos haciendo referencia a otra variable que, si no está definida, genera un mensaje de error:
+El texto se escribe entre comillas simples o dobles. Sin comillas, Python interpreta la palabra como el nombre de otra variable:
 
 ```pycon
 >>> nombre = "Pepito Conejo"
@@ -898,322 +881,140 @@ Traceback (most recent call last):
 NameError: name 'Pepe' is not defined
 ```
 
+Las comillas marcan dónde empieza y termina el texto. En cambio, sin comillas, `Pepe` no es texto: Python intenta encontrar una variable llamada `Pepe`.
+
 ### 4.2 Reasignación
 
-Una variable puede cambiar de valor y, técnicamente, incluso de tipo:
+Se puede asignar un valor nuevo a una variable. La asignación nueva reemplaza el valor anterior:
 
 ```python
-valor = 10
-valor = 20
-valor = "veinte"
+edad = 28
+edad = 29
+print(edad)  # 29
 ```
 
-Aunque es posible, cambiar de tipo sin una razón clara puede dificultar la lectura. Es mejor mantener un significado estable para cada variable.
-
-### 4.3 Asignación múltiple y desempaquetado
+También se puede usar el valor actual para calcular el siguiente:
 
 ```python
-ancho, alto = 800, 600
-print(ancho, alto)
-
-primero, segundo = "A", "B"
-primero, segundo = segundo, primero
-print(primero, segundo)  # B A
+puntuacion = 10
+puntuacion = puntuacion + 5
+print(puntuacion)  # 15
 ```
 
-El desempaquetado también funciona con listas y tuplas si el número de elementos coincide:
+La expresión de la derecha se calcula primero. Por eso `puntuacion = puntuacion + 5` significa «toma el valor actual, súmale 5 y asigna el resultado otra vez a `puntuacion`».
+Esta forma se utiliza para llevar una cuenta acumulada, actualizar una puntuación o aumentar un importe. El nombre debe tener un valor antes de poder aparecer en la expresión de la derecha.
+
+### 4.3 Intercambiar valores
+
+Para intercambiar los valores de dos variables, se puede utilizar una tercera variable temporal:
 
 ```python
-coordenada = (10, 25)
-x, y = coordenada
+primero = 5
+segundo = 10
+
+temporal = primero
+primero = segundo
+segundo = temporal
+
+print(primero)  # 10
+print(segundo)  # 5
 ```
 
-### 4.4 Variables mutables e inmutables
+La variable `temporal` evita perder uno de los valores. Si se escribiera primero `primero = segundo`, el valor inicial de `primero` se reemplazaría; al hacer después `segundo = primero`, ambas variables acabarían valiendo lo mismo. La variable temporal conserva el primer valor mientras se realizan las otras asignaciones.
+Para separar palabras, se recomienda usar guiones bajos, por ejemplo `fecha_de_nacimiento`. Esta forma se llama `snake_case` y facilita la lectura. También se pueden usar mayúsculas dentro del nombre, pero Python distingue entre ellas: `precio` y `Precio` no son el mismo nombre.
 
-Los enteros, flotantes, cadenas, booleanos y tuplas son inmutables: una operación produce otro objeto en lugar de modificar el original. Las listas, diccionarios y conjuntos son mutables.
+### 4.4 Nombres de variables
 
-```python
-texto = "hola"
-texto = texto.upper()  # se crea otra cadena
+Elige nombres que describan el valor, como `precio` o `numero_de_intentos`. Las reglas básicas son:
 
-numeros = [1, 2]
-numeros.append(3)       # se modifica la lista
-```
+- El nombre puede contener letras, números y guiones bajos (`_`).
+- Debe empezar por una letra o un guion bajo, no por un número.
+- No puede contener espacios.
+- Python distingue mayúsculas de minúsculas: `nombre` y `Nombre` son nombres distintos.
+- No se pueden usar palabras reservadas como `for` o `if`.
 
-### 4.5 Convenciones de nombres
+Para separar palabras, se recomienda usar guiones bajos, por ejemplo `fecha_de_nacimiento`. Esta forma se llama `snake_case`.
 
 ```python
 nombre_completo = "Lucía García"
 numero_de_intentos = 3
-MAXIMO_REINTENTOS = 5
 ```
 
-Se recomienda:
+Conviene evitar nombres demasiado cortos o que no expliquen el dato. Por ejemplo, `p` puede ser difícil de entender, mientras que `precio` indica claramente qué representa. El nombre no cambia el valor ni el resultado del cálculo: solo ayuda a quien lee el programa.
 
-- Variables y funciones: `snake_case`.
-- Clases: `PascalCase`.
-- Constantes convencionales: `MAYUSCULAS_CON_GUIONES_BAJOS`.
-- Evitar nombres de una sola letra salvo índices sencillos como `i` en bucles cortos.
-- Evitar nombres demasiado genéricos como `dato`, `cosa` o `resultado` si existe una descripción mejor.
+### 4.5 Asignaciones aumentadas
 
-El nombre debe empezar por una letra o por un guion bajo (`_`) y puede continuar con letras, números o guiones bajos. No puede contener espacios ni comenzar por un número. Python distingue mayúsculas de minúsculas, por lo que `nombre`, `Nombre` y `NOMBRE` son nombres distintos. Los identificadores pueden contener letras como `ñ` o vocales acentuadas, aunque se recomienda utilizar únicamente caracteres del alfabeto inglés para facilitar la compatibilidad.
-
-Cuando un nombre contiene varias palabras, se recomienda separarlas con guiones bajos (`fecha_de_nacimiento`); también existe la notación `camelCase` (`fechaDeNacimiento`). Las palabras reservadas, como `lambda`, no se pueden utilizar como nombres. Los nombres de funciones integradas, como `print`, sí se pueden asignar, pero no conviene hacerlo porque dejan de estar disponibles con su significado habitual en ese ámbito.
-
-### 4.6 Comprobar el tipo y la identidad
+Las asignaciones aumentadas actualizan una variable a partir de su valor actual. Se escriben con un operador aritmético seguido de `=`:
 
 ```python
-numero = 42
-print(type(numero))
-print(isinstance(numero, int))
+contador = 0
+contador += 1  # equivale a contador = contador + 1
+contador *= 2  # equivale a contador = contador * 2
 ```
 
-`type()` muestra el tipo exacto. `isinstance()` comprueba si un objeto pertenece a un tipo o a una familia de tipos y suele ser más flexible.
+En la primera línea, `contador += 1` suma uno al valor actual. En la segunda, `contador *= 2` multiplica ese nuevo valor por dos. También existen `-=`, `/=`, `//=`, `%=`, y `**=` para restar, dividir, calcular una división entera, obtener el resto y elevar a una potencia.
 
-El operador `is` comprueba identidad, no igualdad:
+Python no tiene operadores `++` ni `--`; para aumentar o reducir una unidad se usa `+= 1` o `-= 1`. La variable debe haberse definido antes de aplicar una asignación aumentada.
+
+### 4.6 Constantes
+
+Python no tiene una instrucción que impida modificar una variable. Para indicar que un valor no debería cambiar, se escribe su nombre en mayúsculas y se evita reasignarlo:
 
 ```python
-valor = None
-if valor is None:
-	print("No hay valor")
+MAXIMO_INTENTOS = 3
 ```
 
-Para comparar contenidos se usa `==`.
+Las mayúsculas son una convención, no una protección: Python permite cambiar el valor con otra asignación. No existe una forma incorporada de declarar una constante que el propio lenguaje impida modificar.
 
-### 4.7 Referencias compartidas y alias
-
-Cuando se asigna una lista, un diccionario o un conjunto a otra variable, las
-dos etiquetas pueden referirse al mismo objeto mutable:
+Se suelen usar constantes para valores que tienen un significado fijo dentro del programa, como un límite o un porcentaje. Darles un nombre evita repetir un número sin explicar qué representa:
 
 ```python
-original = [1, 2]
-copia = original
-copia.append(3)
-
-print(original)  # [1, 2, 3]
-print(copia)     # [1, 2, 3]
+IVA = 0.21
+precio_final = 100 * (1 + IVA)
 ```
 
-Si se necesita una lista independiente, hay que crear una copia, por ejemplo
-con `original.copy()` o `list(original)`. En cambio, al reasignar una variable
-no se modifica el objeto al que apuntaba la otra:
+Por convención, el nombre de una constante se escribe en mayúsculas y con guiones bajos entre palabras. La persona que programa debe respetar esa convención y no reasignarle otro valor.
 
-```python
-original = [1, 2]
-copia = original
-original = [9, 10]
-print(copia)     # [1, 2]
-```
+### 4.7 Borrar una variable
 
-### 4.8 Borrar variables
-
-La instrucción `del` elimina la asociación de un nombre con su objeto. Usar el
-nombre después de borrarlo produce `NameError`:
+La instrucción `del` elimina un nombre. Si se intenta utilizar después, Python produce un `NameError`:
 
 ```python
 nombre = "Ana"
 del nombre
-# print(nombre)  # NameError
+# print(nombre)  # NameError: el nombre ya no existe
 ```
 
-### 4.9 Asignaciones aumentadas
+`del` no es necesario para cambiar el valor: para eso basta con hacer otra asignación. Se puede usar cuando se quiere dejar de utilizar un nombre. Después de borrarlo, hay que asignarle un valor de nuevo antes de volver a consultarlo.
 
-Cuando una variable se modifica a partir de su propio valor se puede utilizar
-una asignación aumentada:
+### 4.8 Error frecuente: usar un nombre antes de asignarlo
+
+Una variable debe recibir un valor antes de utilizarse:
 
 ```python
-contador = 0
-contador += 1       # equivale a contador = contador + 1
-contador *= 2       # equivale a contador = contador * 2
+# print(ciudad)  # NameError: ciudad aún no está definida
+ciudad = "Sevilla"
+print(ciudad)
 ```
 
-También existen `-=`, `/=`, `//=`, `%=`, `**=`, `&=`, `|=`, `^=`, `<<=` y `>>=`.
-Python no tiene operadores `++` ni `--`; para incrementar o decrementar se usa
-`+= 1` o `-= 1`.
-
-### 4.10 Nombres que conviene evitar
-
-No se deben utilizar palabras reservadas como `if`, `class` o `return` como
-nombres de variables. También conviene no sobrescribir nombres de funciones
-integradas, como `print`, `sum` o `list`, porque dejarían de poder utilizarse
-como funciones en ese ámbito:
-
-```python
-print = 3
-# print("Hola")  # TypeError: 'int' object is not callable
-del print         # recupera el nombre de la función integrada
-```
-
-La información de esta ampliación se basa en [Variables de
-Python](https://www.mclibre.org/consultar/python/lecciones/python-variables.html),
-de mclibre.org.
-
-### Error frecuente: usar una variable antes de asignarla
-
-```python
-# print(nombre)  # NameError
-nombre = "Mario"
-```
-
-El orden de las instrucciones importa. Una variable debe existir antes de utilizarse.
-
-### 4.11 Modelo mental: nombres, objetos y referencias
-
-Para comprender las variables de Python es más útil imaginar etiquetas y objetos
-que pensar en cajas que contienen valores. La asignación vincula un nombre con
-un objeto. Por eso dos nombres pueden apuntar al mismo objeto y observar una
-misma modificación.
-
-```python
-primera_lista = ["rojo", "verde"]
-segunda_lista = primera_lista
-segunda_lista.append("azul")
-print(primera_lista)  # también contiene "azul"
-```
-
-No se ha creado una segunda lista: se han creado dos nombres para la misma.
-Para obtener una lista independiente se copia el contenido:
-
-```python
-primera_lista = ["rojo", "verde"]
-segunda_lista = primera_lista.copy()
-segunda_lista.append("azul")
-print(primera_lista)  # ["rojo", "verde"]
-```
-
-La diferencia entre modificar y reasignar es esencial. `lista.append(...)`
-modifica el objeto; `lista = otra_lista` cambia el objeto asociado al nombre
-`lista`. Esta distinción aparece continuamente al pasar listas a funciones.
-
-### 4.12 Inmutabilidad y efectos de las operaciones
-
-Un objeto inmutable no puede cambiarse después de crearse. Cuando parece que
-una cadena cambia, en realidad se crea otra cadena y el nombre pasa a referirse
-a ella:
-Lee el programa completo. La función recibe dos valores y contiene un `if`
-anidado dentro de otro. Sigue la indentación para determinar qué instrucciones
-pertenecen a cada bloque.
-print(saludo)             # hola
-print(saludo_mayusculas)  # HOLA
-def revisar_pedido(hay_productos, pago_confirmado):
-	print("Inicio de la revisión")
-	if hay_productos:
-		print("El pedido tiene productos")
-		if pago_confirmado:
-			print("Preparar el envío")
-		else:
-			print("Esperar el pago")
-		print("Pedido revisado")
-	else:
-		print("El pedido está vacío")
-	print("Fin de la revisión")
-
-
-revisar_pedido(True, False)
-```
-
-Responde sin ejecutar el programa:
-
-1. Escribe, en orden, los mensajes que muestra la llamada incluida al final.
-2. Cambia la llamada por `revisar_pedido(True, True)`. ¿Qué mensaje cambia y
-   cuáles se mantienen?
-3. Cambia la llamada por `revisar_pedido(False, True)`. ¿Se comprueba el valor
-   de `pago_confirmado`? Explica por qué.
-4. Señala qué instrucciones pertenecen al `if` exterior, cuáles al `if`
-   interior y cuáles están fuera de ambos. Justifica cada decisión por su
-   nivel de indentación.
-### 4.13 Variables como contrato de lectura
-
-Un buen nombre comunica qué representa el dato, qué unidad utiliza y, cuando es
-necesario, qué estado expresa. `duracion_minutos`, `precio_sin_iva` y
-`esta_autenticado` son más informativos que `x`, `dato` o `valor`.
-
-```python
-distancia_km = 12.5
-tiempo_minutos = 30
-velocidad_media_kmh = distancia_km / (tiempo_minutos / 60)
-```
-
-Las variables booleanas suelen comenzar por `es_`, `tiene_` o `puede_`, porque
-su nombre se lee como una pregunta: `es_valido`, `tiene_permiso`,
-`puede_continuar`. Mantener un significado estable también ayuda a detectar
-errores: una variable llamada `edad` no debería convertirse después en un texto
-con el nombre de una persona.
-
-Los nombres son etiquetas para Python y no imponen por sí mismos un significado real a los valores. Por ejemplo, se pueden sumar `peras = 7` y `manzanas = 22`, aunque en el mundo real sean elementos distintos. Del mismo modo, Python permite sumar una distancia y un tiempo, aunque esa operación no tenga sentido físico. Elegir nombres descriptivos ayuda a las personas a comprender qué representa cada valor, pero el programa no deduce sus unidades ni su significado.
-
-### 4.14 Asignación múltiple con seguridad
-
-El desempaquetado permite expresar relaciones entre valores, pero el número de
-nombres debe coincidir con el número de elementos. Si no coincide, Python produce
-`ValueError`.
-
-```python
-datos_servidor = ("localhost", 5432)
-host, puerto = datos_servidor
-print(f"Conectando a {host}:{puerto}")
-```
-
-Cuando se necesita recoger el resto de elementos se puede usar `*`:
-
-```python
-primero, *intermedios, ultimo = [10, 20, 30, 40, 50]
-print(primero, intermedios, ultimo)  # 10 [20, 30, 40] 50
-```
-
-Esta técnica es útil para procesar secuencias, pero conviene validar antes la
-entrada si su estructura puede variar.
-
-### 4.15 Errores de variables y cómo diagnosticarlos
-
-Los errores relacionados con nombres suelen ser fáciles de aislar leyendo el
-mensaje completo:
-
-- `NameError`: el nombre no existe o se escribió de forma distinta;
-- `UnboundLocalError`: se lee una variable local antes de asignarla;
-- `TypeError`: el tipo no permite la operación solicitada;
-- `ValueError`: el tipo es válido, pero el valor no tiene el formato esperado;
-- `AttributeError`: el objeto no posee el atributo o método indicado.
-
-```python
-texto = "25"
-# total = texto + 5          # TypeError
-total = int(texto) + 5       # conversión explícita
-print(total)
-```
-
-Para diagnosticar, observa el valor y el tipo justo antes de la operación:
-
-```python
-print(f"valor={texto!r}, tipo={type(texto).__name__}")
-```
-
-Después de corregirlo, prueba también una entrada vacía, un límite y un formato
-incorrecto para no depender solo del caso feliz.
-
-### 4.16 Videotutoriales recomendados
-
-- [Variables y asignación en Python](https://youtu.be/DN4PHRpbBmc?si=_mA6tvN9021N-LGj).
-- [Buenas prácticas para nombrar variables en Python](https://www.youtube.com/results?search_query=Python+convenciones+nombres+variables+PEP8+espa%C3%B1ol).
+Un `NameError` también puede deberse a un error al escribir el nombre. Python distingue mayúsculas y minúsculas, así que `ciudad`, `Ciudad` y `CIUDAD` se interpretan como nombres diferentes. Para localizar el problema, compara el nombre de la asignación con el de la instrucción que lo utiliza.
 
 ### Actividad 4.1: ficha de variables
 
-Crea un programa que guarde el nombre y la edad de una persona en variables con
-nombres descriptivos. Muestra sus valores con `print()`. Después asigna una edad
-nueva a la variable `edad`, vuelve a mostrarla y explica qué ocurre con el valor
-anterior.
+Crea un programa que asigne un nombre y una edad a dos variables. Muestra ambos
+valores. Después cambia la edad y vuelve a mostrarla.
 
 ### Actividad 4.2: reasignar variables
 
-Asigna el número `10` a la variable `a` y después asigna a `b` el valor de `a`.
-Muestra ambas variables. A continuación, asigna `20` a `a` y vuelve a mostrar
-ambas. Describe por qué cambia `a` pero `b` conserva su valor.
+Asigna `10` a `a` y luego asigna el valor de `a` a `b`. Muestra ambas variables.
+Cambia `a` a `20` y vuelve a mostrar las dos. Explica por qué `b` sigue valiendo
+`10`.
 
 ### Actividad 4.3: calcular y actualizar un valor
 
-Asigna un precio y una cantidad a dos variables numéricas. Calcula el importe en
-una tercera variable y muéstralo. Después aumenta la cantidad con una asignación
-aumentada y vuelve a calcular el importe.
+Asigna un precio y una cantidad a dos variables. Calcula el importe en una
+tercera variable y muéstralo. Aumenta la cantidad con `+=` y calcula de nuevo el
+importe.
 
 ### Actividad 4.4: elegir nombres válidos
 
@@ -1226,6 +1027,61 @@ elige nombres descriptivos para guardar el precio y la cantidad de un producto.
 Asigna una distancia en kilómetros a una variable y calcula su equivalencia en
 metros en otra variable. Muestra ambos valores con `print()`. Después modifica la
 distancia en kilómetros y vuelve a calcular la equivalencia en metros.
+
+### Actividad 4.6: constante por convención
+
+Define `MAXIMO_INTENTOS` con el valor `3`. Explica por qué se escribe en
+mayúsculas y qué ocurriría si después le asignas el valor `5`. ¿Python impide el
+cambio o depende de la persona que escribe el programa respetar la convención?
+
+### Actividad 4.7: seguir las asignaciones
+
+Sin ejecutar el código, completa el valor de `total` después de cada instrucción.
+Después comprueba tus respuestas ejecutándolo:
+
+```python
+total = 12
+total = total + 5
+descuento = 3
+total = total - descuento
+```
+
+| Instrucción ejecutada | Valor de `total` |
+| --- | --- |
+| `total = 12` | `__________` |
+| `total = total + 5` | `__________` |
+| `total = total - descuento` | `__________` |
+
+Explica por qué la última instrucción utiliza el valor actual de `total`.
+
+### Actividad 4.8: corregir nombres
+
+En cada línea hay un problema con el nombre utilizado. Explica el error y
+reescribe la instrucción correctamente:
+
+```python
+2precio = 4.5
+nombre completo = "Ana"
+for = 3
+ciudad = "Cádiz"
+print(Ciudad)
+```
+
+En la última línea, utiliza el nombre que se definió en la instrucción anterior.
+
+### Actividad 4.9: actualizar cantidades
+
+Empieza con `saldo = 50`. Aplica, en orden, estas operaciones usando
+asignaciones aumentadas: ingresa 20, gasta 15 y duplica el saldo restante.
+Escribe el saldo después de cada operación y comprueba el resultado con
+`print()`.
+
+### Actividad 4.10: preparar un recibo
+
+Define variables para el nombre de un producto, su precio y la cantidad
+comprada. Calcula el subtotal y el total con IVA, usando una constante llamada
+`IVA`. Muestra el nombre del producto y ambos importes. Después cambia la
+cantidad y vuelve a calcular los importes.
 
 ---
 
@@ -1389,36 +1245,40 @@ persona = {
 	"nombre": "Elena",
 	"edad": 31,
 	"activo": True,
-}
-
-print(persona["nombre"])
-persona["ciudad"] = "Valencia"
-```
-
-Para evitar un error cuando la clave no existe:
 
 ```python
-telefono = persona.get("telefono", "No disponible")
+saludo = "hola"
+saludo_mayusculas = saludo.upper()
+print(saludo)             # hola
+print(saludo_mayusculas)  # HOLA
 ```
 
-### 5.10 `None`
+El método `upper()` no modifica la cadena original: devuelve una nueva cadena.
+Por eso `saludo` conserva el valor `"hola"`.
 
-`None` representa la ausencia intencionada de valor:
+En cambio, algunos métodos de las listas modifican el objeto existente. Por
+ejemplo, `sort()` ordena la lista y devuelve `None`:
 
 ```python
-resultado = None
-if resultado is None:
-	print("Todavía no hay resultado")
+numeros = [3, 1, 2]
+resultado = numeros.sort()
+print(numeros)   # [1, 2, 3]
+print(resultado) # None
 ```
 
-No debe confundirse con `0`, `False` o una cadena vacía, aunque todos pueden considerarse falsos en un contexto booleano.
-
-### 5.11 Valores verdaderos y falsos
-
-En una condición se consideran falsos `False`, `None`, `0`, `0.0`, `""`, `[]`, `()`, `{}` y `set()`. La mayoría de los demás objetos son verdaderos.
+Si se necesita obtener una lista ordenada sin modificar la original, se puede
+usar `sorted()`:
 
 ```python
-nombre = ""
+numeros = [3, 1, 2]
+ordenados = sorted(numeros)
+print(numeros)   # [3, 1, 2]
+print(ordenados) # [1, 2, 3]
+```
+
+Antes de usar un método, conviene comprobar si modifica el objeto o si devuelve
+uno nuevo.
+
 if not nombre:
 	print("El nombre está vacío")
 ```
