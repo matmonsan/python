@@ -24,10 +24,11 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
 17. [Depuración y depurador](#17-depuración-y-depurador)
 18. [El depurador como herramienta de control de errores](#18-el-depurador-como-herramienta-de-control-de-errores)
 19. [Documentación y documentación de programas](#19-documentación-y-documentación-de-programas)
-20. [Proyecto práctico integrador](#20-proyecto-práctico-integrador-gestor-de-tareas-en-consola)
-21. [Ejercicios y actividades](#21-ejercicios-y-actividades)
-22. [Soluciones orientativas](#22-soluciones-orientativas)
-23. [Resumen y lista de comprobación](#23-resumen-y-lista-de-comprobación)
+20. [Programación orientada a objetos](#20-programación-orientada-a-objetos)
+21. [Proyecto práctico integrador](#21-proyecto-práctico-integrador-gestor-de-tareas-en-consola)
+22. [Ejercicios y actividades](#22-ejercicios-y-actividades)
+23. [Soluciones orientativas](#23-soluciones-orientativas)
+24. [Resumen y lista de comprobación](#24-resumen-y-lista-de-comprobación)
 
 ---
 
@@ -708,8 +709,7 @@ Aquí algunos videotutoriales en español:
 - [Alcance de variables y funciones en Python](https://youtu.be/Xn5-W5gXdak?si=0C_-3Wy2_h6DUW9I).
 
 > **Nivel inicial:** estas actividades no piden crear un programa desde cero.
-> Primero se observa, se ordena, se completa y se explica. La persona docente
-> puede resolver el primer ejemplo en la pizarra antes del trabajo individual.
+> Primero se observa, se ordena, se completa y se explica.
 
 ### Actividad 3.1: reconocer los bloques
 
@@ -753,68 +753,81 @@ ampliación, dibuja flechas entre las tarjetas que dependen unas de otras.
 
 ### Actividad 3.3: leer la indentación
 
-Mira los dos fragmentos. Indica cuál está correctamente organizado y explica la
-razón usando las palabras **bloque**, **nivel** e **indentación**.
+En ambos fragmentos, `hay_entradas` vale `True`. Los dos fragmentos son válidos,
+pero la última instrucción no pertenece al mismo bloque en ambos casos. Para
+cada fragmento, indica qué mensajes se muestran y explica por qué usando las
+palabras **bloque**, **nivel** e **indentación**.
 
 ```python
 # Fragmento A
-if hay entradas:
+if hay_entradas:
 	print("Comenzamos")
 	print("Hay trabajo")
 ```
 
 ```python
 # Fragmento B
-if hay entradas:
+if hay_entradas:
 	print("Comenzamos")
 print("Hay trabajo")
 ```
 
-Después dibuja una llave o un recuadro alrededor de las instrucciones que
-pertenecen al `if`. No se pide corregir el código: el objetivo es entender qué
-instrucciones forman parte del bloque.
+Después marca las instrucciones que pertenecen al `if` en cada fragmento.
+Recuerda: una instrucción indentada bajo el `if` pertenece a su bloque; una
+instrucción que vuelve al margen izquierdo está fuera de él.
 
 ### Actividad 3.4: programa o módulo
 
-Lee estas dos situaciones y marca **programa**, **módulo** o **ambos**:
+### Actividad 3.4: extraer funciones de un enunciado
 
-1. `saludos.py` se ejecuta con `python saludos.py` y pide un nombre.
-2. `saludos.py` contiene `saludar()` y otro archivo la importa.
-3. Un archivo contiene funciones reutilizables y también un `main()` protegido.
+Un taller de asistencia informática quiere un programa que prepare el
+presupuesto de una reparación. El programa debe pedir el nombre del cliente,
+las horas de trabajo, el precio por hora, el coste de las piezas y el porcentaje
+de IVA. A continuación, debe calcular el coste de la mano de obra, el subtotal,
+el importe del IVA y el total. Por último, debe mostrar el nombre del cliente y
+el presupuesto desglosado.
 
-Completa la tabla:
+Sin escribir todavía el código, analiza el enunciado y divídelo en funciones.
+Completa una fila por cada función que consideres necesaria:
 
-| Situación | `__name__` vale | ¿Se ejecuta `main()`? |
-| --- | --- | --- |
-| Ejecución directa | `__________` | `__________` |
-| Importación desde otro archivo | `__________` | `__________` |
+| Nombre propuesto para la función | Qué tarea realiza | Qué datos necesita | Qué resultado devuelve o muestra |
+| --- | --- | --- | --- |
+| `__________` | `__________` | `__________` | `__________` |
+| `__________` | `__________` | `__________` | `__________` |
+| `__________` | `__________` | `__________` | `__________` |
+| `__________` | `__________` | `__________` | `__________` |
 
-Puedes consultar el ejemplo del apartado 3.3. La actividad se considera correcta
-si explicas con tus palabras por qué importar un módulo no debe abrir preguntas
-por teclado automáticamente.
+Después, indica qué función coordinaría el proceso completo y escribe el orden
+en que llamaría a las demás. Puede haber distintas soluciones: cada función
+debe encargarse de una tarea concreta y el conjunto debe resolver todo el
+enunciado.
 
 ### Actividad 3.5: completar una plantilla con pistas
 
-Completa los huecos de esta plantilla usando únicamente estas palabras:
-`def`, `main`, `return`, `if`, `print`.
+Completa los seis huecos, identificados con letras, usando estas palabras:
+`def`, `main`, `return`, `if` y `print`. Algunas palabras se necesitan más de
+una vez.
 
 ```python
-_____ saludar(nombre):
-	_____ f"Hola, {nombre}"
+_____ saludar(nombre):  # A
+	_____ f"Hola, {nombre}"  # B
 
 
-_____ _____():
-	_____ (saludar("Ana"))
+_____ _____():  # C, D
+	_____ (saludar("Ana"))  # E
 
 
-_____ __name__ == "__main__":
+_____ __name__ == "__main__":  # F
 	main()
 ```
 
-Cuando termines, señala con tres colores distintos: la definición de una
-función, el valor que devuelve y el punto desde el que comienza el programa.
-Como comprobación oral, explica qué línea se ejecutaría primero al abrir el
-archivo y qué línea se ejecutaría al llamar a `saludar("Ana")`.
+Después de completar la plantilla:
+
+1. Señala la definición de cada función y el valor que devuelve `saludar()`.
+2. Si ejecutas el archivo directamente, indica qué función se llama desde el
+   bloque `if`.
+3. Sigue la llamada a `saludar("Ana")` y escribe el texto que termina mostrando
+   `print()`.
 
 ---
 
@@ -823,6 +836,17 @@ archivo y qué línea se ejecutaría al llamar a `saludar("Ana")`.
 [⬆ Volver al índice](#índice)
 
 Una variable es un nombre asociado a un objeto almacenado en memoria. En Python no se declara previamente el tipo de la variable: el tipo pertenece al objeto y el nombre puede volver a asociarse a otro objeto.
+
+### Variables en Matemáticas y en Programación
+
+El concepto de «variable» proviene de las Matemáticas. En Matemáticas, una variable es un símbolo que forma parte de una expresión o de una fórmula. Normalmente las variables se representan mediante letras del alfabeto latino (`x`, `y`, `z`, `n`, `i`, `j`, etc.). Dependiendo del contexto, las variables significan cosas distintas. Por ejemplo:
+
+- En el caso del Álgebra, una variable representa una cantidad desconocida que se relaciona con otras y que en algunos casos podemos averiguar. Consideremos por ejemplo la ecuación `x + 3 = 5`. En este caso, la variable `x` representa una cantidad desconocida pero de la que se sabe que si se le suma 3 se obtiene 5. Resolviendo la ecuación, obtenemos inmediatamente que la variable `x` estaba representando realmente el número 2.
+- En el caso del Análisis matemático, una variable no representa una cantidad determinada, sino que representa todo un conjunto de valores. Consideremos por ejemplo la ecuación de la recta `y = x + 1`. En este caso, la variable `x` no representa ningún valor concreto, sino que puede tomar cualquier valor numérico positivo o negativo. Para cada valor de `x` podemos calcular el valor correspondiente de la variable `y`.
+
+En Programación también existe el concepto de «variable», parecido pero no idéntico al concepto matemático. En muchos lenguajes de programación, una variable se puede entender como una especie de caja en la que se puede guardar un valor. En esos lenguajes, el símbolo igualdad (`=`) hay que entenderlo como una asignación, no como una igualdad matemática: se calcula lo que hay a la derecha y se guarda en la variable que hay a la izquierda.
+
+En Python las variables son «etiquetas» que permiten hacer referencia a los datos, que se guardan en unas «cajas» llamadas objetos. Python es un lenguaje de programación orientado a objetos y su modelo de datos también está basado en objetos. Para cada dato que aparece en un programa, Python crea un objeto que tiene un identificador único, un tipo de datos y un valor. Así, las variables en Python no guardan los datos, sino que son simples nombres para poder hacer referencia a esos objetos.
 
 ### 4.1 Asignación
 
@@ -841,6 +865,37 @@ La asignación se evalúa de derecha a izquierda. Primero se calcula el valor y 
 ```python
 total = 10 + 5 * 2
 print(total)  # 20
+```
+
+Las variables en Python se crean cuando se definen por primera vez, es decir, cuando se les asigna un valor por primera vez. Para asignar un valor a una variable se utiliza el operador de igualdad (`=`). A la izquierda de la igualdad se escribe el nombre de la variable y a la derecha el valor que se quiere dar a la variable. Los números decimales se escriben con punto (`.`) y no con coma (`,`):
+
+```pycon
+>>> x = 2.5
+```
+
+La variable se escribe siempre a la izquierda de la igualdad. Si se escribe al revés, Python genera un mensaje de error. Si una variable no se ha definido previamente, escribir su nombre genera un mensaje de error:
+
+En el entorno interactivo de Python basta con escribir el nombre para mostrar su valor. También se pueden mostrar varios valores separados por comas; Python los presenta como una tupla:
+
+```pycon
+>>> a = 2
+>>> b = "pepe"
+>>> a
+2
+>>> a, b
+(2, 'pepe')
+```
+
+Si se va a almacenar texto, el texto debe escribirse entre comillas simples (`'`) o dobles (`"`), que son equivalentes. A las variables que almacenan texto se les suele llamar cadenas (de texto). Si no se escriben comillas, Python supone que estamos haciendo referencia a otra variable que, si no está definida, genera un mensaje de error:
+
+```pycon
+>>> nombre = "Pepito Conejo"
+>>> nombre
+'Pepito Conejo'
+>>> nombre = Pepe
+Traceback (most recent call last):
+	...
+NameError: name 'Pepe' is not defined
 ```
 
 ### 4.2 Reasignación
@@ -900,6 +955,10 @@ Se recomienda:
 - Constantes convencionales: `MAYUSCULAS_CON_GUIONES_BAJOS`.
 - Evitar nombres de una sola letra salvo índices sencillos como `i` en bucles cortos.
 - Evitar nombres demasiado genéricos como `dato`, `cosa` o `resultado` si existe una descripción mejor.
+
+El nombre debe empezar por una letra o por un guion bajo (`_`) y puede continuar con letras, números o guiones bajos. No puede contener espacios ni comenzar por un número. Python distingue mayúsculas de minúsculas, por lo que `nombre`, `Nombre` y `NOMBRE` son nombres distintos. Los identificadores pueden contener letras como `ñ` o vocales acentuadas, aunque se recomienda utilizar únicamente caracteres del alfabeto inglés para facilitar la compatibilidad.
+
+Cuando un nombre contiene varias palabras, se recomienda separarlas con guiones bajos (`fecha_de_nacimiento`); también existe la notación `camelCase` (`fechaDeNacimiento`). Las palabras reservadas, como `lambda`, no se pueden utilizar como nombres. Los nombres de funciones integradas, como `print`, sí se pueden asignar, pero no conviene hacerlo porque dejan de estar disponibles con su significado habitual en ese ámbito.
 
 ### 4.6 Comprobar el tipo y la identidad
 
@@ -1031,27 +1090,38 @@ modifica el objeto; `lista = otra_lista` cambia el objeto asociado al nombre
 Un objeto inmutable no puede cambiarse después de crearse. Cuando parece que
 una cadena cambia, en realidad se crea otra cadena y el nombre pasa a referirse
 a ella:
-
-```python
-saludo = "hola"
-saludo_mayusculas = saludo.upper()
+Lee el programa completo. La función recibe dos valores y contiene un `if`
+anidado dentro de otro. Sigue la indentación para determinar qué instrucciones
+pertenecen a cada bloque.
 print(saludo)             # hola
 print(saludo_mayusculas)  # HOLA
+def revisar_pedido(hay_productos, pago_confirmado):
+	print("Inicio de la revisión")
+	if hay_productos:
+		print("El pedido tiene productos")
+		if pago_confirmado:
+			print("Preparar el envío")
+		else:
+			print("Esperar el pago")
+		print("Pedido revisado")
+	else:
+		print("El pedido está vacío")
+	print("Fin de la revisión")
+
+
+revisar_pedido(True, False)
 ```
 
-Con una lista, métodos como `append`, `extend` o `sort` sí modifican el objeto.
-Algunos devuelven `None` porque su objetivo es modificar:
+Responde sin ejecutar el programa:
 
-```python
-numeros = [3, 1, 2]
-resultado = numeros.sort()
-print(numeros)   # [1, 2, 3]
-print(resultado) # None
-```
-
-Para recibir una lista nueva se puede usar `sorted(numeros)`. Conocer qué
-operaciones mutan y cuáles devuelven un objeto nuevo evita perder datos.
-
+1. Escribe, en orden, los mensajes que muestra la llamada incluida al final.
+2. Cambia la llamada por `revisar_pedido(True, True)`. ¿Qué mensaje cambia y
+   cuáles se mantienen?
+3. Cambia la llamada por `revisar_pedido(False, True)`. ¿Se comprueba el valor
+   de `pago_confirmado`? Explica por qué.
+4. Señala qué instrucciones pertenecen al `if` exterior, cuáles al `if`
+   interior y cuáles están fuera de ambos. Justifica cada decisión por su
+   nivel de indentación.
 ### 4.13 Variables como contrato de lectura
 
 Un buen nombre comunica qué representa el dato, qué unidad utiliza y, cuando es
@@ -1069,6 +1139,8 @@ su nombre se lee como una pregunta: `es_valido`, `tiene_permiso`,
 `puede_continuar`. Mantener un significado estable también ayuda a detectar
 errores: una variable llamada `edad` no debería convertirse después en un texto
 con el nombre de una persona.
+
+Los nombres son etiquetas para Python y no imponen por sí mismos un significado real a los valores. Por ejemplo, se pueden sumar `peras = 7` y `manzanas = 22`, aunque en el mundo real sean elementos distintos. Del mismo modo, Python permite sumar una distancia y un tiempo, aunque esa operación no tenga sentido físico. Elegir nombres descriptivos ayuda a las personas a comprender qué representa cada valor, pero el programa no deduce sus unidades ni su significado.
 
 ### 4.14 Asignación múltiple con seguridad
 
@@ -1126,33 +1198,34 @@ incorrecto para no depender solo del caso feliz.
 
 ### Actividad 4.1: ficha de variables
 
-Crea un programa que guarde nombre, edad, ciudad, altura y si la persona tiene
-permiso de conducir. Muestra el valor y el tipo de cada variable usando nombres
-descriptivos. Después modifica la edad y explica qué ocurre con la asociación.
+Crea un programa que guarde el nombre y la edad de una persona en variables con
+nombres descriptivos. Muestra sus valores con `print()`. Después asigna una edad
+nueva a la variable `edad`, vuelve a mostrarla y explica qué ocurre con el valor
+anterior.
 
-### Actividad 4.2: alias y copia
+### Actividad 4.2: reasignar variables
 
-Crea una lista de tareas y asigna sus valores a dos nombres distintos. Añade una
-tarea desde uno de ellos y observa el resultado. Repite usando `.copy()` y
-describe la diferencia entre compartir y copiar una lista.
+Asigna el número `10` a la variable `a` y después asigna a `b` el valor de `a`.
+Muestra ambas variables. A continuación, asigna `20` a `a` y vuelve a mostrar
+ambas. Describe por qué cambia `a` pero `b` conserva su valor.
 
-### Actividad 4.3: desempaquetar un registro
+### Actividad 4.3: calcular y actualizar un valor
 
-Representa un producto con una tupla que contenga código, descripción, precio y
-stock. Desempaqueta sus cuatro elementos, calcula el valor total del stock y usa
-una asignación aumentada para incrementar el stock tras una reposición.
+Asigna un precio y una cantidad a dos variables numéricas. Calcula el importe en
+una tercera variable y muéstralo. Después aumenta la cantidad con una asignación
+aumentada y vuelve a calcular el importe.
 
-### Actividad 4.4: detectar nombres problemáticos
+### Actividad 4.4: elegir nombres válidos
 
-Revisa un programa que use nombres como `dato`, `x`, `list` y `print`. Sustitúyelos
-por nombres descriptivos y comprueba que no sobrescribes funciones integradas.
-Incluye una variable booleana cuyo nombre se lea como una pregunta.
+Indica cuáles de estos nombres se pueden usar como variables y explica por qué:
+`2precio`, `precio total`, `for`, `precio_total` y `precioUnitario`. Después
+elige nombres descriptivos para guardar el precio y la cantidad de un producto.
 
-### Actividad 4.5: conversor validado
+### Actividad 4.5: conversor de distancia
 
-Pide una distancia y una unidad (`km`, `m` o `cm`). Guarda cada dato en una
-variable clara, valida la unidad y convierte todo a metros. Controla entradas no
-numéricas y muestra también el tipo del valor convertido.
+Asigna una distancia en kilómetros a una variable y calcula su equivalencia en
+metros en otra variable. Muestra ambos valores con `print()`. Después modifica la
+distancia en kilómetros y vuelve a calcular la equivalencia en metros.
 
 ---
 
@@ -1181,53 +1254,49 @@ Representan números sin parte decimal y pueden ser positivos, negativos o cero.
 ```python
 usuarios = 150
 temperatura = -3
-```
-
+Una pequeña empresa de asistencia informática quiere un programa de consola
+para preparar el presupuesto de una reparación. El programa debe pedir el
+nombre del cliente, las horas de trabajo, el precio por hora, el coste de las
+piezas y el porcentaje de IVA. Después debe calcular el coste de mano de obra,
+el subtotal, el IVA y el total, y mostrar un presupuesto desglosado.
 Python permite literales en distintas bases:
-
-```python
-decimal = 42
-binario = 0b101010
+Divide el problema en módulos `.py`. Propón al menos tres módulos e indica la
+responsabilidad de cada uno. Puedes considerar, por ejemplo, un módulo para
+coordinar el programa, otro para los cálculos y otro para solicitar o mostrar
+información. No existe una única división correcta: lo importante es que cada
+módulo tenga una responsabilidad clara y que el programa principal coordine el
+trabajo.
 octal = 0o52
-hexadecimal = 0x2A
-```
+Completa una tabla como esta:
 
-Todos representan el mismo valor decimal: 42.
-
-### 5.3 Reales: `float`
-
+| Módulo propuesto | Responsabilidad | Funciones que podría contener |
+| --- | --- | --- |
+| `main.py` | `__________` | `__________` |
+| `__________` | `__________` | `__________` |
+| `__________` | `__________` | `__________` |
 Representan números con parte decimal usando punto:
-
-```python
-pi_aproximado = 3.14159
+Al terminar, explica por qué no conviene escribir todo el programa en un solo
+archivo. Los módulos de esta actividad son archivos Python que contienen código;
+no se pide guardar datos en ficheros ni usar bases de datos.
 saldo = -15.75
-```
+### Actividad 3.5: diseñar las llamadas entre módulos
 
-Los `float` usan representación de punto flotante. Por eso algunas operaciones no son exactas en binario:
-
-```python
+Usa la propuesta de módulos de la actividad 3.4 para diseñar cómo colaboran.
+Escribe el nombre de una función que podría realizar cada tarea y qué
+información recibe o devuelve:
 print(0.1 + 0.2)  # puede mostrar 0.30000000000000004
-```
+| Tarea | Función propuesta | Información que recibe o devuelve |
+| --- | --- | --- |
+| Pedir los datos del presupuesto | `__________` | `__________` |
+| Calcular el coste de mano de obra | `__________` | `__________` |
+| Calcular el IVA y el total | `__________` | `__________` |
+| Mostrar el presupuesto | `__________` | `__________` |
 
-Para dinero se recomienda considerar `decimal.Decimal`:
-
+Después dibuja un esquema con flechas que muestre qué módulos llaman a las
+funciones de otros. El flujo debe comenzar en `main.py`; indica qué función
+coordina las llamadas y en qué orden se prepara y se muestra el presupuesto.
+No hace falta escribir el programa completo.
 ```python
-from decimal import Decimal
-
-precio = Decimal("0.10")
-cantidad = Decimal("0.20")
-print(precio + cantidad)
-```
-
-### 5.4 Complejos: `complex`
-
-Un número complejo tiene una parte real y otra imaginaria:
-
-```python
-z = 3 + 4j
-print(z.real)
-print(z.imag)
-```
 
 Se usa principalmente en contextos científicos y matemáticos.
 
@@ -2816,13 +2885,191 @@ Escribe tres funciones relacionadas con una agenda. Añade anotaciones de tipo, 
 
 ---
 
-## 20. Proyecto práctico integrador: gestor de tareas en consola
+## 20. Programación orientada a objetos
+
+[⬆ Volver al índice](#índice)
+
+La programación orientada a objetos (POO) organiza un programa mediante objetos que combinan estado (datos) y comportamiento (operaciones). Una clase define cómo serán sus objetos; cada objeto concreto creado a partir de ella se denomina instancia.
+
+### 20.1 Clases, instancias, atributos y métodos
+
+Los atributos describen el estado de una instancia y los métodos definen operaciones que puede realizar. El método especial `__init__` inicializa el objeto cuando se crea. El parámetro `self` representa la instancia actual y aparece como primer parámetro de los métodos de instancia; Python lo proporciona al llamar al método.
+
+```python
+class Rectangulo:
+	def __init__(self, ancho, alto):
+		if ancho <= 0 or alto <= 0:
+			raise ValueError("Las dimensiones deben ser positivas")
+		self.ancho = ancho
+		self.alto = alto
+
+	def calcular_area(self):
+		return self.ancho * self.alto
+
+
+rectangulo = Rectangulo(5, 3)
+print(rectangulo.calcular_area())  # 15
+```
+
+`Rectangulo` es la clase; `rectangulo` es una instancia. `ancho` y `alto` son atributos de instancia, y `calcular_area()` es un método. Cada instancia mantiene sus propios valores.
+
+### 20.2 Encapsulación y propiedades
+
+La encapsulación consiste en mantener juntos el estado y las operaciones que lo modifican, ofreciendo una interfaz clara. En Python, un atributo sin prefijo especial se considera público. Un guion bajo inicial, como `_saldo`, indica por convención que se trata de un detalle interno; no lo hace inaccesible.
+
+Una propiedad permite consultar un valor mediante una sintaxis de atributo y, a la vez, controlar cómo se obtiene:
+
+```python
+class Cuenta:
+	def __init__(self, titular, saldo_inicial=0):
+		if saldo_inicial < 0:
+			raise ValueError("El saldo inicial no puede ser negativo")
+		self.titular = titular
+		self._saldo = saldo_inicial
+
+	@property
+	def saldo(self):
+		return self._saldo
+
+	def ingresar(self, cantidad):
+		if cantidad <= 0:
+			raise ValueError("La cantidad debe ser positiva")
+		self._saldo += cantidad
+
+
+cuenta = Cuenta("Ana", 100)
+cuenta.ingresar(25)
+print(cuenta.saldo)  # 125
+```
+
+Se consulta `cuenta.saldo` sin paréntesis porque es una propiedad. La modificación del saldo se realiza mediante un método que puede comprobar la cantidad recibida.
+
+### 20.3 Atributos de clase y de instancia
+
+Un atributo de instancia pertenece a un objeto concreto. Un atributo de clase se define en la clase y se comparte como valor común entre sus instancias mientras no se sobrescriba:
+
+```python
+class Alumno:
+	centro = "IES Central"
+
+	def __init__(self, nombre):
+		self.nombre = nombre
+
+
+ana = Alumno("Ana")
+luis = Alumno("Luis")
+print(ana.nombre, luis.nombre)
+print(ana.centro, luis.centro)
+```
+
+Conviene usar atributos de clase para datos realmente comunes. El estado que cambia de una instancia a otra debe guardarse en atributos de instancia.
+
+### 20.4 Herencia y polimorfismo
+
+La herencia permite definir una clase especializada a partir de otra. La clase hija puede reutilizar métodos de la clase base, añadir comportamiento y redefinir métodos. `super()` permite llamar a la implementación de la clase base.
+
+```python
+class Vehiculo:
+	def __init__(self, marca):
+		self.marca = marca
+
+	def descripcion(self):
+		return f"Vehículo de marca {self.marca}"
+
+
+class Coche(Vehiculo):
+	def __init__(self, marca, numero_puertas):
+		super().__init__(marca)
+		self.numero_puertas = numero_puertas
+
+	def descripcion(self):
+		return f"Coche {self.marca} de {self.numero_puertas} puertas"
+
+
+vehiculo = Vehiculo("Genérica")
+coche = Coche("Ejemplo", 5)
+print(vehiculo.descripcion())
+print(coche.descripcion())
+```
+
+El polimorfismo permite utilizar objetos de distintas clases a través de una operación común, como `descripcion()`. La herencia resulta útil cuando existe una relación «es un tipo de»; no conviene crear jerarquías solo para compartir unas pocas líneas.
+
+### 20.5 Composición
+
+La composición representa una relación «tiene un»: un objeto utiliza otro objeto como parte de su funcionamiento. A menudo es una alternativa más sencilla y flexible que la herencia.
+
+```python
+class Motor:
+	def arrancar(self):
+		return "Motor en marcha"
+
+
+class CocheConMotor:
+	def __init__(self, marca):
+		self.marca = marca
+		self.motor = Motor()
+
+	def arrancar(self):
+		return f"{self.marca}: {self.motor.arrancar()}"
+
+
+coche = CocheConMotor("Ejemplo")
+print(coche.arrancar())
+```
+
+### 20.6 Métodos especiales y representaciones
+
+Los métodos especiales permiten definir cómo interactúan los objetos con operaciones y funciones de Python. Por ejemplo, `__str__` proporciona una representación legible para las personas cuando se usa `print()`:
+
+```python
+class Producto:
+	def __init__(self, nombre, precio):
+		self.nombre = nombre
+		self.precio = precio
+
+	def __str__(self):
+		return f"{self.nombre}: {self.precio:.2f} euros"
+
+
+producto = Producto("Cuaderno", 2.5)
+print(producto)
+```
+
+Otros métodos especiales habituales son `__repr__`, para una representación útil durante el desarrollo, y `__eq__`, para definir cómo se comparan dos instancias con `==`. No se deben confundir con métodos normales llamados directamente: Python los invoca al realizar determinadas operaciones.
+
+### 20.7 Clases de datos
+
+Cuando una clase sirve principalmente para agrupar datos, `dataclasses` puede generar automáticamente métodos habituales como `__init__`, `__repr__` y `__eq__`:
+
+```python
+from dataclasses import dataclass
+
+
+@dataclass
+class Coordenada:
+	x: float
+	y: float
+
+
+punto = Coordenada(3, 4)
+print(punto)  # Coordenada(x=3, y=4)
+```
+
+`@dataclass` reduce código repetitivo, pero no sustituye el diseño de la clase ni añade validaciones automáticamente. Se pueden añadir métodos propios cuando el objeto necesita comportamiento.
+
+### Actividad 20.1: clase Rectangulo
+
+Implementa una clase `Rectangulo` que reciba ancho y alto, calcule el área y el perímetro, y rechace dimensiones no positivas. Crea dos instancias con dimensiones diferentes y muestra ambos resultados. No uses listas ni tuplas.
+
+---
+
+## 21. Proyecto práctico integrador: gestor de tareas en consola
 
 [⬆ Volver al índice](#índice)
 
 El siguiente proyecto combina variables, tipos, funciones, listas, diccionarios, selección, repetición, excepciones, documentación y depuración. Permite añadir, listar, completar y eliminar tareas.
 
-### 20.1 Diseño
+### 21.1 Diseño
 
 Cada tarea será un diccionario:
 
@@ -2841,7 +3088,7 @@ El programa tendrá estas operaciones:
 - Eliminar una tarea.
 - Salir.
 
-### 20.2 Implementación completa
+### 21.2 Implementación completa
 
 ```python
 """Gestor de tareas sencillo para la terminal."""
@@ -2937,7 +3184,7 @@ if __name__ == "__main__":
 	ejecutar()
 ```
 
-### 20.3 Mejoras propuestas
+### 21.3 Mejoras propuestas
 
 Amplía el proyecto con:
 
@@ -2954,7 +3201,7 @@ Amplía el proyecto con:
 
 ---
 
-## 21. Ejercicios y actividades
+## 22. Ejercicios y actividades
 
 [⬆ Volver al índice](#índice)
 
@@ -3032,7 +3279,7 @@ Desarrolla una aplicación de consola para gestionar calificaciones. Debe permit
 
 ---
 
-## 22. Soluciones orientativas
+## 23. Soluciones orientativas
 
 [⬆ Volver al índice](#índice)
 
@@ -3134,7 +3381,7 @@ def media(valores):
 
 ---
 
-## 23. Resumen y lista de comprobación
+## 24. Resumen y lista de comprobación
 
 [⬆ Volver al índice](#índice)
 
