@@ -776,8 +776,6 @@ Después marca las instrucciones que pertenecen al `if` en cada fragmento.
 Recuerda: una instrucción indentada bajo el `if` pertenece a su bloque; una
 instrucción que vuelve al margen izquierdo está fuera de él.
 
-### Actividad 3.4: programa o módulo
-
 ### Actividad 3.4: extraer funciones de un enunciado
 
 Un taller de asistencia informática quiere un programa que prepare el
