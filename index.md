@@ -1378,10 +1378,6 @@ if not nombre:
 	print("El nombre está vacío")
 ```
 
-### Actividad 5.1: elección de tipos
-
-Asigna un tipo apropiado a cada dato: nombre de una persona, número de matrícula, precio, lista de asignaturas, coordenadas GPS, permisos de usuario y ausencia de fecha de cierre. Justifica cada elección.
-
 ---
 
 ## 6. Literales
@@ -1400,10 +1396,12 @@ notacion_cientifica = 1.2e3
 binario = 0b1101
 ```
 
-Se pueden utilizar guiones bajos para mejorar la lectura:
+Los guiones bajos pueden separar grupos de cifras para que los números largos sean más fáciles de leer. Python los ignora al interpretar el literal: `1_000_000` y `1000000` representan exactamente el mismo valor. No son un operador ni cambian el número.
 
 ```python
 presupuesto = 1_000_000
+presupuesto_sin_separadores = 1000000
+print(presupuesto == presupuesto_sin_separadores)  # True
 ```
 
 ### 6.2 Literales booleanos y nulo
@@ -1416,48 +1414,43 @@ sin_resultado = None
 
 ### 6.3 Literales de cadena
 
-```python
-uno = "cadena"
-dos = 'cadena'
-multilinea = """texto
-con varias líneas"""
-```
-
-Caracteres especiales:
+Las comillas delimitan el texto y le indican a Python dónde empieza y termina la cadena. Se pueden usar comillas simples (`'...'`) o dobles (`"..."`): ambas crean una cadena y tienen el mismo significado. A menudo se elige el tipo de comilla que permita escribir el texto con menos escapes:
 
 ```python
-mensaje = "Primera línea\nSegunda línea"
-ruta = r"C:\\Users\\Ana\\archivo.txt"
+mensaje1 = "Ella dijo 'hola'"   # comillas dobles por fuera
+mensaje2 = 'Ella dijo "hola"'   # comillas simples por fuera
+mensaje3 = "It's Python"        # el apóstrofo no necesita escape
 ```
 
-La `r` crea una cadena cruda, útil para rutas y expresiones regulares. Las f-strings permiten insertar expresiones:
+Si el texto contiene la misma comilla que delimita la cadena, se puede escribir una barra invertida (`\`) antes de esa comilla para incluirla. La barra invertida también introduce secuencias de escape: combinaciones que representan caracteres especiales.
+
+```python
+comillas = "Ella dijo \"hola\""
+apostrofo = 'It\'s Python'
+multilinea = "Primera línea\nSegunda línea"
+tabulacion = "Nombre:\tAda"
+ruta_con_barra = "C:\\Users\\Ana"
+```
+
+- `\n` representa un salto de línea.
+- `\t` representa una tabulación.
+- `\\` representa una barra invertida dentro de la cadena.
+- `\"` y `\'` permiten incluir comillas dobles o simples, respectivamente.
+
+Si se antepone `r` a una cadena, como en `r"C:\Users\Ana\archivo.txt"`, se crea una cadena cruda: las barras invertidas se conservan y no se interpretan como el inicio de estas secuencias. Las comillas triples permiten escribir cadenas que ocupan varias líneas:
+
+```python
+multilinea = """Primera línea
+Segunda línea"""
+```
+
+Las f-strings permiten insertar valores o expresiones entre llaves:
 
 ```python
 producto = "libro"
 precio = 19.9
 print(f"{producto}: {precio:.2f} €")
 ```
-
-### 6.4 Literales de colecciones
-
-```python
-lista = [1, 2, 3]
-tupla = (1, 2, 3)
-conjunto = {1, 2, 3}
-diccionario = {"uno": 1, "dos": 2}
-```
-
-### 6.5 Literales con comprensión
-
-Las comprensiones crean colecciones de forma declarativa:
-
-```python
-cuadrados = [numero ** 2 for numero in range(1, 6)]
-pares = {numero for numero in range(10) if numero % 2 == 0}
-longitudes = {palabra: len(palabra) for palabra in ["sol", "luna"]}
-```
-
-No deben utilizarse para ocultar una lógica compleja; si la expresión deja de ser clara, un bucle normal es mejor.
 
 ---
 
@@ -1499,12 +1492,15 @@ precio_final = 100 * (1 + TASA_IVA)
 
 ### 7.2 `Final` para expresar intención estática
 
-El módulo `typing` permite indicar que un nombre no debería reasignarse. Es una ayuda para herramientas de análisis, no una barrera durante la ejecución:
+`Final` se importa desde `typing` y se escribe como anotación junto a una variable para indicar que su valor no debería reasignarse. «Estática» significa que esta intención puede ser revisada por el editor o por una herramienta de análisis sin ejecutar el programa.
+
+Si una herramienta detecta que se asigna otro valor a `PI`, puede mostrar un aviso. Sin embargo, `Final` no bloquea la asignación mientras el programa se ejecuta: Python permite reasignar la variable. Por tanto, sirve para comunicar la intención y ayudar a detectar errores, pero no convierte el nombre en una constante protegida.
 
 ```python
 from typing import Final
 
 PI: Final = 3.141592653589793
+# PI = 3.14  # Una herramienta de análisis puede señalar esta reasignación.
 ```
 
 ### 7.3 Cuándo usar constantes
@@ -1517,6 +1513,50 @@ Una constante es apropiada para valores que:
 - No dependen de los datos de una ejecución concreta.
 
 Es mejor escribir `SEGUNDOS_POR_MINUTO = 60` que repetir el número `60` sin explicar su significado.
+
+### 7.4 Actividades: tipos, literales y constantes
+
+Desarrolla y ejecuta un programa para cada ejercicio.
+
+#### Actividad 1: ficha de matrícula
+
+Prepara una ficha para una alumna llamada Lucía Ruiz. Incluye su edad (`19`), nota media (`8.4`), si está matriculada (`True`) y su fecha de baja, que todavía se desconoce. Guarda cada dato por separado. Al ejecutar el programa, muestra primero todos los datos en una ficha legible y después el tipo de cada valor. El resultado debe distinguir el dato desconocido del texto `"None"`.
+
+#### Actividad 2: cuenta institucional
+
+Pide por separado el nombre y los apellidos. Prueba el programa con `  mARía  ` y `lÓPEZ  `. La salida debe mostrar el nombre como `María López` y crear la cuenta `maría.lópez@centro.example`, sin espacios sobrantes y en minúsculas. El programa debe aceptar otros nombres introducidos por teclado, no limitarse a los datos de prueba.
+
+#### Actividad 3: informe de incidencias
+
+Pide una descripción de una incidencia. Prueba el programa con `  ERROR en aula. Error al arrancar  `. Presenta cuatro datos: la descripción sin espacios sobrantes; una versión con las palabras en formato de título; una versión en minúsculas con los espacios reemplazados por guiones; y la cantidad de veces que aparece `error`, contando igual `ERROR` y `Error`. Calcula también la cantidad de caracteres de la descripción limpia. Presenta cada resultado con una etiqueta clara.
+
+#### Actividad 4: selección de asignaturas
+
+La entrada inicial es `  Python, Redes , Sistemas, Python  `. Convierte sus elementos en una selección sin espacios sobrantes ni asignaturas repetidas. Añade `Bases de datos`, elimina `Redes` porque ya no se imparte y muestra la selección final en orden alfabético, separando las asignaturas con ` | `. La línea final debe ser `Bases de datos | Python | Sistemas`.
+
+#### Actividad 5: lista de compra compartida
+
+La compra inicial es `pan`, `leche`, `manzanas` y `leche`. Añade `arroz` y `café`, elimina `manzanas` y ordena alfabéticamente lo que queda. Muestra la lista resultante y cuántas unidades de `leche` hay. El resultado final debe conservar las dos entradas de leche, ya que representan dos unidades compradas.
+
+#### Actividad 6: organización de una playlist
+
+La playlist inicial es `Luz`, `Viaje`, `Luz`, `Norte`. Añade `Casa` y `Sol`, y quita solo una de las dos canciones llamadas `Luz`. Muestra la playlist en su orden actual y, aparte, una versión alfabética. La versión alfabética no debe cambiar el orden de la playlist original. Indica cuántas veces aparece `Luz` y en qué posición está su primera aparición en la playlist actual.
+
+#### Actividad 7: revisión de archivos entregados
+
+Pide el nombre de un archivo y prepara una versión normalizada sin espacios exteriores y en minúsculas. Para esa versión, muestra si comienza con `act_`, si termina en `.py` y la posición del primer guion bajo. Comprueba el programa con ` ACT_Cadenas.PY ` y `notas-final.PY`. Para el primer nombre debe indicar que cumple ambos formatos y que el guion bajo está en la posición `3`; para el segundo, que no empieza por `act_`, que sí termina en `.py` y que la búsqueda del guion bajo da `-1`.
+
+#### Actividad 8: registro de temperaturas
+
+Registra las temperaturas enteras `18`, `20`, `21`, `19` y `22` de cinco aulas. Después llega la lectura de una sexta aula, `23`, y se descubre que la tercera lectura debía ser `20`. Actualiza el registro y muestra los seis valores en el orden de las aulas, junto con el tipo de dato de la estructura elegida. La secuencia final debe contener `18`, `20`, `20`, `19`, `22` y `23`, y todos sus elementos deben seguir siendo enteros.
+
+#### Actividad 9: configuración de una aplicación
+
+Prepara la configuración de una aplicación llamada `Aula ASIR`, versión `1.2`, idioma `es` y límite de `3` intentos. Guarda estos valores para que se puedan cambiar desde un único lugar y nómbralos como constantes según la convención explicada en el tema. Marca la versión con `Final`. Muestra una pantalla de bienvenida que incluya el nombre, la versión, el idioma y el límite de intentos. No hace falta crear otros archivos.
+
+#### Actividad 10: catálogo de productos
+
+El catálogo `Equipamiento de aula` empieza con estos nombres: ` teclado `, `RATÓN`, `monitor` y ` Ratón `. Pide dos productos nuevos: prueba con ` ALTAVOCES ` y `webcam `. Limpia los espacios exteriores y unifica las mayúsculas para que nombres iguales se reconozcan como el mismo producto. Retira `monitor`, conserva una sola entrada de cada producto y muestra el resultado en orden alfabético, separado por comas. Guarda el nombre del catálogo como constante y muestra también el número de productos finales. La lista mostrada debe contener `Altavoces`, `Ratón`, `Teclado` y `Webcam`, una vez cada uno; el total es `4`.
 
 ---
 
