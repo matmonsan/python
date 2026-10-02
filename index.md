@@ -778,7 +778,32 @@ instrucción que vuelve al margen izquierdo está fuera de él.
 
 ### Actividad 3.4: programa o módulo
 
-### Actividad 3.4: extraer funciones de un enunciado
+Una pequeña empresa de asistencia informática quiere un programa de consola
+para preparar el presupuesto de una reparación. El programa debe pedir el
+nombre del cliente, las horas de trabajo, el precio por hora, el coste de las
+piezas y el porcentaje de IVA. Después debe calcular el coste de mano de obra,
+el subtotal, el IVA y el total, y mostrar un presupuesto desglosado.
+
+Divide el problema en módulos `.py`. Propón al menos tres módulos e indica la
+responsabilidad de cada uno. Puedes considerar, por ejemplo, un módulo para
+coordinar el programa, otro para los cálculos y otro para solicitar o mostrar
+información. No existe una única división correcta: lo importante es que cada
+módulo tenga una responsabilidad clara y que el programa principal coordine el
+trabajo.
+
+Completa una tabla como esta:
+
+| Módulo propuesto | Responsabilidad | Funciones que podría contener |
+| --- | --- | --- |
+| `main.py` | `__________` | `__________` |
+| `__________` | `__________` | `__________` |
+| `__________` | `__________` | `__________` |
+
+Al terminar, explica por qué no conviene escribir todo el programa en un solo
+archivo. Los módulos de esta actividad son archivos Python que contienen código;
+no se pide guardar datos en ficheros ni usar bases de datos.
+
+### Actividad 3.5: extraer funciones de un enunciado
 
 Un taller de asistencia informática quiere un programa que prepare el
 presupuesto de una reparación. El programa debe pedir el nombre del cliente,
@@ -802,7 +827,7 @@ en que llamaría a las demás. Puede haber distintas soluciones: cada función
 debe encargarse de una tarea concreta y el conjunto debe resolver todo el
 enunciado.
 
-### Actividad 3.5: completar una plantilla con pistas
+### Actividad 3.6: completar una plantilla con pistas
 
 Completa los seis huecos, identificados con letras, usando estas palabras:
 `def`, `main`, `return`, `if` y `print`. Algunas palabras se necesitan más de
@@ -828,6 +853,24 @@ Después de completar la plantilla:
    bloque `if`.
 3. Sigue la llamada a `saludar("Ana")` y escribe el texto que termina mostrando
    `print()`.
+
+### Actividad 3.7: diseñar las llamadas entre módulos
+
+Usa la propuesta de módulos de la actividad 3.4 para diseñar cómo colaboran.
+Escribe el nombre de una función que podría realizar cada tarea y qué
+información recibe o devuelve:
+
+| Tarea | Función propuesta | Información que recibe o devuelve |
+| --- | --- | --- |
+| Pedir los datos del presupuesto | `__________` | `__________` |
+| Calcular el coste de mano de obra | `__________` | `__________` |
+| Calcular el IVA y el total | `__________` | `__________` |
+| Mostrar el presupuesto | `__________` | `__________` |
+
+Después dibuja un esquema con flechas que muestre qué módulos llaman a las
+funciones de otros. El flujo debe comenzar en `main.py`; indica qué función
+coordina las llamadas y en qué orden se prepara y se muestra el presupuesto.
+No hace falta escribir el programa completo.
 
 ---
 
@@ -1106,55 +1149,41 @@ Los booleanos aparecen en condiciones y expresiones lógicas.
 ### 5.2 Enteros: `int`
 
 Representan números sin parte decimal y pueden ser positivos, negativos o cero.
+Python permite escribir enteros en decimal, binario, octal y hexadecimal:
 
 ```python
 usuarios = 150
 temperatura = -3
-Una pequeña empresa de asistencia informática quiere un programa de consola
-para preparar el presupuesto de una reparación. El programa debe pedir el
-nombre del cliente, las horas de trabajo, el precio por hora, el coste de las
-piezas y el porcentaje de IVA. Después debe calcular el coste de mano de obra,
-el subtotal, el IVA y el total, y mostrar un presupuesto desglosado.
-Python permite literales en distintas bases:
-Divide el problema en módulos `.py`. Propón al menos tres módulos e indica la
-responsabilidad de cada uno. Puedes considerar, por ejemplo, un módulo para
-coordinar el programa, otro para los cálculos y otro para solicitar o mostrar
-información. No existe una única división correcta: lo importante es que cada
-módulo tenga una responsabilidad clara y que el programa principal coordine el
-trabajo.
+binario = 0b1010
 octal = 0o52
-Completa una tabla como esta:
+hexadecimal = 0x2A
+```
 
-| Módulo propuesto | Responsabilidad | Funciones que podría contener |
-| --- | --- | --- |
-| `main.py` | `__________` | `__________` |
-| `__________` | `__________` | `__________` |
-| `__________` | `__________` | `__________` |
-Representan números con parte decimal usando punto:
-Al terminar, explica por qué no conviene escribir todo el programa en un solo
-archivo. Los módulos de esta actividad son archivos Python que contienen código;
-no se pide guardar datos en ficheros ni usar bases de datos.
-saldo = -15.75
-### Actividad 3.5: diseñar las llamadas entre módulos
+### 5.3 Reales: `float`
 
-Usa la propuesta de módulos de la actividad 3.4 para diseñar cómo colaboran.
-Escribe el nombre de una función que podría realizar cada tarea y qué
-información recibe o devuelve:
-print(0.1 + 0.2)  # puede mostrar 0.30000000000000004
-| Tarea | Función propuesta | Información que recibe o devuelve |
-| --- | --- | --- |
-| Pedir los datos del presupuesto | `__________` | `__________` |
-| Calcular el coste de mano de obra | `__________` | `__________` |
-| Calcular el IVA y el total | `__________` | `__________` |
-| Mostrar el presupuesto | `__________` | `__________` |
+Representan números con parte decimal, escrita con un punto:
 
-Después dibuja un esquema con flechas que muestre qué módulos llaman a las
-funciones de otros. El flujo debe comenzar en `main.py`; indica qué función
-coordina las llamadas y en qué orden se prepara y se muestra el presupuesto.
-No hace falta escribir el programa completo.
 ```python
+saldo = -15.75
+print(0.1 + 0.2)  # puede mostrar 0.30000000000000004
+```
 
-Se usa principalmente en contextos científicos y matemáticos.
+Debido a la representación binaria de los números de punto flotante, algunos
+resultados son aproximados. Para comparar importes decimales exactos, puede
+ser necesario utilizar el módulo `decimal`.
+
+### 5.4 Complejos: `complex`
+
+Los números complejos tienen una parte real y otra imaginaria. En Python, la
+unidad imaginaria se escribe con el sufijo `j`:
+
+```python
+numero = 2 + 3j
+print(numero.real)  # 2.0
+print(numero.imag)  # 3.0
+```
+
+Se usan principalmente en contextos científicos y matemáticos.
 
 ### 5.5 Cadenas: `str`
 
@@ -1279,6 +1308,7 @@ print(ordenados) # [1, 2, 3]
 Antes de usar un método, conviene comprobar si modifica el objeto o si devuelve
 uno nuevo.
 
+```python
 if not nombre:
 	print("El nombre está vacío")
 ```
