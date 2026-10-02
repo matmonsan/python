@@ -1132,11 +1132,13 @@ cantidad y vuelve a calcular los importes.
 
 [⬆ Volver al índice](#índice)
 
-Un tipo describe qué clase de valor representa un objeto y qué operaciones son válidas sobre él. Python ofrece tipos integrados y permite crear tipos propios mediante clases.
+El tipo de dato indica qué clase de valor representa un dato y qué operaciones tienen sentido para él. En este apartado se explican los tipos que se utilizan en los ejemplos: valores lógicos, números, texto y varias formas de agrupar valores.
 
 ### 5.1 Booleanos: `bool`
 
-Solo existen dos valores booleanos: `True` y `False`.
+Un booleano representa un resultado que solo puede ser `True` (verdadero) o `False` (falso). Las comparaciones producen valores booleanos. Se pueden guardar en variables y utilizar en condiciones para decidir qué instrucciones ejecutar.
+
+En este ejemplo, `18 >= 18` es verdadero, por lo que `es_mayor` recibe `True`. `type()` permite comprobar el tipo del valor guardado:
 
 ```python
 es_mayor = 18 >= 18
@@ -1144,12 +1146,11 @@ print(es_mayor)       # True
 print(type(es_mayor)) # <class 'bool'>
 ```
 
-Los booleanos aparecen en condiciones y expresiones lógicas.
+Así, `bool` sirve para expresar el resultado de una pregunta que admite una respuesta verdadera o falsa, como comprobar si se cumple una comparación.
 
 ### 5.2 Enteros: `int`
 
-Representan números sin parte decimal y pueden ser positivos, negativos o cero.
-Python permite escribir enteros en decimal, binario, octal y hexadecimal:
+El tipo `int` representa números sin parte decimal; puede ser positivo, negativo o cero. Los ejemplos muestran distintas maneras de escribirlos: `150` y `-3` están en decimal, mientras que `0b`, `0o` y `0x` indican, respectivamente, que el número está escrito en binario, octal o hexadecimal. La base cambia la escritura, no el hecho de que el valor sea un entero. Por ejemplo, `0b1010` representa diez y tanto `0o52` como `0x2A` representan cuarenta y dos.
 
 ```python
 usuarios = 150
@@ -1161,33 +1162,25 @@ hexadecimal = 0x2A
 
 ### 5.3 Reales: `float`
 
-Representan números con parte decimal, escrita con un punto:
+El tipo `float` representa números que pueden tener parte decimal. En Python, la parte decimal se escribe después de un punto, como en `-15.75`. Internamente estos números se representan en binario, por lo que algunos valores decimales no se almacenan con exactitud y ciertos cálculos pueden mostrar una pequeña diferencia, como `0.1 + 0.2`.
+
+Para controlar cuántas cifras decimales se muestran, se puede usar `:.2f` dentro de una cadena formateada. El `2` indica que se mostrarán dos cifras después del punto; se puede sustituir por otra cantidad. Este formato cambia cómo se presenta el número, no el valor almacenado.
 
 ```python
 saldo = -15.75
 print(0.1 + 0.2)  # puede mostrar 0.30000000000000004
+
+precio = 12.5
+print(f"{precio:.2f}")  # 12.50
 ```
 
 Debido a la representación binaria de los números de punto flotante, algunos
 resultados son aproximados. Para comparar importes decimales exactos, puede
 ser necesario utilizar el módulo `decimal`.
 
-### 5.4 Complejos: `complex`
+### 5.4 Cadenas: `str`
 
-Los números complejos tienen una parte real y otra imaginaria. En Python, la
-unidad imaginaria se escribe con el sufijo `j`:
-
-```python
-numero = 2 + 3j
-print(numero.real)  # 2.0
-print(numero.imag)  # 3.0
-```
-
-Se usan principalmente en contextos científicos y matemáticos.
-
-### 5.5 Cadenas: `str`
-
-Una cadena es una secuencia inmutable de caracteres Unicode:
+El tipo `str` representa texto como una secuencia de caracteres. Las comillas simples o dobles delimitan una cadena de una línea; las comillas triples permiten escribirla en varias líneas. Una cadena es inmutable: sus caracteres no se cambian directamente y los métodos que transforman el texto devuelven una cadena nueva.
 
 ```python
 nombre = "Ada Lovelace"
@@ -1196,7 +1189,7 @@ texto_largo = """Primera línea
 Segunda línea"""
 ```
 
-Operaciones comunes:
+Operaciones básicas:
 
 ```python
 texto = "Python"
@@ -1209,11 +1202,38 @@ print(texto.upper())
 print("th" in texto)
 ```
 
-La indexación empieza en cero. El corte `texto[inicio:fin]` incluye `inicio` y excluye `fin`.
+En estas expresiones, `texto` vale `"Python"`:
 
-### 5.6 Listas: `list`
+- `len(texto)` devuelve el número de caracteres: `6`.
+- `texto[0]` obtiene el carácter de la primera posición (`"P"`). La numeración empieza en cero; `texto[-1]` obtiene el último carácter (`"n"`).
+- `texto[0:3]` obtiene desde la posición 0 hasta antes de la 3: `"Pyt"`.
+- `texto.lower()` devuelve una versión en minúsculas y `texto.upper()` una versión en mayúsculas.
+- `"th" in texto` comprueba si el fragmento está en la cadena y devuelve `True` o `False`. `not in` comprueba si no está.
+- `"Hola " + "Ada"` concatena dos cadenas; `"ja" * 3` repite una cadena tres veces.
 
-Una lista es una colección ordenada y mutable:
+#### Métodos básicos de `str`
+
+Cada método se llama escribiendo un punto después de la cadena o de la variable. Los que generan texto devuelven otra cadena y no modifican la original.
+
+| Método | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `lower()` | Devuelve el texto en minúsculas. | `"HOLA".lower()` da `"hola"`. |
+| `upper()` | Devuelve el texto en mayúsculas. | `"hola".upper()` da `"HOLA"`. |
+| `capitalize()` | Pone en mayúscula el primer carácter y el resto en minúscula. | `"hola mundo".capitalize()` da `"Hola mundo"`. |
+| `title()` | Pone en mayúscula la inicial de cada palabra. | `"hola mundo".title()` da `"Hola Mundo"`. |
+| `strip()` | Quita espacios en blanco del principio y del final. | `"  hola  ".strip()` da `"hola"`. |
+| `replace(viejo, nuevo)` | Sustituye las apariciones de un texto por otro. | `"casa".replace("a", "o")` da `"coso"`. |
+| `split(separador)` | Divide la cadena por el separador y devuelve sus partes en una lista. | `"rojo,azul".split(",")` da `["rojo", "azul"]`. |
+| `join(partes)` | Une cadenas poniendo el texto que llama al método entre ellas. | `", ".join(["rojo", "azul"])` da `"rojo, azul"`. |
+| `find(texto)` | Devuelve la posición de la primera aparición; devuelve `-1` si no lo encuentra. | `"Python".find("th")` da `2`. |
+| `count(texto)` | Cuenta cuántas veces aparece el texto indicado. | `"banana".count("a")` da `3`. |
+| `startswith(texto)` | Comprueba si la cadena empieza con el texto indicado. | `"Python".startswith("Py")` da `True`. |
+| `endswith(texto)` | Comprueba si la cadena termina con el texto indicado. | `"Python".endswith("on")` da `True`. |
+| `format(valores)` | Inserta valores en los huecos `{}` de una cadena. | `"Hola, {}".format("Ada")` da `"Hola, Ada"`. |
+
+### 5.5 Listas: `list`
+
+Una lista (`list`) reúne varios elementos en un orden concreto y permite cambiar su contenido. En el ejemplo, `append("kiwi")` añade un elemento al final; `frutas[0] = "plátano"` reemplaza el de la primera posición. La primera posición tiene índice `0`. Las listas pueden contener valores de distintos tipos, aunque suele ser más claro agrupar valores que cumplen una misma función.
 
 ```python
 frutas = ["manzana", "pera", "uva"]
@@ -1222,28 +1242,75 @@ frutas[0] = "plátano"
 print(frutas)
 ```
 
-Operaciones habituales:
+#### Métodos más comunes de las listas
+
+Estos métodos se llaman con un punto después de la variable, por ejemplo `frutas.append("kiwi")`. Los métodos que modifican la lista actúan sobre la lista original; no hay que guardar su resultado en otra variable.
+
+| Método | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `append(valor)` | Añade un elemento al final. | `frutas.append("kiwi")` |
+| `extend(valores)` | Añade al final todos los elementos de otra secuencia. | `numeros.extend([4, 5])` |
+| `insert(indice, valor)` | Inserta un elemento en la posición indicada. | `frutas.insert(0, "kiwi")` |
+| `remove(valor)` | Elimina la primera aparición del valor indicado. | `frutas.remove("pera")` |
+| `pop(indice)` | Elimina y devuelve el elemento de la posición indicada; si se omite, quita el último. | `ultimo = frutas.pop()` |
+| `clear()` | Elimina todos los elementos de la lista. | `frutas.clear()` |
+| `index(valor)` | Devuelve la posición de la primera aparición del valor. | `frutas.index("pera")` |
+| `count(valor)` | Cuenta cuántas veces aparece el valor. | `frutas.count("pera")` |
+| `sort()` | Ordena la lista original de menor a mayor. | `numeros.sort()` |
+| `reverse()` | Invierte el orden de los elementos de la lista original. | `frutas.reverse()` |
+| `copy()` | Crea una copia de la lista. | `copia = frutas.copy()` |
+
+Las funciones `len()` y `sum()` también se pueden usar con listas, aunque no son métodos: `len(numeros)` cuenta los elementos y `sum(numeros)` suma sus valores.
 
 ```python
 numeros = [4, 1, 8, 2]
 numeros.sort()
-print(numeros)
-print(len(numeros))
-print(sum(numeros))
+print(numeros)       # [1, 2, 4, 8]
+print(len(numeros))  # 4
+print(sum(numeros))  # 15
 ```
 
-Una lista puede mezclar tipos, aunque en código mantenible suele ser preferible que represente elementos homogéneos.
+### 5.6 Array: `array.array`
+
+`array.array` es el tipo de array que proporciona el módulo estándar `array`. Se parece a una lista porque mantiene los valores ordenados y permite modificarlos, pero todos sus elementos deben ser del mismo tipo numérico. Al crearlo se indica el tipo mediante un código: `"i"` para enteros y `"f"` para números de punto flotante. Esta restricción permite almacenar secuencias numéricas de forma compacta.
+
+#### ¿Cuándo usar una lista y cuándo un array?
+
+En Python, la **lista suele ser la opción habitual**: sirve para la mayoría de colecciones y permite guardar valores de distintos tipos. `array.array` se usa en un caso más concreto: cuando todos los elementos son numéricos del mismo tipo y se quiere almacenarlos de forma compacta.
+
+| Necesidad | Opción adecuada | Motivo |
+| --- | --- | --- |
+| Guardar una colección general, que puede mezclar tipos | `list` | Es flexible y no requiere indicar de antemano el tipo de sus elementos. |
+| Guardar una secuencia compacta de números todos del mismo tipo | `array.array` | El código elegido al crearlo fija el tipo permitido para sus elementos. |
+
+Por ejemplo, para una lista de edades normalmente basta con una lista. Si se necesita una secuencia compacta de números enteros, se puede elegir `array("i", ...)`:
+
+```python
+from array import array
+
+edades_lista = [18, 21, 25]
+edades_array = array("i", [18, 21, 25])
+
+edades_array.append(30)  # añade un entero; debe coincidir con el código "i"
+edades_array[0] = 19     # cambia el valor de la primera posición
+print(edades_lista)
+print(edades_array)
+
+temperaturas = array("f", [18.5, 21.0, 19.5])
+```
+
+En ambos casos se puede consultar un elemento por su posición, añadir valores y cambiar un elemento. La diferencia no es que uno sustituya al otro: usa una lista como opción general y elige `array.array` cuando la restricción a un único tipo numérico y el almacenamiento compacto sean útiles. La [documentación oficial del módulo `array`](https://docs.python.org/3/library/array.html) contiene los códigos disponibles.
 
 ### 5.7 Tuplas: `tuple`
 
-Una tupla es una secuencia ordenada e inmutable:
+Una tupla (`tuple`) agrupa valores en un orden concreto, como una lista, pero no permite cambiar sus elementos una vez creada. En el ejemplo, `punto` contiene dos valores y la asignación `x, y = punto` guarda el primero en `x` y el segundo en `y`.
 
 ```python
 punto = (10, 20)
 x, y = punto
 ```
 
-La tupla de un solo elemento necesita una coma:
+La coma es la que indica que `(7,)` es una tupla de un único elemento. Sin ella, `(7)` solo agrupa el número entre paréntesis:
 
 ```python
 un_elemento = (7,)
@@ -1251,7 +1318,7 @@ un_elemento = (7,)
 
 ### 5.8 Conjuntos: `set`
 
-Un conjunto no mantiene duplicados y resulta útil para pertenencia y operaciones de conjuntos:
+Un conjunto (`set`) agrupa elementos sin repetirlos y no los organiza por posiciones. En el ejemplo, `"rojo"` aparece una sola vez aunque se haya escrito dos veces. El operador `&` obtiene los elementos que están en ambos conjuntos; `|` reúne los elementos de los dos. Por eso su resultado común contiene `"editor"`, y el conjunto combinado contiene `"admin"`, `"editor"` e `"invitado"`.
 
 ```python
 colores = {"rojo", "verde", "rojo"}
@@ -1263,17 +1330,27 @@ print(permitidos & solicitados)
 print(permitidos | solicitados)
 ```
 
-Un conjunto vacío se crea con `set()`, no con `{}`, porque `{}` representa un diccionario vacío.
+Para crear un conjunto vacío se usa `set()`. Las llaves vacías `{}` representan un diccionario vacío, no un conjunto.
 
 ### 5.9 Diccionarios: `dict`
 
-Un diccionario almacena asociaciones clave-valor:
+Un diccionario (`dict`) guarda asociaciones entre claves y valores. En el ejemplo, `"nombre"` permite localizar `"Elena"`, `"edad"` permite localizar `31` y `"activo"` permite localizar `True`. Para consultar un valor se escribe su clave entre corchetes, como en `persona["nombre"]`:
 
 ```python
 persona = {
 	"nombre": "Elena",
 	"edad": 31,
 	"activo": True,
+}
+print(persona["nombre"])  # Elena
+```
+
+La clave también permite cambiar el valor asociado o añadir una asociación nueva:
+
+```python
+persona["edad"] = 32
+persona["ciudad"] = "Cádiz"
+```
 
 ```python
 saludo = "hola"
@@ -1282,31 +1359,19 @@ print(saludo)             # hola
 print(saludo_mayusculas)  # HOLA
 ```
 
-El método `upper()` no modifica la cadena original: devuelve una nueva cadena.
-Por eso `saludo` conserva el valor `"hola"`.
-
-En cambio, algunos métodos de las listas modifican el objeto existente. Por
-ejemplo, `sort()` ordena la lista y devuelve `None`:
+`upper()` devuelve una cadena nueva y no modifica `saludo`; por eso la primera impresión sigue mostrando `"hola"`. En cambio, `sort()` modifica la lista sobre la que se llama y devuelve `None`. La función `sorted()` ordena los elementos y devuelve una lista nueva, sin cambiar la lista original:
 
 ```python
 numeros = [3, 1, 2]
 resultado = numeros.sort()
 print(numeros)   # [1, 2, 3]
 print(resultado) # None
-```
 
-Si se necesita obtener una lista ordenada sin modificar la original, se puede
-usar `sorted()`:
-
-```python
 numeros = [3, 1, 2]
 ordenados = sorted(numeros)
 print(numeros)   # [3, 1, 2]
 print(ordenados) # [1, 2, 3]
 ```
-
-Antes de usar un método, conviene comprobar si modifica el objeto o si devuelve
-uno nuevo.
 
 ```python
 if not nombre:
