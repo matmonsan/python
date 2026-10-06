@@ -2006,14 +2006,6 @@ Un aula tiene `12` plazas disponibles. Reserva `3` plazas y después cancela
 número final de plazas y, mediante una expresión condicional, muestra
 `"Hay plazas"` si queda alguna o `"Completo"` si no queda ninguna.
 
-### Actividad 9.5: gestionar permisos con bits
-
-Representa los permisos de lectura, escritura y ejecución con las máscaras
-`0b001`, `0b010` y `0b100`, respectivamente. Asigna inicialmente lectura y
-escritura. Comprueba con `&` si está habilitada la lectura, añade ejecución
-con `|=` y retira escritura con `permisos &= ~ESCRITURA`. Muestra el valor
-final y comprueba que conserva lectura y ejecución, pero no escritura.
-
 ---
 
 ## 10. Conversiones de tipo
@@ -2209,46 +2201,6 @@ repetidas se reemplazan por el último valor:
 print(set([1, 1, 2]))  # {1, 2}
 print(dict([("a", 1), ("a", 2)]))  # {"a": 2}
 ```
-
-### Actividades 9.1: conversiones y validación
-
-#### Actividad 1: calcular el precio de una compra
-
-Pide el precio de un producto y el número de unidades. Convierte las entradas
-a `float` e `int`, calcula el coste total y muéstralo con dos decimales.
-Prueba con un precio de `2.5` y `4` unidades: el total debe ser `10.00`.
-
-#### Actividad 2: calcular la media de tres notas
-
-Pide tres notas en una sola entrada, separadas por comas. Divide el texto con
-`split()`, elimina los espacios exteriores de cada elemento y convierte las
-notas a `float`. Calcula y muestra la media. Prueba con `7.5, 8, 9.5`: la
-media debe ser `8.333333333333334`. Muestra también el tipo de una de las
-notas convertidas.
-
-#### Actividad 3: validar una cantidad
-
-Pide una cantidad entera y conviértela con `int()`. Si la conversión falla,
-muestra un mensaje de error; si funciona, indica si la cantidad está entre
-`1` y `20`, incluidos ambos extremos. Prueba con `abc`, `0`, `12` y `4.5`.
-Controla el error de conversión con `try` y `except ValueError`.
-
-#### Actividad 4: limpiar una lista de nombres
-
-Parte del texto ` Ana, Luis, Ana, Marta `. Sepáralo por comas, elimina los
-espacios sobrantes de cada nombre y crea una lista sin duplicados. Muestra la
-lista ordenada alfabéticamente y el número de nombres distintos. El resultado
-debe contener `Ana`, `Luis` y `Marta`.
-
-#### Actividad 5: crear un diccionario de precios
-
-Parte de estos pares: `[("pan", "1.2"), ("leche", "1.5")]`. Convierte los
-pares en un diccionario cuyas claves sean los nombres de los productos y cuyos
-valores sean números `float`. Muestra el precio de cada producto y el tipo de
-uno de los valores. El precio del pan debe ser `1.2` y su tipo debe ser
-`float`.
-
----
 
 ## 11. Comentarios
 
