@@ -1573,6 +1573,20 @@ Python trabaja principalmente con enteros (`int`), números decimales
 un punto, no una coma: `3.5` es un número decimal, mientras que `3,5` crea una
 pareja de valores.
 
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `+` | Suma dos valores. | `print(17 + 5)  # 22` |
+| `-` | Resta el segundo valor al primero. | `print(17 - 5)  # 12` |
+| `*` | Multiplica dos valores. | `print(17 * 5)  # 85` |
+| `/` | Divide y devuelve un resultado decimal. | `print(17 / 5)  # 3.4` |
+| `//` | Divide y redondea el cociente hacia abajo. | `print(17 // 5)  # 3` |
+| `%` | Devuelve el resto de la división. | `print(17 % 5)  # 2` |
+| `**` | Eleva un número a una potencia. | `print(2 ** 3)  # 8` |
+| `round()` | Redondea un número a las cifras indicadas. | `print(round(4.3527, 2))  # 4.35` |
+| `abs()` | Devuelve el valor absoluto. | `print(abs(-7))  # 7` |
+| `max()` / `min()` | Devuelven el mayor o el menor de los valores. | `print(max(4, 8, 2))  # 8` y `print(min(4, 8, 2))  # 2` |
+| `sum()` | Suma los elementos de un iterable numérico. | `print(sum([1, 2, 3]))  # 6` |
+
 Los guiones bajos permiten mejorar la lectura de números largos sin cambiar su
 valor:
 
@@ -1700,6 +1714,15 @@ de mclibre.org.
 
 Devuelven `True` o `False`:
 
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `==` | Comprueba si dos valores son iguales. | `print(20 == 20)  # True` |
+| `!=` | Comprueba si dos valores son distintos. | `print(20 != 18)  # True` |
+| `>` | Comprueba si el valor de la izquierda es mayor. | `print(20 > 18)  # True` |
+| `>=` | Comprueba si el valor de la izquierda es mayor o igual. | `print(20 >= 20)  # True` |
+| `<` | Comprueba si el valor de la izquierda es menor. | `print(18 < 20)  # True` |
+| `<=` | Comprueba si el valor de la izquierda es menor o igual. | `print(20 <= 20)  # True` |
+
 ```python
 edad = 20
 print(edad == 20)
@@ -1711,6 +1734,12 @@ print(edad <= 20)
 ```
 
 ### 8.3 Operadores lógicos
+
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `and` | Devuelve el primer operando falso o el último si todos son verdaderos. | `print(True and False)  # False` |
+| `or` | Devuelve el primer operando verdadero o el último si todos son falsos. | `print(0 or "sí")  # sí` |
+| `not` | Invierte el valor lógico: `True` pasa a `False` y viceversa. | `print(not True)  # False` |
 
 ```python
 es_mayor = edad >= 18
@@ -1729,6 +1758,11 @@ nombre = entrada.strip() if entrada else "Anónimo"
 
 ### 8.4 Operadores de pertenencia
 
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `in` | Comprueba si un elemento está presente en una colección o como clave de un diccionario. | `print("uva" in ["pera", "uva"])  # True` |
+| `not in` | Comprueba si un elemento no está presente en una colección. | `print("manzana" not in ["pera", "uva"])  # True` |
+
 ```python
 frutas = ["pera", "uva"]
 print("uva" in frutas)
@@ -1743,6 +1777,11 @@ print("nombre" in persona)
 ```
 
 ### 8.5 Operadores de identidad
+
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `is` | Comprueba si dos referencias apuntan al mismo objeto. | `valor = None; print(valor is None)  # True` |
+| `is not` | Comprueba si dos referencias apuntan a objetos distintos. | `valor = 5; print(valor is not None)  # True` |
 
 ```python
 valor = None
@@ -1761,6 +1800,18 @@ print(primero is segundo)  # objetos distintos
 
 ### 8.6 Operadores de asignación aumentada
 
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `+=` | Suma el valor y guarda el resultado en la variable. | `contador = 0; contador += 1; print(contador)  # 1` |
+| `-=` | Resta el valor y guarda el resultado en la variable. | `contador = 2; contador -= 1; print(contador)  # 1` |
+| `*=` | Multiplica por el valor y guarda el resultado. | `contador = 3; contador *= 2; print(contador)  # 6` |
+| `/=` | Divide por el valor y guarda el resultado. | `total = 6; total /= 2; print(total)  # 3.0` |
+| `//=` | Divide hacia abajo y guarda el resultado. | `total = 7; total //= 2; print(total)  # 3` |
+| `%=` | Guarda el resto de la división. | `total = 7; total %= 2; print(total)  # 1` |
+| `**=` | Eleva a la potencia indicada y guarda el resultado. | `base = 3; base **= 2; print(base)  # 9` |
+| `&=` / `|=` / `^=` | Aplica AND, OR o XOR bit a bit y guarda el resultado. | `bits = 0b1100; bits &= 0b1010; print(bits)  # 8` |
+| `<<=` / `>>=` | Desplaza los bits a la izquierda o a la derecha y guarda el resultado. | `bits = 0b1100; bits <<= 1; print(bits)  # 24` |
+
 ```python
 contador = 0
 contador += 1
@@ -1773,6 +1824,15 @@ También existen `/=`, `//=`, `%=`, `**=`, `&=`, `|=`, `^=`, `<<=` y `>>=`.
 ### 8.7 Operadores bit a bit
 
 Se aplican a enteros representados en binario:
+
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `&` | Pone a `1` los bits que son `1` en ambos operandos. | `print(0b1100 & 0b1010)  # 8` |
+| `|` | Pone a `1` los bits que son `1` en al menos un operando. | `print(0b1100 | 0b1010)  # 14` |
+| `^` | Pone a `1` los bits que son distintos entre sí. | `print(0b1100 ^ 0b1010)  # 6` |
+| `~` | Invierte los bits del entero, según la representación de enteros de Python. | `print(~0b1100)  # -13` |
+| `<<` | Desplaza los bits a la izquierda. | `print(0b1100 << 1)  # 24` |
+| `>>` | Desplaza los bits a la derecha. | `print(0b1100 >> 1)  # 6` |
 
 ```python
 a = 0b1100
@@ -1801,6 +1861,18 @@ Python sigue una precedencia parecida a la matemática:
 8. `and`.
 9. `or`.
 
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| Paréntesis | Se evalúan primero y permiten agrupar operaciones. | `print((2 + 3) * 4)  # 20` |
+| `**` | Se evalúa antes que los signos unarios y las operaciones aritméticas siguientes. | `print(2 ** 3 * 2)  # 16` |
+| Signos unarios (`+`, `-`, `~`) | Se aplican al valor; van antes que `*`, `/`, `//`, `%`, `+` y `-` binarios. | `print(-2 ** 2, (-2) ** 2)  # -4 4` |
+| `*`, `/`, `//`, `%` | Se evalúan antes que la suma y la resta. | `print(10 + 6 // 2)  # 13` |
+| `+`, `-` | Se evalúan antes que las comparaciones. | `print(2 + 3 == 5)  # True` |
+| Comparaciones | Se evalúan antes que `not`, `and` y `or`. | `print(3 < 5 and 5 < 8)  # True` |
+| `not` | Se evalúa antes que `and` y `or`. | `print(not False and True)  # True` |
+| `and` | Se evalúa antes que `or`. | `print(True or False and False)  # True` |
+| `or` | Se evalúa después de `and`. | `print(False or True)  # True` |
+
 ```python
 resultado = 2 + 3 * 4       # 14
 resultado_claro = (2 + 3) * 4  # 20
@@ -1809,6 +1881,10 @@ resultado_claro = (2 + 3) * 4  # 20
 Los paréntesis son recomendables cuando mejoran la intención, incluso si no son estrictamente necesarios.
 
 ### 8.9 Expresiones condicionales
+
+| Operación | Qué hace | Ejemplo |
+| --- | --- | --- |
+| `valor_si_verdadero if condición else valor_si_falso` | Elige un valor según el resultado de la condición. | `edad = 17; tipo = "adulto" if edad >= 18 else "menor"; print(tipo)  # menor` |
 
 ```python
 edad = 17
@@ -1821,90 +1897,269 @@ Conviene reservarlas para condiciones simples. Una expresión condicional anidad
 
 Crea un programa que lea precio, unidades y porcentaje de descuento, calcule subtotal, descuento, IVA y total, y muestre cada importe con dos decimales. Añade una condición que indique si el pedido supera un umbral de envío gratuito.
 
+### Actividad 8.2: descomponer una duración
+
+Guarda en una variable una duración total de `7384` segundos. Calcula cuántas
+horas completas, minutos restantes y segundos restantes contiene, usando
+división entera (`//`) y resto (`%`). Muestra los tres resultados; deben ser
+`2` horas, `3` minutos y `4` segundos.
+
+### Actividad 8.3: comprobar el acceso a un aula
+
+Guarda si una persona está matriculada (`True`), si tiene autorización
+especial (`False`) y su edad (`17`). Puede acceder si está matriculada y
+tiene al menos `18` años, o si tiene autorización especial. Calcula y muestra
+el resultado como `True` o `False`. Cambia los valores para comprobar también
+un caso en el que sí pueda acceder.
+
+### Actividad 8.4: actualizar las plazas disponibles
+
+Un aula tiene `12` plazas disponibles. Reserva `3` plazas y después cancela
+`1` reserva, actualizando la variable con asignación aumentada. Muestra el
+número final de plazas y, mediante una expresión condicional, muestra
+`"Hay plazas"` si queda alguna o `"Completo"` si no queda ninguna.
+
+### Actividad 8.5: gestionar permisos con bits
+
+Representa los permisos de lectura, escritura y ejecución con las máscaras
+`0b001`, `0b010` y `0b100`, respectivamente. Asigna inicialmente lectura y
+escritura. Comprueba con `&` si está habilitada la lectura, añade ejecución
+con `|=` y retira escritura con `permisos &= ~ESCRITURA`. Muestra el valor
+final y comprueba que conserva lectura y ejecución, pero no escritura.
+
 ---
 
 ## 9. Conversiones de tipo
 
 [⬆ Volver al índice](#índice)
 
-La conversión transforma un valor en otro tipo cuando la operación es válida. La entrada de `input()` siempre devuelve una cadena, incluso si la persona escribe un número.
+Cada valor de Python tiene un tipo, que determina qué operaciones se pueden
+realizar con él. Convertir es crear un valor de otro tipo a partir del valor
+original. Algunas conversiones son directas; otras no son posibles o pueden
+perder información.
+
+La función `input()` siempre devuelve una cadena (`str`), aunque se escriban
+dígitos. Para hacer cálculos, hay que convertir esa cadena al tipo numérico
+adecuado:
 
 ```python
-edad_texto = input("Edad: ")
-edad = int(edad_texto)
+edad_texto = input("Edad: ")  # Por ejemplo, "20"
+edad = int(edad_texto)        # El entero 20
+print(edad + 1)
 ```
 
 ### 9.1 Conversiones habituales
 
+Estas funciones integradas crean valores de tipos habituales:
+
+| Operación | Qué hace | Ejemplo en Python |
+| --- | --- | --- |
+| `int(valor)` | Convierte a entero si el valor tiene un formato aceptado. | `edad = int("20")` |
+| `float(valor)` | Convierte a número decimal si el valor tiene un formato aceptado. | `precio = float("3.5")` |
+| `str(valor)` | Obtiene una representación textual del valor. | `mensaje = str(2025)` |
+| `bool(valor)` | Convierte el valor a `True` o `False` según si es verdadero o falso en contexto lógico. | `hay_datos = bool([1, 2])` |
+| `list(iterable)` | Crea una lista con los elementos del iterable. | `letras = list("sol")` |
+| `tuple(iterable)` | Crea una tupla con los elementos del iterable. | `coordenadas = tuple([3, 5])` |
+| `set(iterable)` | Crea un conjunto, eliminando los elementos duplicados. | `unicos = set([1, 1, 2])` |
+| `dict(iterable)` | Crea un diccionario a partir de pares clave-valor. | `edades = dict([("Ana", 20)])` |
+
 ```python
-print(int("42"))
-print(float("3.14"))
-print(str(2025))
-print(bool(1))
-print(list("abc"))
-print(tuple([1, 2]))
-print(set([1, 1, 2]))
+print(int("42"))                       # 42
+print(float("3.14"))                   # 3.14
+print(str(2025))                       # "2025"
+print(bool(1))                         # True
+print(list("abc"))                     # ["a", "b", "c"]
+print(tuple([1, 2]))                   # (1, 2)
+print(set([1, 1, 2]))                  # {1, 2}
+print(dict([("nombre", "Ana")]))       # {"nombre": "Ana"}
+```
+
+Una conversión numérica desde texto solo funciona si el contenido tiene un
+formato válido. En los literales decimales de Python se usa el punto:
+
+```python
+print(int("42"))       # Correcto
+print(float("3.14"))   # Correcto
+# int("cuarenta")      # ValueError
+# float("3,14")        # ValueError
 ```
 
 ### 9.2 Conversión explícita frente a implícita
 
-Python realiza alguna promoción numérica automáticamente:
+Una conversión **explícita** se escribe en el programa, por ejemplo con
+`int()` o `str()`. Python también realiza algunas conversiones **implícitas**
+cuando una operación las necesita. En una operación entre un entero y un
+decimal, el entero se convierte a `float`:
 
 ```python
-resultado = 5 + 2.5  # 7.5, un float
+resultado = 5 + 2.5
+print(resultado)        # 7.5
+print(type(resultado))  # <class 'float'>
 ```
 
-Pero no concatena automáticamente una cadena y un entero:
+Python no convierte automáticamente un texto en número ni un número en texto
+para concatenarlos. Hay que convertirlo o utilizar una cadena formateada:
 
 ```python
 edad = 25
-print("Edad: " + str(edad))
-print(f"Edad: {edad}")
+print("Edad: " + str(edad))  # Conversión explícita a str
+print(f"Edad: {edad}")       # Inserta el valor en una cadena formateada
+# print("Edad: " + edad)     # TypeError: str y int no se concatenan
 ```
+
+Conviene elegir el tipo según el uso: `int` para cantidades enteras,
+`float` para cálculos decimales y `str` para texto que se muestra o se procesa
+como caracteres.
 
 ### 9.3 Validar antes de convertir
 
-Comprobar un texto antes de convertirlo puede evitar errores simples:
+Una cadena que no representa un número válido provoca `ValueError` al
+convertirla. Se puede validar el texto antes, pero las comprobaciones como
+`isdigit()` tienen límites: por ejemplo, no reconocen un signo `-` como parte
+del número ni permiten decimales. Para una entrada general, lo habitual es
+intentar la conversión y controlar el error:
 
 ```python
 texto = input("Introduce un entero: ").strip()
-if texto.lstrip("+-").isdigit():
-	numero = int(texto)
-	print(numero * 2)
+try:
+    numero = int(texto)
+except ValueError:
+    print("El valor no es un entero válido")
 else:
-	print("El valor no es un entero válido")
+    print(numero * 2)
 ```
 
-Para casos reales, `try` y `except` son más generales porque aceptan formatos que una comprobación textual podría no cubrir bien.
+| Operación | Qué hace | Ejemplo en Python |
+| --- | --- | --- |
+| `texto.strip()` | Elimina espacios al principio y al final antes de convertir. | `numero = int("  42  ".strip())` |
+| `int(texto)` | Convierte el texto a entero; puede producir `ValueError`. | `numero = int("-8")` |
+| `float(texto)` | Convierte el texto a decimal; puede producir `ValueError`. | `precio = float("3.5")` |
+| `try` / `except ValueError` | Ejecuta una conversión y responde si el formato no es válido. | `try: numero = int(texto)` |
+
+Captura el error específico de conversión (`ValueError`) en lugar de ocultar
+cualquier error del programa. Si el usuario debe volver a intentarlo, se
+puede repetir la petición con un bucle:
+
+```python
+while True:
+    texto = input("Introduce un entero: ").strip()
+    try:
+        numero = int(texto)
+    except ValueError:
+        print("Escribe un número entero, por ejemplo -3 o 12.")
+    else:
+        break
+
+print(f"El doble es {numero * 2}")
+```
 
 ### 9.4 Conversiones con pérdida
 
+Algunas conversiones no conservan exactamente el valor original. `int()` al
+recibir un `float` descarta la parte decimal, acercándose a cero; no redondea:
+
 ```python
-print(int(3.99))  # 3, trunca la parte decimal
+print(int(3.99))   # 3
+print(int(-3.99))  # -3
 ```
 
-Si se necesita redondear se puede usar `round()`:
+Si se necesita redondear, se usa `round()`. En los casos exactamente
+intermedios, Python redondea al entero par más cercano:
 
 ```python
-print(round(3.99))
-print(round(3.14159, 2))
+print(round(3.99))       # 4
+print(round(3.14159, 2)) # 3.14
+print(round(2.5))        # 2
+print(round(3.5))        # 4
+```
+
+| Operación | Qué hace | Ejemplo en Python |
+| --- | --- | --- |
+| `int(decimal)` | Elimina la parte fraccionaria y aproxima hacia cero. | `print(int(-3.99))  # -3` |
+| `round(numero)` | Redondea al entero más cercano; en empates, al par más cercano. | `print(round(2.5))  # 2` |
+| `round(numero, cifras)` | Redondea conservando las cifras decimales indicadas. | `print(round(3.14159, 2))  # 3.14` |
+
+Los números `float` tienen precisión finita, por lo que ciertos decimales no
+se representan exactamente en memoria. El formato de salida permite controlar
+lo que se muestra, pero no cambia el valor almacenado:
+
+```python
+precio = 0.1 + 0.2
+print(precio)       # 0.30000000000000004
+print(f"{precio:.2f}")  # 0.30
 ```
 
 ### 9.5 Conversiones de estructuras
 
+Las conversiones entre colecciones dependen del iterable de origen. Por
+ejemplo, convertir directamente un texto en lista separa sus caracteres; para
+separar palabras o campos se usa `split()`:
+
+| Operación | Qué hace | Ejemplo en Python |
+| --- | --- | --- |
+| `list(texto)` | Crea una lista con un elemento por cada carácter. | `letras = list("sol")` |
+| `texto.split(separador)` | Divide el texto en partes usando el separador. | `partes = "a,b".split(",")` |
+| `tuple(iterable)` | Copia los elementos del iterable en una tupla. | `coordenadas = tuple([3, 5])` |
+| `set(iterable)` | Crea un conjunto sin duplicados; no conserva un orden definido. | `colores = set(["rojo", "rojo", "azul"])` |
+| `dict(pares)` | Construye un diccionario a partir de pares de dos elementos. | `datos = dict([("a", 1), ("b", 2)])` |
+
 ```python
-texto = "rojo,verde,azul"
-colores = [elemento.strip() for elemento in texto.split(",")]
-print(colores)
+texto = "rojo, verde, azul"
+partes = texto.split(",")
+colores = [elemento.strip() for elemento in partes]
+print(colores)  # ["rojo", "verde", "azul"]
 
 pares = [("a", 1), ("b", 2)]
 diccionario = dict(pares)
-print(diccionario)
+print(diccionario)  # {"a": 1, "b": 2}
 ```
 
-### Actividad 9.1: entrada robusta
+Al convertir a conjunto se eliminan los repetidos. Al convertir una lista a
+diccionario, cada elemento debe ser un par clave-valor válido; las claves
+repetidas se reemplazan por el último valor:
 
-Escribe una función `leer_entero(mensaje, minimo, maximo)` que repita la petición hasta recibir un entero dentro del intervalo. Debe controlar tanto entradas no numéricas como valores fuera del rango.
+```python
+print(set([1, 1, 2]))  # {1, 2}
+print(dict([("a", 1), ("a", 2)]))  # {"a": 2}
+```
+
+### Actividades 9.1: conversiones y validación
+
+#### Actividad 1: calcular el precio de una compra
+
+Pide el precio de un producto y el número de unidades. Convierte las entradas
+a `float` e `int`, calcula el coste total y muéstralo con dos decimales.
+Prueba con un precio de `2.5` y `4` unidades: el total debe ser `10.00`.
+
+#### Actividad 2: calcular la media de tres notas
+
+Pide tres notas en una sola entrada, separadas por comas. Divide el texto con
+`split()`, elimina los espacios exteriores de cada elemento y convierte las
+notas a `float`. Calcula y muestra la media. Prueba con `7.5, 8, 9.5`: la
+media debe ser `8.333333333333334`. Muestra también el tipo de una de las
+notas convertidas.
+
+#### Actividad 3: validar una cantidad
+
+Pide una cantidad entera y conviértela con `int()`. Si la conversión falla,
+muestra un mensaje de error; si funciona, indica si la cantidad está entre
+`1` y `20`, incluidos ambos extremos. Prueba con `abc`, `0`, `12` y `4.5`.
+Controla el error de conversión con `try` y `except ValueError`.
+
+#### Actividad 4: limpiar una lista de nombres
+
+Parte del texto ` Ana, Luis, Ana, Marta `. Sepáralo por comas, elimina los
+espacios sobrantes de cada nombre y crea una lista sin duplicados. Muestra la
+lista ordenada alfabéticamente y el número de nombres distintos. El resultado
+debe contener `Ana`, `Luis` y `Marta`.
+
+#### Actividad 5: crear un diccionario de precios
+
+Parte de estos pares: `[("pan", "1.2"), ("leche", "1.5")]`. Convierte los
+pares en un diccionario cuyas claves sean los nombres de los productos y cuyos
+valores sean números `float`. Muestra el precio de cada producto y el tipo de
+uno de los valores. El precio del pan debe ser `1.2` y su tipo debe ser
+`float`.
 
 ---
 
