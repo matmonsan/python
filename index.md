@@ -6,16 +6,16 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
 ## Índice
 
 1. [Introducción y objetivos](#1-introducción-y-objetivos)
-2. [Identificación de los elementos de un programa](#2-identificación-de-los-elementos-de-un-programa-informático)
-3. [Estructura y bloques fundamentales](#3-estructura-y-bloques-fundamentales)
-4. [Variables](#4-variables)
-5. [Tipos de datos](#5-tipos-de-datos)
-6. [Literales](#6-literales)
-7. [Constantes](#7-constantes)
-8. [Operadores y expresiones](#8-operadores-y-expresiones)
-9. [Conversiones de tipo](#9-conversiones-de-tipo)
-10. [Comentarios](#10-comentarios)
-11. [Entornos integrados de desarrollo](#11-entornos-integrados-de-desarrollo)
+2. [Entornos integrados de desarrollo](#2-entornos-integrados-de-desarrollo)
+3. [Identificación de los elementos de un programa](#3-identificación-de-los-elementos-de-un-programa-informático)
+4. [Estructura y bloques fundamentales](#4-estructura-y-bloques-fundamentales)
+5. [Variables](#5-variables)
+6. [Tipos de datos](#6-tipos-de-datos)
+7. [Literales](#7-literales)
+8. [Constantes](#8-constantes)
+9. [Operadores y expresiones](#9-operadores-y-expresiones)
+10. [Conversiones de tipo](#10-conversiones-de-tipo)
+11. [Comentarios](#11-comentarios)
 12. [Estructuras de control](#12-uso-de-estructuras-de-control)
 13. [Selección y estructuras de selección](#13-selección-y-estructuras-de-selección)
 14. [Repetición y estructuras de repetición](#14-repetición-y-estructuras-de-repetición)
@@ -44,6 +44,7 @@ Este documento presenta los fundamentos necesarios para leer, escribir, ejecutar
 
 Contenidos clave:
 
+- Entornos integrados de desarrollo
 - Variables
 - Tipos de datos
 - Literales
@@ -51,7 +52,6 @@ Contenidos clave:
 - Operadores y expresiones
 - Conversiones de tipo
 - Comentarios
-- Entornos integrados de desarrollo
 - Estructuras de control
 - Selección
 - Repetición
@@ -103,7 +103,94 @@ print("Hola, Python")
 
 ---
 
-## 2. Identificación de los elementos de un programa informático
+## 2. Entornos integrados de desarrollo
+
+[⬆ Volver al índice](#índice)
+
+Un IDE (Integrated Development Environment, entorno integrado de desarrollo) reúne herramientas para escribir, ejecutar y mantener programas. Para Python, opciones habituales son Visual Studio Code, PyCharm, IDLE y JupyterLab.
+
+### 2.1 Componentes de un IDE
+
+Un IDE suele incluir:
+
+- Editor con resaltado de sintaxis.
+- Autocompletado y navegación de símbolos.
+- Terminal integrada.
+- Ejecución y configuración de programas.
+- Depurador con puntos de interrupción.
+- Integración con Git.
+- Diagnósticos de sintaxis y tipos.
+- Herramientas de formato y análisis estático.
+- Explorador de archivos y gestión de entornos.
+
+### 2.2 Flujo de trabajo en Visual Studio Code
+
+Un flujo básico es:
+
+1. Abrir la carpeta del proyecto.
+2. Instalar la extensión de Python de Microsoft.
+3. Seleccionar un intérprete con `Python: Select Interpreter`.
+4. Crear un archivo como `main.py`.
+5. Escribir el programa y guardarlo.
+6. Ejecutarlo desde el botón de ejecución o la terminal.
+7. Revisar diagnósticos y corregirlos.
+8. Ejecutar pruebas y depurar con puntos de interrupción.
+
+### 2.3 Entornos virtuales
+
+Un entorno virtual aísla dependencias de un proyecto:
+
+```bash
+python -m venv .venv
+```
+
+Activación en Windows PowerShell:
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+Activación en macOS o Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Después se pueden instalar paquetes sin afectar a otras aplicaciones:
+
+```bash
+python -m pip install nombre-paquete
+```
+
+Es buena práctica guardar dependencias:
+
+```bash
+python -m pip freeze > requirements.txt
+```
+
+### 2.4 Formateo y análisis
+
+Herramientas populares son `black` para formato y `ruff` para análisis y estilo. Si se utilizan en un proyecto, deben configurarse y ejecutarse de forma consistente. El objetivo no es obedecer mecánicamente a una herramienta, sino reducir errores y discusiones de estilo.
+
+### 2.5 Ejecutar desde la terminal
+
+```bash
+python main.py
+```
+
+Ejecutar mediante `python -m` es útil para módulos y paquetes:
+
+```bash
+python -m mi_paquete
+```
+
+### Actividad 2.1: preparar un entorno
+
+Crea una carpeta de proyecto, genera `.venv`, selecciona el intérprete en el IDE, crea `main.py`, ejecuta un saludo y documenta en un `README.md` los pasos de instalación y ejecución.
+
+---
+
+## 3. Identificación de los elementos de un programa informático
 
 [⬆ Volver al índice](#índice)
 
@@ -126,7 +213,7 @@ graph TD
 <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 <script>mermaid.initialize({ startOnLoad: true });</script>
 
-### 2.1 Código fuente
+### 3.1 Código fuente
 
 El código fuente es el texto que escribe la persona programadora. En Python suele guardarse en archivos con extensión `.py`:
 
@@ -138,7 +225,7 @@ print(mensaje)
 
 El intérprete de Python lee ese código, comprueba su sintaxis y ejecuta las instrucciones. El código fuente debe ser comprensible para las personas y válido para el intérprete.
 
-### 2.2 Instrucciones
+### 3.2 Instrucciones
 
 Una instrucción es una orden que puede producir un efecto. Algunos ejemplos son una asignación, una llamada a función o una sentencia condicional:
 
@@ -154,7 +241,7 @@ Python utiliza el salto de línea para separar normalmente las instrucciones. Ta
 
 Las tabulaciones (o su equivalente en espacios) no separan instrucciones, sino que definen la indentación: el nivel de sangrado que delimita los bloques de código (por ejemplo, el cuerpo de un `if`, un `for` o una función). A diferencia de otros lenguajes que usan llaves `{}`, en Python la indentación es obligatoria y forma parte de la sintaxis. Se recomienda usar siempre 4 espacios y no mezclar tabulaciones con espacios, ya que Python puede rechazar el código con un error de indentación (`IndentationError` o `TabError`).
 
-### 2.3 Identificadores
+### 3.3 Identificadores
 
 Los identificadores son nombres que designan variables, funciones, clases, módulos u otros elementos. Sus reglas principales son:
 
@@ -172,7 +259,7 @@ importe = precio_unitario * cantidad
 
 Conviene elegir nombres que expresen el significado: `edad_usuario` es preferible a `x` cuando la variable representa una edad.
 
-### 2.4 Palabras reservadas
+### 3.4 Palabras reservadas
 
 Python reserva determinadas palabras para su propia sintaxis. Se pueden consultar con:
 
@@ -186,7 +273,7 @@ Entre ellas están `and`, `as`, `assert`, `break`, `class`, `continue`, `def`, `
 
 El listado completo y actualizado de palabras reservadas de Python 3 puede consultarse en la [documentación oficial de Python](https://docs.python.org/3/reference/lexical_analysis.html#keywords).
 
-### 2.5 Entrada, procesamiento y salida
+### 3.5 Entrada, procesamiento y salida
 
 Un esquema muy común es **entrada -> procesamiento -> salida**:
 
@@ -206,7 +293,7 @@ print(f"El área es {area:.2f}")
 - **Procesamiento:** cálculos, comparaciones, transformaciones y decisiones.
 - **Salida:** información mostrada, guardada o enviada a otro sistema.
 
-### 2.6 Sintaxis y semántica
+### 3.6 Sintaxis y semántica
 
 La **sintaxis** son las reglas que definen si el texto de un programa está bien formado, es decir, si el intérprete es capaz de leerlo. Determina cosas como el orden de las palabras clave, el uso de paréntesis, comillas o dos puntos, y la indentación. Un fallo de sintaxis impide que el programa llegue a ejecutarse: el intérprete se detiene y muestra un `SyntaxError` antes de procesar ninguna instrucción.
 
@@ -236,7 +323,7 @@ resultado = "10" * 3
 print(resultado)    # produce "101010", no 30
 ```
 
-### 2.7 Errores de un programa
+### 3.7 Errores de un programa
 
 Los errores más habituales son:
 
@@ -260,7 +347,7 @@ lado = 5
 perimetro_incorrecto = lado * lado
 ```
 
-### Actividad 2.1: reconocer elementos
+### Actividad 3.1: reconocer elementos
 
 Analiza el siguiente código e identifica variables, literales, operadores, funciones, entrada, procesamiento y salida:
 
@@ -272,11 +359,11 @@ total = precio * unidades * (1 - descuento)
 print(f"Total: {total:.2f}")
 ```
 
-### Actividad 2.2: identificadores válidos
+### Actividad 3.2: identificadores válidos
 
 Indica cuáles de los siguientes nombres son identificadores válidos en Python y, para los que no lo sean, explica por qué: `total_1`, `1total`, `Total`, `for`, `_precio`, `precio-unitario`, `precio_unitario_€`, `class`, `Class`, `__init__`, `2do_intento`, `nombre completo`, `número_de_cuenta`, `total__final`, `def_valores`, `True`, `variable-2`, `_`, `mi.variable`, `while1`.
 
-### Actividad 2.3: entrada, procesamiento y salida
+### Actividad 3.3: entrada, procesamiento y salida
 
 Observa el siguiente código y clasifica cada línea como entrada, procesamiento o salida escribiéndolo en un comentario al lado. Algunas líneas combinan más de una categoría y una de ellas no encaja en ninguna de las tres:
 
@@ -299,7 +386,7 @@ print(f"Superficie: {superficie:.2f}")
 print(f"Superficie con recargo: {superficie_con_recargo:.2f}")
 ```
 
-### Actividad 2.4: depurar tipos de error
+### Actividad 3.4: depurar tipos de error
 
 El siguiente código mezcla varios problemas: errores de sintaxis, de indentación/tabulación, de ejecución y errores lógicos. Localízalos todos, indica de qué tipo es cada uno y corrígelos:
 
@@ -333,19 +420,19 @@ Pistas:
 - Una llamada a `print` referencia una variable que no existe con ese nombre.
 - Una de las funciones falla con una entrada concreta aunque el código sea sintácticamente correcto.
 
-### Actividad 2.5: esquema propio
+### Actividad 3.5: esquema propio
 
-A partir del esquema de la sección 2, elabora tu propio diagrama (en papel o en Mermaid) que represente los elementos de un programa distinto, por ejemplo uno que calcule el precio final de una compra con IVA. Incluye al menos: identificadores, tipos de datos, literales, operadores y estructuras de control.
+A partir del esquema de la sección 3, elabora tu propio diagrama (en papel o en Mermaid) que represente los elementos de un programa distinto, por ejemplo uno que calcule el precio final de una compra con IVA. Incluye al menos: identificadores, tipos de datos, literales, operadores y estructuras de control.
 
 ---
 
-## 3. Estructura y bloques fundamentales
+## 4. Estructura y bloques fundamentales
 
 [⬆ Volver al índice](#índice)
 
 Python utiliza la indentación para delimitar bloques de código. Esto diferencia a Python de lenguajes que emplean llaves, y hace que la presentación visual del programa forme parte de su sintaxis.
 
-### 3.1 Indentación
+### 4.1 Indentación
 
 Después de una línea que termina en dos puntos, las instrucciones del bloque se escriben indentadas:
 
@@ -365,7 +452,7 @@ if True:
 	print(mensaje)
 ```
 
-### 3.2 Bloques anidados
+### 4.2 Bloques anidados
 
 Un bloque puede contener otro bloque. Cada nivel añade una indentación:
 
@@ -382,7 +469,7 @@ if temperatura > 20:
 
 Cuando hay muchos niveles anidados, suele ser mejor reorganizar la lógica con condiciones compuestas o funciones.
 
-### 3.3 Módulos y función `main`
+### 4.3 Módulos y función `main`
 
 > **Idea clave:** un archivo Python puede ser un programa que se ejecuta o un
 > módulo que otro archivo importa. `main()` organiza la ejecución y evita que la
@@ -499,7 +586,7 @@ Al ejecutar `python programa.py`:
 > condición. Así la interacción se inicia cada vez que otro archivo importa el
 > módulo.
 
-### 3.4 Funciones como bloques reutilizables
+### 4.4 Funciones como bloques reutilizables
 
 Una función agrupa instrucciones con un nombre, recibe parámetros y puede
 devolver un resultado. Es una forma de convertir una tarea compleja o repetida
@@ -518,7 +605,7 @@ print(iva)
 Las funciones reducen la duplicación, facilitan las pruebas y permiten dividir
 un problema grande en tareas pequeñas.
 
-### 3.5 Alcance de los nombres
+### 4.5 Alcance de los nombres
 
 Una variable creada dentro de una función suele ser local a esa función:
 
@@ -534,7 +621,7 @@ print(resultado)
 
 Es preferible pasar datos como argumentos y devolver resultados, en lugar de depender de variables globales.
 
-### 3.6 Nombres de archivos de programas
+### 4.6 Nombres de archivos de programas
 
 Los archivos de Python deben guardarse con la extensión `.py`. Para que sean
 fáciles de localizar y entender, se recomienda:
@@ -560,7 +647,7 @@ La plantilla con `main()` mostrada en la sección anterior y esta convención de
 nombres siguen las recomendaciones de [Programa básico de Python de
 mclibre.org](https://www.mclibre.org/consultar/python/lecciones/python-plantilla.html).
 
-### 3.7 Cómo se ejecuta un programa Python
+### 4.7 Cómo se ejecuta un programa Python
 
 Un programa Python se procesa de arriba abajo. Esta idea explica muchos errores
 de principiante: una función debe estar definida antes de llamarse, una variable
@@ -591,7 +678,7 @@ La definición de `duplicar` no ejecuta todavía su cuerpo: crea la función. El
 cuerpo se ejecuta cuando aparece `duplicar(4)`. Distinguir entre definir y
 llamar es fundamental para organizar programas en funciones.
 
-### 3.8 La indentación como parte de la sintaxis
+### 4.8 La indentación como parte de la sintaxis
 
 En muchos lenguajes las llaves indican dónde empieza y termina un bloque. En
 Python esa información la aporta la indentación. No es solo formato visual:
@@ -619,7 +706,7 @@ está al mismo nivel de indentación. Para evitar errores:
 - reduce la profundidad extrayendo una función cuando un bloque sea difícil de
   leer.
 
-### 3.9 Diseñar un bloque antes de escribirlo
+### 4.9 Diseñar un bloque antes de escribirlo
 
 Antes de codificar conviene expresar cada bloque como una responsabilidad. Un
 programa que calcula una compra puede dividirse en `leer_precio()`,
@@ -649,7 +736,7 @@ if __name__ == "__main__":
 acumule toda la lógica. Si aparece una nueva tarea, normalmente puede extraerse
 como otra función pequeña y comprobable.
 
-### 3.10 Parámetros, argumentos y valores devueltos
+### 4.10 Parámetros, argumentos y valores devueltos
 
 El parámetro es el nombre de la definición; el argumento es el valor concreto de
 la llamada. En `calcular_total(precio, unidades)`, los parámetros son `precio` y
@@ -675,7 +762,7 @@ Una función que calcula debería devolver el resultado; quien la llama decidir�
 si lo muestra, lo guarda o lo utiliza en otra operación. Esta separación permite
 reutilizar el código en una consola, una prueba automática o una interfaz.
 
-### 3.11 Alcance, flujo y errores habituales
+### 4.11 Alcance, flujo y errores habituales
 
 El alcance indica dónde se puede utilizar un nombre. Los nombres locales nacen
 dentro de una función y dejan de estar disponibles al terminar su ejecución.
@@ -699,7 +786,7 @@ importar un módulo por no usar `main()`. Para localizar el problema, prueba
 primero cada función con datos sencillos, comprueba qué recibe y qué devuelve, y
 añade complejidad solo después de validar el bloque pequeño.
 
-### 3.12 Videotutoriales recomendados
+### 4.12 Videotutoriales recomendados
 
 Aquí algunos videotutoriales en español:
 
@@ -711,7 +798,7 @@ Aquí algunos videotutoriales en español:
 > **Nivel inicial:** estas actividades no piden crear un programa desde cero.
 > Primero se observa, se ordena, se completa y se explica.
 
-### Actividad 3.1: reconocer los bloques
+### Actividad 4.1: reconocer los bloques
 
 Observa este ejemplo y colorea o marca cada parte con una letra:
 
@@ -734,7 +821,7 @@ Relaciona cada letra con una descripción:
 Después responde: ¿qué líneas se agrupan por la indentación? ¿Qué ocurriría si
 la línea `print(mensaje)` se escribiera sin sangrado?
 
-### Actividad 3.2: ordenar un programa
+### Actividad 4.2: ordenar un programa
 
 Las siguientes tarjetas forman un programa, pero están desordenadas. Numéralas
 del 1 al 6 para indicar el orden correcto. No es necesario escribir código.
@@ -751,7 +838,7 @@ del 1 al 6 para indicar el orden correcto. No es necesario escribir código.
 Explica por qué no tendría sentido llamar a `saludar` antes de definirla. Como
 ampliación, dibuja flechas entre las tarjetas que dependen unas de otras.
 
-### Actividad 3.3: leer la indentación
+### Actividad 4.3: leer la indentación
 
 En ambos fragmentos, `hay_entradas` vale `True`. Los dos fragmentos son válidos,
 pero la última instrucción no pertenece al mismo bloque en ambos casos. Para
@@ -776,7 +863,7 @@ Después marca las instrucciones que pertenecen al `if` en cada fragmento.
 Recuerda: una instrucción indentada bajo el `if` pertenece a su bloque; una
 instrucción que vuelve al margen izquierdo está fuera de él.
 
-### Actividad 3.4: programa o módulo
+### Actividad 4.4: programa o módulo
 
 Una pequeña empresa de asistencia informática quiere un programa de consola
 para preparar el presupuesto de una reparación. El programa debe pedir el
@@ -803,7 +890,7 @@ Al terminar, explica por qué no conviene escribir todo el programa en un solo
 archivo. Los módulos de esta actividad son archivos Python que contienen código;
 no se pide guardar datos en ficheros ni usar bases de datos.
 
-### Actividad 3.5: extraer funciones de un enunciado
+### Actividad 4.5: extraer funciones de un enunciado
 
 Un taller de asistencia informática quiere un programa que prepare el
 presupuesto de una reparación. El programa debe pedir el nombre del cliente,
@@ -827,7 +914,7 @@ en que llamaría a las demás. Puede haber distintas soluciones: cada función
 debe encargarse de una tarea concreta y el conjunto debe resolver todo el
 enunciado.
 
-### Actividad 3.6: completar una plantilla con pistas
+### Actividad 4.6: completar una plantilla con pistas
 
 Completa los seis huecos, identificados con letras, usando estas palabras:
 `def`, `main`, `return`, `if` y `print`. Algunas palabras se necesitan más de
@@ -854,7 +941,7 @@ Después de completar la plantilla:
 3. Sigue la llamada a `saludar("Ana")` y escribe el texto que termina mostrando
    `print()`.
 
-### Actividad 3.7: diseñar las llamadas entre módulos
+### Actividad 4.7: diseñar las llamadas entre módulos
 
 Usa la propuesta de módulos de la actividad 3.4 para diseñar cómo colaboran.
 Escribe el nombre de una función que podría realizar cada tarea y qué
@@ -874,7 +961,7 @@ No hace falta escribir el programa completo.
 
 ---
 
-## 4. Variables
+## 5. Variables
 
 [⬆ Volver al índice](#índice)
 
@@ -886,7 +973,7 @@ En Matemáticas, una variable representa una cantidad, conocida o desconocida, d
 
 En programación, una variable es un nombre al que se asigna un valor para poder utilizarlo más adelante. El signo `=` indica una **asignación**, no una igualdad matemática: Python calcula lo que aparece a la derecha y asigna el resultado al nombre de la izquierda. Por eso `total = precio * unidades` se lee como «calcula el producto y guarda el resultado en `total`», no como una ecuación que haya que resolver.
 
-### 4.1 Asignación
+### 5.1 Asignación
 
 Para crear una variable, escribe su nombre, el signo `=` y el valor que quieres asignarle:
 
@@ -926,7 +1013,7 @@ NameError: name 'Pepe' is not defined
 
 Las comillas marcan dónde empieza y termina el texto. En cambio, sin comillas, `Pepe` no es texto: Python intenta encontrar una variable llamada `Pepe`.
 
-### 4.2 Reasignación
+### 5.2 Reasignación
 
 Se puede asignar un valor nuevo a una variable. La asignación nueva reemplaza el valor anterior:
 
@@ -947,7 +1034,7 @@ print(puntuacion)  # 15
 La expresión de la derecha se calcula primero. Por eso `puntuacion = puntuacion + 5` significa «toma el valor actual, súmale 5 y asigna el resultado otra vez a `puntuacion`».
 Esta forma se utiliza para llevar una cuenta acumulada, actualizar una puntuación o aumentar un importe. El nombre debe tener un valor antes de poder aparecer en la expresión de la derecha.
 
-### 4.3 Intercambiar valores
+### 5.3 Intercambiar valores
 
 Para intercambiar los valores de dos variables, se puede utilizar una tercera variable temporal:
 
@@ -966,7 +1053,7 @@ print(segundo)  # 5
 La variable `temporal` evita perder uno de los valores. Si se escribiera primero `primero = segundo`, el valor inicial de `primero` se reemplazaría; al hacer después `segundo = primero`, ambas variables acabarían valiendo lo mismo. La variable temporal conserva el primer valor mientras se realizan las otras asignaciones.
 Para separar palabras, se recomienda usar guiones bajos, por ejemplo `fecha_de_nacimiento`. Esta forma se llama `snake_case` y facilita la lectura. También se pueden usar mayúsculas dentro del nombre, pero Python distingue entre ellas: `precio` y `Precio` no son el mismo nombre.
 
-### 4.4 Nombres de variables
+### 5.4 Nombres de variables
 
 Elige nombres que describan el valor, como `precio` o `numero_de_intentos`. Las reglas básicas son:
 
@@ -985,7 +1072,7 @@ numero_de_intentos = 3
 
 Conviene evitar nombres demasiado cortos o que no expliquen el dato. Por ejemplo, `p` puede ser difícil de entender, mientras que `precio` indica claramente qué representa. El nombre no cambia el valor ni el resultado del cálculo: solo ayuda a quien lee el programa.
 
-### 4.5 Asignaciones aumentadas
+### 5.5 Asignaciones aumentadas
 
 Las asignaciones aumentadas actualizan una variable a partir de su valor actual. Se escriben con un operador aritmético seguido de `=`:
 
@@ -999,7 +1086,7 @@ En la primera línea, `contador += 1` suma uno al valor actual. En la segunda, `
 
 Python no tiene operadores `++` ni `--`; para aumentar o reducir una unidad se usa `+= 1` o `-= 1`. La variable debe haberse definido antes de aplicar una asignación aumentada.
 
-### 4.6 Constantes
+### 5.6 Constantes
 
 Python no tiene una instrucción que impida modificar una variable. Para indicar que un valor no debería cambiar, se escribe su nombre en mayúsculas y se evita reasignarlo:
 
@@ -1018,7 +1105,7 @@ precio_final = 100 * (1 + IVA)
 
 Por convención, el nombre de una constante se escribe en mayúsculas y con guiones bajos entre palabras. La persona que programa debe respetar esa convención y no reasignarle otro valor.
 
-### 4.7 Borrar una variable
+### 5.7 Borrar una variable
 
 La instrucción `del` elimina un nombre. Si se intenta utilizar después, Python produce un `NameError`:
 
@@ -1030,7 +1117,7 @@ del nombre
 
 `del` no es necesario para cambiar el valor: para eso basta con hacer otra asignación. Se puede usar cuando se quiere dejar de utilizar un nombre. Después de borrarlo, hay que asignarle un valor de nuevo antes de volver a consultarlo.
 
-### 4.8 Error frecuente: usar un nombre antes de asignarlo
+### 5.8 Error frecuente: usar un nombre antes de asignarlo
 
 Una variable debe recibir un valor antes de utilizarse:
 
@@ -1042,42 +1129,42 @@ print(ciudad)
 
 Un `NameError` también puede deberse a un error al escribir el nombre. Python distingue mayúsculas y minúsculas, así que `ciudad`, `Ciudad` y `CIUDAD` se interpretan como nombres diferentes. Para localizar el problema, compara el nombre de la asignación con el de la instrucción que lo utiliza.
 
-### Actividad 4.1: ficha de variables
+### Actividad 5.1: ficha de variables
 
 Crea un programa que asigne un nombre y una edad a dos variables. Muestra ambos
 valores. Después cambia la edad y vuelve a mostrarla.
 
-### Actividad 4.2: reasignar variables
+### Actividad 5.2: reasignar variables
 
 Asigna `10` a `a` y luego asigna el valor de `a` a `b`. Muestra ambas variables.
 Cambia `a` a `20` y vuelve a mostrar las dos. Explica por qué `b` sigue valiendo
 `10`.
 
-### Actividad 4.3: calcular y actualizar un valor
+### Actividad 5.3: calcular y actualizar un valor
 
 Asigna un precio y una cantidad a dos variables. Calcula el importe en una
 tercera variable y muéstralo. Aumenta la cantidad con `+=` y calcula de nuevo el
 importe.
 
-### Actividad 4.4: elegir nombres válidos
+### Actividad 5.4: elegir nombres válidos
 
 Indica cuáles de estos nombres se pueden usar como variables y explica por qué:
 `2precio`, `precio total`, `for`, `precio_total` y `precioUnitario`. Después
 elige nombres descriptivos para guardar el precio y la cantidad de un producto.
 
-### Actividad 4.5: conversor de distancia
+### Actividad 5.5: conversor de distancia
 
 Asigna una distancia en kilómetros a una variable y calcula su equivalencia en
 metros en otra variable. Muestra ambos valores con `print()`. Después modifica la
 distancia en kilómetros y vuelve a calcular la equivalencia en metros.
 
-### Actividad 4.6: constante por convención
+### Actividad 5.6: constante por convención
 
 Define `MAXIMO_INTENTOS` con el valor `3`. Explica por qué se escribe en
 mayúsculas y qué ocurriría si después le asignas el valor `5`. ¿Python impide el
 cambio o depende de la persona que escribe el programa respetar la convención?
 
-### Actividad 4.7: seguir las asignaciones
+### Actividad 5.7: seguir las asignaciones
 
 Sin ejecutar el código, completa el valor de `total` después de cada instrucción.
 Después comprueba tus respuestas ejecutándolo:
@@ -1097,7 +1184,7 @@ total = total - descuento
 
 Explica por qué la última instrucción utiliza el valor actual de `total`.
 
-### Actividad 4.8: corregir nombres
+### Actividad 5.8: corregir nombres
 
 En cada línea hay un problema con el nombre utilizado. Explica el error y
 reescribe la instrucción correctamente:
@@ -1112,14 +1199,14 @@ print(Ciudad)
 
 En la última línea, utiliza el nombre que se definió en la instrucción anterior.
 
-### Actividad 4.9: actualizar cantidades
+### Actividad 5.9: actualizar cantidades
 
 Empieza con `saldo = 50`. Aplica, en orden, estas operaciones usando
 asignaciones aumentadas: ingresa 20, gasta 15 y duplica el saldo restante.
 Escribe el saldo después de cada operación y comprueba el resultado con
 `print()`.
 
-### Actividad 4.10: preparar un recibo
+### Actividad 5.10: preparar un recibo
 
 Define variables para el nombre de un producto, su precio y la cantidad
 comprada. Calcula el subtotal y el total con IVA, usando una constante llamada
@@ -1128,13 +1215,13 @@ cantidad y vuelve a calcular los importes.
 
 ---
 
-## 5. Tipos de datos
+## 6. Tipos de datos
 
 [⬆ Volver al índice](#índice)
 
 El tipo de dato indica qué clase de valor representa un dato y qué operaciones tienen sentido para él. En este apartado se explican los tipos que se utilizan en los ejemplos: valores lógicos, números, texto y varias formas de agrupar valores.
 
-### 5.1 Booleanos: `bool`
+### 6.1 Booleanos: `bool`
 
 Un booleano representa un resultado que solo puede ser `True` (verdadero) o `False` (falso). Las comparaciones producen valores booleanos. Se pueden guardar en variables y utilizar en condiciones para decidir qué instrucciones ejecutar.
 
@@ -1148,7 +1235,7 @@ print(type(es_mayor)) # <class 'bool'>
 
 Así, `bool` sirve para expresar el resultado de una pregunta que admite una respuesta verdadera o falsa, como comprobar si se cumple una comparación.
 
-### 5.2 Enteros: `int`
+### 6.2 Enteros: `int`
 
 El tipo `int` representa números sin parte decimal; puede ser positivo, negativo o cero. Los ejemplos muestran distintas maneras de escribirlos: `150` y `-3` están en decimal, mientras que `0b`, `0o` y `0x` indican, respectivamente, que el número está escrito en binario, octal o hexadecimal. La base cambia la escritura, no el hecho de que el valor sea un entero. Por ejemplo, `0b1010` representa diez y tanto `0o52` como `0x2A` representan cuarenta y dos.
 
@@ -1160,7 +1247,7 @@ octal = 0o52
 hexadecimal = 0x2A
 ```
 
-### 5.3 Reales: `float`
+### 6.3 Reales: `float`
 
 El tipo `float` representa números que pueden tener parte decimal. En Python, la parte decimal se escribe después de un punto, como en `-15.75`. Internamente estos números se representan en binario, por lo que algunos valores decimales no se almacenan con exactitud y ciertos cálculos pueden mostrar una pequeña diferencia, como `0.1 + 0.2`.
 
@@ -1178,7 +1265,7 @@ Debido a la representación binaria de los números de punto flotante, algunos
 resultados son aproximados. Para comparar importes decimales exactos, puede
 ser necesario utilizar el módulo `decimal`.
 
-### 5.4 Cadenas: `str`
+### 6.4 Cadenas: `str`
 
 El tipo `str` representa texto como una secuencia de caracteres. Las comillas simples o dobles delimitan una cadena de una línea; las comillas triples permiten escribirla en varias líneas. Una cadena es inmutable: sus caracteres no se cambian directamente y los métodos que transforman el texto devuelven una cadena nueva.
 
@@ -1231,7 +1318,7 @@ Cada método se llama escribiendo un punto después de la cadena o de la variabl
 | `endswith(texto)` | Comprueba si la cadena termina con el texto indicado. | `"Python".endswith("on")` da `True`. |
 | `format(valores)` | Inserta valores en los huecos `{}` de una cadena. | `"Hola, {}".format("Ada")` da `"Hola, Ada"`. |
 
-### 5.5 Listas: `list`
+### 6.5 Listas: `list`
 
 Una lista (`list`) reúne varios elementos en un orden concreto y permite cambiar su contenido. En el ejemplo, `append("kiwi")` añade un elemento al final; `frutas[0] = "plátano"` reemplaza el de la primera posición. La primera posición tiene índice `0`. Las listas pueden contener valores de distintos tipos, aunque suele ser más claro agrupar valores que cumplen una misma función.
 
@@ -1270,7 +1357,7 @@ print(len(numeros))  # 4
 print(sum(numeros))  # 15
 ```
 
-### 5.6 Array: `array.array`
+### 6.6 Array: `array.array`
 
 `array.array` es el tipo de array que proporciona el módulo estándar `array`. Se parece a una lista porque mantiene los valores ordenados y permite modificarlos, pero todos sus elementos deben ser del mismo tipo numérico. Al crearlo se indica el tipo mediante un código: `"i"` para enteros y `"f"` para números de punto flotante. Esta restricción permite almacenar secuencias numéricas de forma compacta.
 
@@ -1301,7 +1388,7 @@ temperaturas = array("f", [18.5, 21.0, 19.5])
 
 En ambos casos se puede consultar un elemento por su posición, añadir valores y cambiar un elemento. La diferencia no es que uno sustituya al otro: usa una lista como opción general y elige `array.array` cuando la restricción a un único tipo numérico y el almacenamiento compacto sean útiles. La [documentación oficial del módulo `array`](https://docs.python.org/3/library/array.html) contiene los códigos disponibles.
 
-### 5.7 Tuplas: `tuple`
+### 6.7 Tuplas: `tuple`
 
 Una tupla (`tuple`) agrupa valores en un orden concreto, como una lista, pero no permite cambiar sus elementos una vez creada. En el ejemplo, `punto` contiene dos valores y la asignación `x, y = punto` guarda el primero en `x` y el segundo en `y`.
 
@@ -1316,7 +1403,7 @@ La coma es la que indica que `(7,)` es una tupla de un único elemento. Sin ella
 un_elemento = (7,)
 ```
 
-### 5.8 Conjuntos: `set`
+### 6.8 Conjuntos: `set`
 
 Un conjunto (`set`) agrupa elementos sin repetirlos y no los organiza por posiciones. En el ejemplo, `"rojo"` aparece una sola vez aunque se haya escrito dos veces. El operador `&` obtiene los elementos que están en ambos conjuntos; `|` reúne los elementos de los dos. Por eso su resultado común contiene `"editor"`, y el conjunto combinado contiene `"admin"`, `"editor"` e `"invitado"`.
 
@@ -1332,7 +1419,7 @@ print(permitidos | solicitados)
 
 Para crear un conjunto vacío se usa `set()`. Las llaves vacías `{}` representan un diccionario vacío, no un conjunto.
 
-### 5.9 Diccionarios: `dict`
+### 6.9 Diccionarios: `dict`
 
 Un diccionario (`dict`) guarda asociaciones entre claves y valores. En el ejemplo, `"nombre"` permite localizar `"Elena"`, `"edad"` permite localizar `31` y `"activo"` permite localizar `True`. Para consultar un valor se escribe su clave entre corchetes, como en `persona["nombre"]`:
 
@@ -1380,13 +1467,13 @@ if not nombre:
 
 ---
 
-## 6. Literales
+## 7. Literales
 
 [⬆ Volver al índice](#índice)
 
 Un literal es una notación escrita directamente en el código para representar un valor. No es lo mismo un literal que una variable: `25` es un literal entero, mientras que `edad` es un nombre que puede referirse a un objeto entero.
 
-### 6.1 Literales numéricos
+### 7.1 Literales numéricos
 
 ```python
 entero = 100
@@ -1404,7 +1491,7 @@ presupuesto_sin_separadores = 1000000
 print(presupuesto == presupuesto_sin_separadores)  # True
 ```
 
-### 6.2 Literales booleanos y nulo
+### 7.2 Literales booleanos y nulo
 
 ```python
 disponible = True
@@ -1412,7 +1499,7 @@ eliminado = False
 sin_resultado = None
 ```
 
-### 6.3 Literales de cadena
+### 7.3 Literales de cadena
 
 Las comillas delimitan el texto y le indican a Python dónde empieza y termina la cadena. Se pueden usar comillas simples (`'...'`) o dobles (`"..."`): ambas crean una cadena y tienen el mismo significado. A menudo se elige el tipo de comilla que permita escribir el texto con menos escapes:
 
@@ -1454,7 +1541,7 @@ print(f"{producto}: {precio:.2f} €")
 
 ---
 
-## 7. Constantes
+## 8. Constantes
 
 [⬆ Volver al índice](#índice)
 
@@ -1473,7 +1560,7 @@ MAX_INTENTOS = 3
 MAX_INTENTOS = 10  # Python lo permite, aunque puede ser un error de diseño
 ```
 
-### 7.1 Constantes agrupadas en un módulo
+### 8.1 Constantes agrupadas en un módulo
 
 Archivo `configuracion.py`:
 
@@ -1490,7 +1577,7 @@ from configuracion import TASA_IVA
 precio_final = 100 * (1 + TASA_IVA)
 ```
 
-### 7.2 `Final` para expresar intención estática
+### 8.2 `Final` para expresar intención estática
 
 `Final` se importa desde `typing` y se escribe como anotación junto a una variable para indicar que su valor no debería reasignarse. «Estática» significa que esta intención puede ser revisada por el editor o por una herramienta de análisis sin ejecutar el programa.
 
@@ -1503,7 +1590,7 @@ PI: Final = 3.141592653589793
 # PI = 3.14  # Una herramienta de análisis puede señalar esta reasignación.
 ```
 
-### 7.3 Cuándo usar constantes
+### 8.3 Cuándo usar constantes
 
 Una constante es apropiada para valores que:
 
@@ -1514,7 +1601,7 @@ Una constante es apropiada para valores que:
 
 Es mejor escribir `SEGUNDOS_POR_MINUTO = 60` que repetir el número `60` sin explicar su significado.
 
-### 7.4 Actividades: tipos, literales y constantes
+### 8.4 Actividades: tipos, literales y constantes
 
 Desarrolla y ejecuta un programa para cada ejercicio.
 
@@ -1560,13 +1647,13 @@ El catálogo `Equipamiento de aula` empieza con estos nombres: ` teclado `, `RAT
 
 ---
 
-## 8. Operadores y expresiones
+## 9. Operadores y expresiones
 
 [⬆ Volver al índice](#índice)
 
 Una expresión combina valores, variables, operadores y llamadas para producir un resultado.
 
-### 8.1 Tipos numéricos y operadores aritméticos
+### 9.1 Tipos numéricos y operadores aritméticos
 
 Python trabaja principalmente con enteros (`int`), números decimales
 (`float`) y números complejos (`complex`). En los literales decimales se usa
@@ -1710,7 +1797,7 @@ La información de esta ampliación se basa en [Números y operaciones
 aritméticas elementales](https://www.mclibre.org/consultar/python/lecciones/python-operaciones-matematicas.html),
 de mclibre.org.
 
-### 8.2 Operadores de comparación
+### 9.2 Operadores de comparación
 
 Devuelven `True` o `False`:
 
@@ -1733,7 +1820,7 @@ print(edad < 30)
 print(edad <= 20)
 ```
 
-### 8.3 Operadores lógicos
+### 9.3 Operadores lógicos
 
 | Operación | Qué hace | Ejemplo |
 | --- | --- | --- |
@@ -1756,7 +1843,7 @@ print(not tiene_entrada)
 nombre = entrada.strip() if entrada else "Anónimo"
 ```
 
-### 8.4 Operadores de pertenencia
+### 9.4 Operadores de pertenencia
 
 | Operación | Qué hace | Ejemplo |
 | --- | --- | --- |
@@ -1776,7 +1863,7 @@ persona = {"nombre": "Ana"}
 print("nombre" in persona)
 ```
 
-### 8.5 Operadores de identidad
+### 9.5 Operadores de identidad
 
 | Operación | Qué hace | Ejemplo |
 | --- | --- | --- |
@@ -1798,7 +1885,7 @@ print(primero == segundo)  # mismo contenido
 print(primero is segundo)  # objetos distintos
 ```
 
-### 8.6 Operadores de asignación aumentada
+### 9.6 Operadores de asignación aumentada
 
 | Operación | Qué hace | Ejemplo |
 | --- | --- | --- |
@@ -1821,7 +1908,7 @@ contador -= 1
 
 También existen `/=`, `//=`, `%=`, `**=`, `&=`, `|=`, `^=`, `<<=` y `>>=`.
 
-### 8.7 Operadores bit a bit
+### 9.7 Operadores bit a bit
 
 Se aplican a enteros representados en binario:
 
@@ -1847,7 +1934,7 @@ print(a >> 1)
 
 Se usan en máscaras, permisos y programación de bajo nivel. No deben confundirse con `and` y `or`.
 
-### 8.8 Precedencia y paréntesis
+### 9.8 Precedencia y paréntesis
 
 Python sigue una precedencia parecida a la matemática:
 
@@ -1880,7 +1967,7 @@ resultado_claro = (2 + 3) * 4  # 20
 
 Los paréntesis son recomendables cuando mejoran la intención, incluso si no son estrictamente necesarios.
 
-### 8.9 Expresiones condicionales
+### 9.9 Expresiones condicionales
 
 | Operación | Qué hace | Ejemplo |
 | --- | --- | --- |
@@ -1893,18 +1980,18 @@ tipo = "adulto" if edad >= 18 else "menor"
 
 Conviene reservarlas para condiciones simples. Una expresión condicional anidada suele ser menos legible que un `if` normal.
 
-### Actividad 8.1: calcular una factura
+### Actividad 9.1: calcular una factura
 
 Crea un programa que lea precio, unidades y porcentaje de descuento, calcule subtotal, descuento, IVA y total, y muestre cada importe con dos decimales. Añade una condición que indique si el pedido supera un umbral de envío gratuito.
 
-### Actividad 8.2: descomponer una duración
+### Actividad 9.2: descomponer una duración
 
 Guarda en una variable una duración total de `7384` segundos. Calcula cuántas
 horas completas, minutos restantes y segundos restantes contiene, usando
 división entera (`//`) y resto (`%`). Muestra los tres resultados; deben ser
 `2` horas, `3` minutos y `4` segundos.
 
-### Actividad 8.3: comprobar el acceso a un aula
+### Actividad 9.3: comprobar el acceso a un aula
 
 Guarda si una persona está matriculada (`True`), si tiene autorización
 especial (`False`) y su edad (`17`). Puede acceder si está matriculada y
@@ -1912,14 +1999,14 @@ tiene al menos `18` años, o si tiene autorización especial. Calcula y muestra
 el resultado como `True` o `False`. Cambia los valores para comprobar también
 un caso en el que sí pueda acceder.
 
-### Actividad 8.4: actualizar las plazas disponibles
+### Actividad 9.4: actualizar las plazas disponibles
 
 Un aula tiene `12` plazas disponibles. Reserva `3` plazas y después cancela
 `1` reserva, actualizando la variable con asignación aumentada. Muestra el
 número final de plazas y, mediante una expresión condicional, muestra
 `"Hay plazas"` si queda alguna o `"Completo"` si no queda ninguna.
 
-### Actividad 8.5: gestionar permisos con bits
+### Actividad 9.5: gestionar permisos con bits
 
 Representa los permisos de lectura, escritura y ejecución con las máscaras
 `0b001`, `0b010` y `0b100`, respectivamente. Asigna inicialmente lectura y
@@ -1929,7 +2016,7 @@ final y comprueba que conserva lectura y ejecución, pero no escritura.
 
 ---
 
-## 9. Conversiones de tipo
+## 10. Conversiones de tipo
 
 [⬆ Volver al índice](#índice)
 
@@ -1948,7 +2035,7 @@ edad = int(edad_texto)        # El entero 20
 print(edad + 1)
 ```
 
-### 9.1 Conversiones habituales
+### 10.1 Conversiones habituales
 
 Estas funciones integradas crean valores de tipos habituales:
 
@@ -1984,7 +2071,7 @@ print(float("3.14"))   # Correcto
 # float("3,14")        # ValueError
 ```
 
-### 9.2 Conversión explícita frente a implícita
+### 10.2 Conversión explícita frente a implícita
 
 Una conversión **explícita** se escribe en el programa, por ejemplo con
 `int()` o `str()`. Python también realiza algunas conversiones **implícitas**
@@ -2011,7 +2098,7 @@ Conviene elegir el tipo según el uso: `int` para cantidades enteras,
 `float` para cálculos decimales y `str` para texto que se muestra o se procesa
 como caracteres.
 
-### 9.3 Validar antes de convertir
+### 10.3 Validar antes de convertir
 
 Una cadena que no representa un número válido provoca `ValueError` al
 convertirla. Se puede validar el texto antes, pero las comprobaciones como
@@ -2053,7 +2140,7 @@ while True:
 print(f"El doble es {numero * 2}")
 ```
 
-### 9.4 Conversiones con pérdida
+### 10.4 Conversiones con pérdida
 
 Algunas conversiones no conservan exactamente el valor original. `int()` al
 recibir un `float` descarta la parte decimal, acercándose a cero; no redondea:
@@ -2089,7 +2176,7 @@ print(precio)       # 0.30000000000000004
 print(f"{precio:.2f}")  # 0.30
 ```
 
-### 9.5 Conversiones de estructuras
+### 10.5 Conversiones de estructuras
 
 Las conversiones entre colecciones dependen del iterable de origen. Por
 ejemplo, convertir directamente un texto en lista separa sus caracteres; para
@@ -2163,13 +2250,13 @@ uno de los valores. El precio del pan debe ser `1.2` y su tipo debe ser
 
 ---
 
-## 10. Comentarios
+## 11. Comentarios
 
 [⬆ Volver al índice](#índice)
 
 Los comentarios son texto para las personas que leen el código. El intérprete los ignora. Sirven para explicar intención, decisiones o advertencias, no para repetir literalmente lo que hace cada línea.
 
-### 10.1 Comentarios de una línea
+### 11.1 Comentarios de una línea
 
 ```python
 # El descuento se aplica antes del IVA.
@@ -2183,7 +2270,7 @@ Un comentario al final de línea debe ser corto:
 limite = 100  # Máximo permitido por el negocio
 ```
 
-### 10.2 Cadenas multilínea y docstrings
+### 11.2 Cadenas multilínea y docstrings
 
 Las cadenas triples pueden utilizarse como docstrings cuando aparecen al principio de un módulo, clase o función:
 
@@ -2195,7 +2282,7 @@ def cuadrado(numero):
 
 Una cadena triple colocada en cualquier lugar sin asignarla no es una buena forma de comentar. Para documentar elementos públicos se deben usar docstrings.
 
-### 10.3 Qué comentar
+### 11.3 Qué comentar
 
 Es útil comentar:
 
@@ -2211,7 +2298,7 @@ No es útil escribir comentarios que contradigan el código o repitan nombres ob
 contador += 1
 ```
 
-### 10.4 Comentarios temporales
+### 11.4 Comentarios temporales
 
 Los comentarios `TODO` pueden señalar trabajo pendiente:
 
@@ -2220,93 +2307,6 @@ Los comentarios `TODO` pueden señalar trabajo pendiente:
 ```
 
 Deben revisarse antes de entregar el proyecto; un `TODO` olvidado puede indicar una funcionalidad incompleta.
-
----
-
-## 11. Entornos integrados de desarrollo
-
-[⬆ Volver al índice](#índice)
-
-Un IDE (Integrated Development Environment, entorno integrado de desarrollo) reúne herramientas para escribir, ejecutar y mantener programas. Para Python, opciones habituales son Visual Studio Code, PyCharm, IDLE y JupyterLab.
-
-### 11.1 Componentes de un IDE
-
-Un IDE suele incluir:
-
-- Editor con resaltado de sintaxis.
-- Autocompletado y navegación de símbolos.
-- Terminal integrada.
-- Ejecución y configuración de programas.
-- Depurador con puntos de interrupción.
-- Integración con Git.
-- Diagnósticos de sintaxis y tipos.
-- Herramientas de formato y análisis estático.
-- Explorador de archivos y gestión de entornos.
-
-### 11.2 Flujo de trabajo en Visual Studio Code
-
-Un flujo básico es:
-
-1. Abrir la carpeta del proyecto.
-2. Instalar la extensión de Python de Microsoft.
-3. Seleccionar un intérprete con `Python: Select Interpreter`.
-4. Crear un archivo como `main.py`.
-5. Escribir el programa y guardarlo.
-6. Ejecutarlo desde el botón de ejecución o la terminal.
-7. Revisar diagnósticos y corregirlos.
-8. Ejecutar pruebas y depurar con puntos de interrupción.
-
-### 11.3 Entornos virtuales
-
-Un entorno virtual aísla dependencias de un proyecto:
-
-```bash
-python -m venv .venv
-```
-
-Activación en Windows PowerShell:
-
-```powershell
-.venv\Scripts\Activate.ps1
-```
-
-Activación en macOS o Linux:
-
-```bash
-source .venv/bin/activate
-```
-
-Después se pueden instalar paquetes sin afectar a otras aplicaciones:
-
-```bash
-python -m pip install nombre-paquete
-```
-
-Es buena práctica guardar dependencias:
-
-```bash
-python -m pip freeze > requirements.txt
-```
-
-### 11.4 Formateo y análisis
-
-Herramientas populares son `black` para formato y `ruff` para análisis y estilo. Si se utilizan en un proyecto, deben configurarse y ejecutarse de forma consistente. El objetivo no es obedecer mecánicamente a una herramienta, sino reducir errores y discusiones de estilo.
-
-### 11.5 Ejecutar desde la terminal
-
-```bash
-python main.py
-```
-
-Ejecutar mediante `python -m` es útil para módulos y paquetes:
-
-```bash
-python -m mi_paquete
-```
-
-### Actividad 11.1: preparar un entorno
-
-Crea una carpeta de proyecto, genera `.venv`, selecciona el intérprete en el IDE, crea `main.py`, ejecuta un saludo y documenta en un `README.md` los pasos de instalación y ejecución.
 
 ---
 
