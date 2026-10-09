@@ -22,6 +22,7 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
    - [Actividades 9](#actividades-9)
 10. [Conversiones de tipo](#10-conversiones-de-tipo)
 11. [Comentarios](#11-comentarios)
+12. [Videotutoriales y recursos](#12-videotutoriales-y-recursos)
 
 ---
 
@@ -2262,5 +2263,97 @@ Los comentarios `TODO` pueden señalar trabajo pendiente:
 ```
 
 Deben revisarse antes de entregar el proyecto; un `TODO` olvidado puede indicar una funcionalidad incompleta.
+
+---
+
+## 12. Videotutoriales y recursos
+
+[⬆ Volver al índice](#índice)
+
+Para cada apartado se indican videotutoriales en español y enlaces a la documentación oficial de Python.
+
+### 12.1 Introducción y objetivos
+
+- Videotutoriales:
+  - [Curso Python 3 desde cero #1: Introducción e instalación (La Geekipedia De Ernesto)](https://www.youtube.com/watch?v=DAdRO6ByBoU)
+  - [Aprende Python: curso de Python desde cero (freeCodeCamp Español)](https://www.youtube.com/watch?v=DLikpfc64cA)
+- Documentación: [Tutorial de Python](https://docs.python.org/es/3/tutorial/index.html) y [Abriendo el apetito](https://docs.python.org/es/3/tutorial/appetite.html).
+
+### 12.2 Entornos integrados de desarrollo
+
+- Videotutoriales:
+  - [Instalación y configuración de Python en Visual Studio Code (Piogram)](https://www.youtube.com/watch?v=-IyA_Yvs8IQ)
+  - [Cómo configurar Visual Studio Code para Python (divcode)](https://www.youtube.com/watch?v=md2pQj144PA)
+  - [¿Qué son los entornos virtuales? (Enrique Barros)](https://www.youtube.com/watch?v=FA6d9f_bs_Q)
+  - [Cómo crear un entorno virtual en Visual Studio Code (Código Espinoza)](https://www.youtube.com/watch?v=cAHTJCF2jic)
+- Documentación: [Entornos virtuales y paquetes](https://docs.python.org/es/3/tutorial/venv.html), [Módulo `venv`](https://docs.python.org/es/3/library/venv.html) y [Python en VS Code](https://code.visualstudio.com/docs/python/python-tutorial).
+
+### 12.3 Elementos de un programa
+
+- Videotutoriales:
+  - [Palabras reservadas en Python (La Geekipedia De Ernesto)](https://www.youtube.com/watch?v=6yBL1mcd7iY)
+  - [Errores sintácticos en Python (Sergio A. Castaño Giraldo)](https://www.youtube.com/watch?v=SoZOCsW_e58)
+  - [Tipos de errores en programación (Enrique Barros)](https://www.youtube.com/watch?v=Ls-0Vd9a5us)
+- Documentación: [Análisis léxico](https://docs.python.org/es/3/reference/lexical_analysis.html), [Palabras reservadas](https://docs.python.org/es/3/reference/lexical_analysis.html#keywords) y [Errores y excepciones](https://docs.python.org/es/3/tutorial/errors.html).
+
+### 12.4 Estructura y bloques fundamentales
+
+- Videotutoriales:
+  - [Indentación y bloques en Python](https://www.youtube.com/watch?v=Bs_Eq7Vo5XU)
+  - [Funciones, parámetros y return en Python](https://www.youtube.com/watch?v=g78juF9pB_w)
+  - [Módulos y if __name__ == "__main__"](https://www.youtube.com/watch?v=wZKTUcTqekw)
+  - [Alcance de variables y funciones en Python](https://www.youtube.com/watch?v=Xn5-W5gXdak)
+- Documentación: [Indentación](https://docs.python.org/es/3/reference/lexical_analysis.html#indentation), [Definición de funciones](https://docs.python.org/es/3/tutorial/controlflow.html#defining-functions), [Módulos](https://docs.python.org/es/3/tutorial/modules.html), [`__main__`](https://docs.python.org/es/3/library/__main__.html) y [Ámbitos y espacios de nombres](https://docs.python.org/es/3/tutorial/classes.html#python-scopes-and-namespaces).
+
+### 12.5 Variables
+
+- Videotutoriales:
+  - [Variables en Python explicadas fácil (PrograLabs)](https://www.youtube.com/watch?v=DN4PHRpbBmc)
+  - [Curso de Python #3: Variables y tipos de datos (Deividcoptero)](https://www.youtube.com/watch?v=UF6xeb6Rh0Q)
+- Documentación: [Python como calculadora](https://docs.python.org/es/3/tutorial/introduction.html) y [Sentencias de asignación](https://docs.python.org/es/3/reference/simple_stmts.html#assignment-statements).
+
+### 12.6 Tipos de datos
+
+- Videotutoriales:
+  - [Curso Python 3 desde cero #8: Tipos de datos (La Geekipedia De Ernesto)](https://www.youtube.com/watch?v=EaWsOcc7R2M)
+  - [Listas, tuplas, conjuntos y diccionarios en 8 minutos (BitBoss)](https://www.youtube.com/watch?v=v25-m1LOUiU)
+- Documentación: [Tipos incorporados](https://docs.python.org/es/3/library/stdtypes.html), [Estructuras de datos](https://docs.python.org/es/3/tutorial/datastructures.html) y [Módulo `array`](https://docs.python.org/es/3/library/array.html).
+
+### 12.7 Literales
+
+- Videotutoriales:
+  - [Cadenas formateadas (f-strings) en Python (Jorge Escobar)](https://www.youtube.com/watch?v=p8IRo6xvokA)
+  - [¿Qué son los booleanos en Python? (Computando Código)](https://www.youtube.com/watch?v=0wtQJX_YlGU)
+  - [El tipo None en Python (Boot dev)](https://www.youtube.com/watch?v=pZoDH6aU7ws)
+- Documentación: [Literales](https://docs.python.org/es/3/reference/lexical_analysis.html#literals).
+
+### 12.8 Constantes
+
+- Videotutoriales:
+  - [Constantes en Python (ConfiguroWeb)](https://www.youtube.com/watch?v=ApBTxzjIxnI)
+  - [Constantes y convenciones de nombres (Programa Con Arnau)](https://www.youtube.com/watch?v=LDuWz3NLmKA)
+- Documentación: [Constantes incorporadas](https://docs.python.org/es/3/library/constants.html) y [`typing.Final`](https://docs.python.org/es/3/library/typing.html#typing.Final).
+
+### 12.9 Operadores y expresiones
+
+- Videotutoriales:
+  - [Programación en Python: operadores aritméticos (Programación ATS)](https://www.youtube.com/watch?v=PMOWXusLr9g)
+  - [Programación en Python: operadores lógicos (Programación ATS)](https://www.youtube.com/watch?v=ZjeOT_ACdhw)
+  - [Operadores de comparación y lógicos (Enrique Barros)](https://www.youtube.com/watch?v=JqykPg15y4o)
+- Documentación: [Expresiones](https://docs.python.org/es/3/reference/expressions.html), [Precedencia de operadores](https://docs.python.org/es/3/reference/expressions.html#operator-precedence) y [Módulo `math`](https://docs.python.org/es/3/library/math.html).
+
+### 12.10 Conversiones de tipo
+
+- Videotutoriales:
+  - [Funciones int() y float() en Python (Programa Resuelto)](https://www.youtube.com/watch?v=wuBMbkDejhM)
+  - [Conversión de tipos en Python: int, float, str (Softwave Academy)](https://www.youtube.com/watch?v=18Qa_HSDI_M)
+- Documentación: [Funciones incorporadas](https://docs.python.org/es/3/library/functions.html) y [Tipos numéricos](https://docs.python.org/es/3/library/stdtypes.html#numeric-types-int-float-complex).
+
+### 12.11 Comentarios
+
+- Videotutoriales:
+  - [Programación en Python: comentarios (Programación ATS)](https://www.youtube.com/watch?v=J_6p01NiqMs)
+  - [Docstrings: curso de introducción a Python (Santiago Hernández)](https://www.youtube.com/watch?v=DXrKZgmiZMg)
+- Documentación: [Comentarios en PEP 8](https://peps.python.org/pep-0008/#comments) y [PEP 257: convenciones de docstrings](https://peps.python.org/pep-0257/).
 
 ---
