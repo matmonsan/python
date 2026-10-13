@@ -38,38 +38,125 @@ Las tres familias principales son:
 - **Selección:** elegir entre caminos.
 - **Repetición:** ejecutar un bloque varias veces.
 
+Estas familias no son alternativas aisladas. Un programa real suele combinar las
+tres: primero recibe y prepara unos datos, después toma decisiones sobre ellos y,
+por último, repite una operación para cada elemento o hasta que se cumpla una
+condición. La estructura elegida debe corresponder al problema que se quiere
+resolver, no a una preferencia de escritura.
+
+Un esquema general de un programa puede representarse así:
+
+```text
+ENTRADA DE DATOS
+       ↓
+SECUENCIA DE PASOS
+       ↓
+DECISIONES
+       ↓
+ACCIONES REPETIDAS, SI SON NECESARIAS
+       ↓
+RESULTADO
+```
+
+En Python, cada bloque debe quedar claramente separado del siguiente. La
+indentación será la forma concreta de marcar esos bloques cuando se estudie la
+sintaxis, pero en esta introducción basta con entender que las instrucciones
+que pertenecen a una misma decisión o repetición forman un grupo.
+
 ### 1.1 Secuencia
 
-```python
-nombre = input("Nombre: ")
-saludo = f"Hola, {nombre}"
-print(saludo)
+La secuencia es el flujo más sencillo: cada paso se realiza una vez y en el
+orden en que aparece. El resultado de un paso puede convertirse en la entrada
+del siguiente. Por eso el orden sí importa; no es equivalente calcular un total
+antes o después de aplicar un descuento.
+
+Un esquema de secuencia sería:
+
+```text
+RECIBIR EL NOMBRE
+       ↓
+PREPARAR EL SALUDO
+       ↓
+MOSTRAR EL SALUDO
 ```
+
+La secuencia es suficiente cuando no hay alternativas ni acciones que repetir.
+Por ejemplo, un programa que pide un nombre, prepara un mensaje y lo muestra
+solo necesita seguir esos pasos consecutivamente.
 
 ### 1.2 Condición como expresión booleana
 
-```python
-saldo = 100
-retirada = 40
+Una condición es una pregunta cuya respuesta solo puede ser afirmativa o
+negativa. El programa utiliza esa respuesta para decidir si continúa por un
+camino o por otro. Las preguntas pueden comparar cantidades, comprobar si un
+dato está disponible o verificar si una situación es válida.
 
-if retirada <= saldo:
-	saldo -= retirada
+Esquema de una decisión sencilla:
+
+```text
+COMPROBAR UNA CONDICIÓN
+          ↓
+   ¿SE CUMPLE?
+     ↙     ↘
+   SÍ       NO
+   ↓        ↓
+REALIZAR  CONTINUAR
+ACCIÓN    SIN ESA ACCIÓN
 ```
+
+Por ejemplo, antes de retirar dinero se puede comprobar si el saldo disponible
+es suficiente. Si lo es, se realiza la retirada; si no, se informa de que la
+operación no puede hacerse. La comprobación debe realizarse antes de la acción
+que depende de ella.
 
 ### 1.3 Repetición controlada por colección
 
-```python
-for numero in [1, 2, 3]:
-	print(numero)
+La repetición controlada por una colección se utiliza cuando una misma acción
+debe realizarse para cada elemento de un conjunto de datos. El programa toma
+un elemento, realiza la acción, pasa al siguiente y termina cuando ya no quedan
+elementos.
+
+```text
+OBTENER LA COLECCIÓN
+          ↓
+TOMAR EL SIGUIENTE ELEMENTO
+          ↓
+REALIZAR LA ACCIÓN
+          ↓
+¿QUEDAN MÁS ELEMENTOS?
+      ↙           ↘
+    SÍ             NO
+    ↑              ↓
+VOLVER AL PASO   TERMINAR
+ANTERIOR
 ```
+
+Este modelo evita repetir manualmente las mismas instrucciones y sigue
+funcionando aunque la colección tenga más o menos elementos.
 
 ### 1.4 Repetición controlada por condición
 
-```python
-respuesta = ""
-while respuesta.lower() != "salir":
-	respuesta = input("Escribe salir para terminar: ")
+La repetición controlada por una condición se utiliza cuando no se conoce de
+antemano cuántas veces debe repetirse una acción. Antes de cada vuelta se
+comprueba si se mantiene la situación que permite continuar.
+
+```text
+COMPROBAR LA CONDICIÓN
+          ↓
+   ¿SE PUEDE CONTINUAR?
+      ↙           ↘
+    SÍ             NO
+    ↓              ↓
+REALIZAR        TERMINAR
+LA ACCIÓN
+    ↑
+    └── ACTUALIZAR LOS DATOS
 ```
+
+Es necesario que cada vuelta pueda cambiar el resultado de la comprobación.
+Si la condición nunca cambia, se produce un bucle infinito. Este modelo es
+apropiado para menús, reintentos y procesos que terminan cuando el usuario
+introduce una respuesta concreta o cuando se alcanza un estado determinado.
 
 ### 1.5 Diseñar antes de codificar
 
@@ -82,17 +169,27 @@ Antes de escribir estructuras de control conviene responder:
 5. ¿Cuándo termina el programa?
 6. ¿Qué pasa si la entrada no es válida?
 
-Un pseudocódigo sencillo para clasificar una nota sería:
+Un esquema sencillo para clasificar una nota sería:
 
 ```text
-leer nota
-si nota no está entre 0 y 10:
-	mostrar error
-si nota es al menos 5:
-	mostrar aprobado
-si no:
-	mostrar suspenso
+LEER LA NOTA
+      ↓
+¿ESTÁ ENTRE 0 Y 10?
+   ↙           ↘
+ NO             SÍ
+ ↓              ↓
+AVISAR        ¿ALCANZA EL APROBADO?
+DEL ERROR       ↙          ↘
+              SÍ            NO
+              ↓             ↓
+          APROBADO       SUSPENSO
 ```
+
+Este diseño separa los casos y hace visibles las reglas del problema. Después
+se puede traducir a Python, comprobar cada camino y añadir validaciones sin
+tener que improvisar la lógica mientras se escribe. También conviene preparar
+casos de prueba para una nota inválida, una nota exactamente igual al límite
+del aprobado, una nota intermedia y la nota máxima.
 
 ---
 
@@ -101,109 +198,396 @@ si no:
 [⬆ Volver al índice](#índice)
 
 Las estructuras de selección ejecutan uno u otro bloque según una condición.
+Permiten representar decisiones del tipo «si ocurre esto, haz una cosa; en caso
+contrario, haz otra». La condición debe expresar una pregunta clara sobre los
+datos del programa y no mezclar cambios de estado innecesarios.
+
+Python determina el bloque que se ejecuta siguiendo estas reglas:
+
+1. Evalúa la condición del `if`.
+2. Si es verdadera, ejecuta ese bloque y omite los bloques alternativos.
+3. Si es falsa, prueba el siguiente `elif`, si existe.
+4. Si ninguna condición es verdadera, ejecuta `else`, si se ha escrito.
+
+En todos los casos se ejecuta como máximo una rama de una misma cadena
+`if`/`elif`/`else`.
 
 ### 2.1 `if`
+
+`if` sirve para ejecutar instrucciones solo cuando se cumple una condición. No
+es necesario escribir un `else` si no hay ninguna acción que realizar cuando la
+condición sea falsa.
 
 ```python
 temperatura = 28
 
 if temperatura > 25:
-	print("Hace calor")
+    print("Hace calor")
 ```
 
-Si la condición es falsa, el bloque no se ejecuta.
+Si la temperatura fuese `25` o menor, no se mostraría ningún mensaje y el
+programa continuaría después del bloque. Los dos puntos indican que comienza
+un bloque y la indentación indica qué instrucciones forman parte de él.
+
+Un `if` es adecuado cuando solo interesa actuar en el caso afirmativo. Por
+ejemplo, se puede mostrar una advertencia si queda poco espacio en disco, pero
+no hacer nada especial cuando el espacio disponible es suficiente. No conviene
+añadir un `else` vacío: si no hay una respuesta para el caso contrario, es más
+claro dejarlo sin escribir.
+
+La condición se evalúa con el valor que tienen las variables en ese momento.
+Si una variable cambia después, esa modificación no cambia una decisión que ya
+se ha tomado. Por eso las comprobaciones deben colocarse justo antes de la
+acción que protegen y deben utilizar datos que estén actualizados.
 
 ### 2.2 `if ... else`
+
+`else` define el camino alternativo. Se utiliza cuando deben cubrirse
+exactamente dos posibilidades, como par/impar, válido/no válido o
+disponible/no disponible:
 
 ```python
 numero = 7
 
 if numero % 2 == 0:
-	print("Es par")
+    print("Es par")
 else:
-	print("Es impar")
+    print("Es impar")
 ```
 
+El operador `%` calcula el resto de la división. Si el resto de dividir entre
+dos es cero, el número es par; si no, es impar. La condición no compara
+directamente con las palabras «par» o «impar», sino que deduce la respuesta a
+partir del dato.
+
+`else` no lleva una condición propia: representa todos los casos en los que el
+`if` no se ha cumplido. Por ese motivo es útil para garantizar una respuesta
+completa. En este ejemplo, cualquier entero queda clasificado, porque todo
+número es par o impar. Antes de utilizar `else`, conviene comprobar que el caso
+alternativo realmente incluye todos los valores restantes y que no se están
+ocultando entradas inválidas.
+
+Si el programa acepta datos introducidos por una persona, la comprobación de
+paridad debería hacerse después de validar que el dato es numérico. La
+selección decide qué hacer con un dato válido; no sustituye por sí sola la
+validación del formato de entrada.
+
 ### 2.3 `if ... elif ... else`
+
+Cuando hay más de dos resultados posibles se encadenan varias condiciones con
+`elif`. El orden es fundamental: las condiciones más específicas o exigentes
+deben aparecer antes que las más generales.
 
 ```python
 nota = 8.4
 
 if nota >= 9:
-	calificacion = "sobresaliente"
+    calificacion = "sobresaliente"
 elif nota >= 7:
-	calificacion = "notable"
+    calificacion = "notable"
 elif nota >= 5:
-	calificacion = "aprobado"
+    calificacion = "aprobado"
 else:
-	calificacion = "suspenso"
+    calificacion = "suspenso"
 
 print(calificacion)
 ```
 
-Las condiciones se evalúan de arriba abajo y solo se ejecuta el primer bloque verdadero.
+Las condiciones se evalúan de arriba abajo y solo se ejecuta el primer bloque
+verdadero. Con `nota = 8.4`, la primera comparación es falsa y la segunda es
+verdadera, por lo que se asigna `notable` y no se revisan las condiciones
+restantes. Si se colocara primero `nota >= 5`, todas las notas aprobadas
+entrarían en esa rama y nunca se alcanzarían las categorías superiores.
+
+Una cadena de `elif` funciona bien cuando las categorías son excluyentes y
+están ordenadas. Los límites deben definirse con cuidado: en el ejemplo, una
+nota exactamente igual a `7` obtiene `notable` y una exactamente igual a `5`
+obtiene `aprobado`. Probar los valores situados justo en cada límite ayuda a
+detectar errores como utilizar `>` cuando se necesitaba `>=`.
+
+`else` puede omitirse si existe un caso que no se desea tratar o si la
+validación se realiza en otra parte. Sin embargo, incluirlo suele ser
+conveniente cuando el programa debe ofrecer una respuesta para cualquier dato
+que llegue hasta esa decisión.
 
 ### 2.4 Condiciones compuestas
+
+Los operadores lógicos permiten combinar comprobaciones:
+
+- `and` exige que todas las condiciones sean verdaderas.
+- `or` exige que al menos una sea verdadera.
+- `not` invierte el resultado lógico.
 
 ```python
 edad = 25
 documento_valido = True
 
 if edad >= 18 and documento_valido:
-	print("Acceso permitido")
+    print("Acceso permitido")
 ```
+
+Aquí deben cumplirse simultáneamente la mayoría de edad y la validez del
+documento. Los paréntesis ayudan a dejar clara la prioridad cuando se mezclan
+`and` y `or`, por ejemplo:
+
+```python
+if (es_personal or es_administrador) and cuenta_activa:
+    print("Acceso permitido")
+```
+
+En la segunda condición, basta con que la persona sea personal o
+administradora, pero en ambos casos la cuenta debe estar activa. Sin los
+paréntesis, una expresión con varios operadores puede resultar difícil de leer
+e interpretar de forma incorrecta al modificarla más adelante.
+
+Python además aplica evaluación en cortocircuito: con `and`, si la primera
+parte ya es falsa no necesita evaluar la segunda; con `or`, si la primera ya es
+verdadera tampoco necesita evaluar la segunda. Esta característica puede
+evitar operaciones innecesarias, pero las condiciones no deberían depender de
+efectos secundarios ocultos. Es preferible que cada comprobación sea clara y
+predecible.
 
 ### 2.5 Guard clauses
 
-Una guard clause termina pronto un caso inválido y evita anidamientos:
+Una *guard clause* comprueba al principio un caso inválido y termina pronto la
+función. Así se evita envolver toda la lógica válida dentro de varios niveles
+de `if` anidados:
 
 ```python
 def procesar_edad(edad):
-	if edad < 0:
-		return "Edad no válida"
-	if edad < 18:
-		return "Menor"
-	return "Adulto"
+    if edad < 0:
+        return "Edad no válida"
+    if edad < 18:
+        return "Menor"
+    return "Adulto"
 ```
+
+Cada `return` deja claro qué resultado corresponde a cada caso. Si la función
+recibe `-1`, no continúa con las comprobaciones posteriores. Esta técnica es
+especialmente útil para validar parámetros al comienzo de una función.
+
+Las guard clauses no significan que toda función deba tener muchos `return`.
+Su objetivo es separar pronto los casos excepcionales y dejar la ruta normal
+sin anidamientos. Una función bien diseñada debe mantener un orden fácil de
+seguir: primero rechaza los datos imposibles, después comprueba los casos
+especiales y finalmente ejecuta el caso válido.
+
+También es importante decidir qué ocurre ante un dato incorrecto. La función
+puede devolver un mensaje, devolver un valor especial o lanzar una excepción,
+según el contrato del programa. La guard clause organiza la decisión, pero no
+elige por sí sola la estrategia de comunicación del error.
 
 ### 2.6 `match` y `case`
 
-Desde Python 3.10 se puede hacer coincidencia estructural:
+Desde Python 3.10 se puede hacer coincidencia estructural. `match` compara un
+valor con varios patrones y ejecuta el primer `case` que coincide:
 
 ```python
 comando = "listar"
 
 match comando:
-	case "crear":
-		print("Creando")
-	case "listar":
-		print("Listando")
-	case "salir":
-		print("Saliendo")
-	case _:
-		print("Comando desconocido")
+    case "crear":
+        print("Creando")
+    case "listar":
+        print("Listando")
+    case "salir":
+        print("Saliendo")
+    case _:
+        print("Comando desconocido")
 ```
 
-`match` es útil cuando hay muchos patrones posibles. Para una sola condición booleana, `if` suele ser más claro.
+El patrón `_` actúa como caso por defecto y coincide con cualquier valor que no
+haya coincidido antes. `match` es útil cuando hay muchos patrones posibles o
+cuando se comparan estructuras de datos. Para una sola condición booleana,
+`if` suele ser más claro.
+
+Cada `case` representa una posibilidad concreta del valor que se está
+analizando. En el ejemplo, el programa no pregunta si el comando es mayor,
+menor o igual que otro valor, sino que compara su forma con varios patrones
+conocidos. El caso `_` evita que una entrada desconocida quede sin respuesta.
+
+`match` no debe utilizarse solo porque el código parezca más moderno. Si las
+decisiones dependen de intervalos, de varias comprobaciones lógicas o de
+condiciones que no son patrones concretos, una cadena de `if`/`elif` suele
+expresar mejor la regla. La elección debe favorecer la lectura del criterio que
+se está aplicando.
+
+También es posible añadir una **guarda** a un `case` mediante `if`. La guarda
+se evalúa después de que el patrón haya coincidido, por lo que permite expresar
+comparaciones como intervalos o combinar varias condiciones:
+
+```python
+numero = 12
+
+match numero:
+    case valor if valor > 10:
+        print("Mayor que 10")
+    case valor if 0 <= valor <= 10:
+        print("Entre 0 y 10")
+    case _:
+        print("Negativo")
+```
+
+También se pueden combinar alternativas dentro de un patrón y utilizar una
+guarda para una comprobación adicional:
+
+```python
+rol = "editor"
+cuenta_activa = True
+
+match rol:
+    case "admin" | "editor" if cuenta_activa:
+        print("Puede modificar contenido")
+    case _:
+        print("Acceso limitado")
+```
+
+Por tanto, `match` sí puede participar en comprobaciones complejas, pero no
+conviene forzar toda la lógica dentro de un `case`. Si la decisión consiste
+principalmente en varias expresiones booleanas independientes, `if`/`elif`
+normalmente resulta más directo. `match` aporta más claridad cuando primero se
+quiere identificar el tipo, la forma o el valor de los datos y después aplicar
+una condición adicional.
 
 ### 2.7 Evitar comparaciones innecesarias
+
+Los valores booleanos ya representan una condición, por lo que no hace falta
+compararlos explícitamente con `True` o `False`:
 
 ```python
 activo = True
 
 if activo:
-	print("Activo")
+    print("Activo")
 
 # Menos idiomático:
 # if activo == True:
 #     print("Activo")
 ```
 
+También se puede comprobar directamente si una colección contiene elementos:
+
+```python
+usuarios = ["Ana"]
+if usuarios:
+    print("Hay usuarios para procesar")
+```
+
+Una lista vacía, una cadena vacía, `0` y `None` se consideran falsos en una
+condición. Conviene usar esta característica cuando mejora la legibilidad, pero
+comparar explícitamente con `None` sigue siendo recomendable:
+
+```python
+resultado = buscar_usuario()
+if resultado is None:
+    print("Usuario no encontrado")
+```
+
+Estos valores se conocen como valores *falsy*. Muchos valores distintos de
+ellos se consideran *truthy*, como una lista con elementos, una cadena no vacía
+o un número distinto de cero. No significa que sean literalmente `True` o
+`False`, sino que Python puede utilizarlos como resultado práctico de una
+condición.
+
+Hay que diferenciar entre «no hay valor» y «el valor es falso». Por ejemplo,
+`0` puede ser una cantidad válida y no debería confundirse automáticamente con
+un resultado ausente. Cuando esa diferencia importa, conviene comparar de
+forma explícita y documentar qué representa cada valor.
+
 ### Actividades 2
 
-#### Actividad 1: menú
+#### Actividad 1: simulación de operaciones bancarias
 
-Crea un menú con las opciones `1. Añadir`, `2. Consultar`, `3. Eliminar` y `4. Salir`. Usa una estructura de selección y muestra un mensaje específico para cada opción. La opción desconocida debe producir un aviso.
+Simula una única operación de un banco. Parte de una cuenta existente con un
+titular, un saldo inicial aleatorio entre `0 €` y `1.000 €` y el estado de la
+cuenta. Solicita la operación que se quiere realizar: `ingresar`, `retirar`,
+`abrir cuenta`, `cerrar cuenta` o `consultar`.
+
+Cada operación debe producir el resultado adecuado:
+
+- al ingresar, solicita una cantidad positiva y actualiza el saldo;
+- al retirar, solicita una cantidad positiva e impide que el saldo quede
+  negativo;
+- al abrir cuenta, informa si ya existe una cuenta activa;
+- al cerrar cuenta, solo permite el cierre si el saldo es exactamente `0`;
+- al consultar, muestra el titular, el saldo y el estado de la cuenta;
+- una operación desconocida debe mostrar un aviso claro.
+
+Normaliza el texto de la operación para aceptar mayúsculas y espacios
+sobrantes. Muestra el estado final de la cuenta tras la operación. Prueba, como
+mínimo, un ingreso válido e inválido, una retirada con y sin saldo suficiente,
+un intento de cierre con saldo y otro con saldo `0`. El programa debe resolver
+una sola operación; no es necesario repetir el menú.
+
+#### Actividad 2: calcular el precio de una entrada
+
+Una sala de cine vende entradas con estas reglas:
+
+- la entrada general cuesta `8 €`;
+- las personas menores de `12` años pagan `5 €`;
+- las personas de `65` años o más pagan `6 €`;
+- los miércoles se aplica un descuento adicional de `1 €`;
+- una sesión en formato 3D añade `2 €`.
+
+Pide la edad, el día de la semana y si la sesión es 3D. Calcula el precio final
+y muestra el desglose de los importes aplicados. Rechaza edades negativas y
+decide qué debe ocurrir con una edad que no pueda convertirse a número.
+Normaliza el día introducido para aceptar mayúsculas y espacios sobrantes.
+Prueba edades por debajo, justo en y por encima de `12` y `65`, tanto en una
+sesión normal como en una sesión 3D.
+
+#### Actividad 3: calculadora con módulos
+
+Crea una calculadora formada por dos archivos:
+
+- `operaciones.py`, que contiene una función independiente para cada operación:
+  sumar, restar, multiplicar y dividir;
+- `calculadora.py`, que solicita dos números y la operación deseada, importa las
+  funciones necesarias desde `operaciones.py` y muestra el resultado.
+
+Cada función debe recibir dos valores y devolver el resultado, sin pedir datos
+ni mostrar mensajes. La división debe controlar el caso de divisor igual a `0`
+y comunicarlo de forma clara al programa principal. La calculadora debe aceptar
+las operaciones `+`, `-`, `*` y `/`, además de informar de una operación no
+reconocida.
+
+El programa principal de `calculadora.py` solo debe ejecutarse cuando ese
+archivo sea el módulo principal. Prueba cada operación con números enteros y
+decimales, una división entre cero y un símbolo de operación inválido.
+
+#### Actividad 4: calcular un envío
+
+Una tienda calcula el coste de envío según el peso del paquete y el tipo de
+entrega:
+
+- hasta `1 kg`: `3 €`;
+- más de `1 kg` y hasta `5 kg`: `6 €`;
+- más de `5 kg`: `10 €`;
+- la entrega urgente añade `4 €`;
+- los pedidos superiores a `50 €` no pagan el envío estándar.
+
+Pide el importe del pedido, el peso y si se desea entrega urgente. Valida que
+el importe y el peso sean valores no negativos. Muestra el coste de transporte
+y el total de la compra. Si el pedido supera `50 €`, explica si la entrega
+urgente se mantiene como coste adicional. Prueba valores en los límites del
+peso y del importe, con entrega normal y urgente.
+
+#### Actividad 5: recomendar un plan de almacenamiento
+
+Una aplicación ofrece tres planes de almacenamiento: `básico`, `profesional`
+y `empresa`. Pide el plan elegido, el espacio que necesita la persona en
+gigabytes y si necesita copias de seguridad.
+
+Los planes disponibles ofrecen, respectivamente, `50`, `200` y `1000 GB`.
+Determina si el plan elegido cubre el espacio solicitado. Las copias de
+seguridad solo están incluidas en los planes `profesional` y `empresa`; si se
+solicitan en el plan básico, informa de que es necesario cambiar de plan.
+
+Acepta el nombre del plan con mayúsculas y espacios sobrantes, rechaza planes
+desconocidos y valida que el espacio solicitado sea un número positivo.
+Presenta una recomendación final explicando si el plan sirve, si falta espacio
+o si hay que contratar un plan superior. El programa debe resolver una sola
+consulta y no necesita repetir el menú ni procesar una colección de consultas.
 
 ---
 
