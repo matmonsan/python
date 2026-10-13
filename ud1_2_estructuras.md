@@ -2,6 +2,7 @@
 title: "UD1.2: Introducción a la programación en Python. Estructuras."
 description: "<strong>Módulo:</strong> Programación y Automatización en Sistemas Informáticos y en Red <br> <strong>Profesor:</strong> Matías Montávez Sánchez"
 ---
+[⌂ Volver al inicio](index.md)
 
 ## Índice
 
