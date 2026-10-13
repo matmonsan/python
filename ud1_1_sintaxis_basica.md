@@ -1617,11 +1617,11 @@ Pide por separado el nombre y los apellidos. Prueba el programa con `  mARía  `
 
 #### Actividad 3: informe de incidencias
 
-Pide una descripción de una incidencia. Prueba el programa con `  ERROR en aula. Error al arrancar  `. Presenta cuatro datos: la descripción sin espacios sobrantes; una versión con las palabras en formato de título; una versión en minúsculas con los espacios reemplazados por guiones; y la cantidad de veces que aparece `error`, contando igual `ERROR` y `Error`. Calcula también la cantidad de caracteres de la descripción limpia. Presenta cada resultado con una etiqueta clara.
+Pide una descripción de una incidencia. Prueba el programa con ``  ERROR en aula. Error al arrancar  ``. Presenta cuatro datos: la descripción sin espacios sobrantes; una versión con las palabras en formato de título; una versión en minúsculas con los espacios reemplazados por guiones; y la cantidad de veces que aparece ``error``, contando igual ``ERROR`` y ``Error``. Calcula también la cantidad de caracteres de la descripción limpia. Presenta cada resultado con una etiqueta clara.
 
 #### Actividad 4: selección de asignaturas
 
-La entrada inicial es la cadena `"  Python, Redes , Sistemas, Python  "` (con espacios sobrantes al principio, al final y alrededor de las comas). Convierte sus elementos en una selección sin espacios sobrantes ni asignaturas repetidas. Añade `Bases de datos`, elimina `Redes` porque ya no se imparte y muestra la selección final en orden alfabético, separando las asignaturas con ` &#124; `. La línea final debe ser `Bases de datos &#124; Python &#124; Sistemas`.
+La entrada inicial es la cadena ``"  Python, Redes , Sistemas, Python  "`` (con espacios sobrantes al principio, al final y alrededor de las comas). Convierte sus elementos en una selección sin espacios sobrantes ni asignaturas repetidas. Añade ``Bases de datos``, elimina ``Redes`` porque ya no se imparte y muestra la selección final en orden alfabético, separando las asignaturas con `` | ``. La línea final debe ser ``Bases de datos | Python | Sistemas``.
 
 #### Actividad 5: lista de compra compartida
 
