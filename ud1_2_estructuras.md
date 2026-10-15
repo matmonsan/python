@@ -417,6 +417,12 @@ También es posible añadir una **guarda** a un `case` mediante `if`. La guarda
 se evalúa después de que el patrón haya coincidido, por lo que permite expresar
 comparaciones como intervalos o combinar varias condiciones:
 
+En cada `case`, `valor` es una variable que captura el valor que se está
+analizando: aquí, el valor de `numero`. Por tanto, como `numero` vale `12`,
+la primera guarda comprueba si `12 > 10` y se ejecuta ese bloque. El nombre
+`valor` podría sustituirse por otro nombre; no es una palabra especial de
+`match`.
+
 ```python
 numero = 12
 
