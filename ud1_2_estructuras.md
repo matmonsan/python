@@ -602,122 +602,283 @@ consulta y no necesita repetir el menú ni procesar una colección de consultas.
 
 [⬆ Volver al índice](#índice)
 
-Los bucles permiten repetir acciones sin duplicar código.
+Un bucle ejecuta varias veces un bloque de instrucciones. Cada ejecución se
+llama **iteración**. En Python hay dos estructuras principales:
 
-### 3.1 Bucle `for`
+- `for`, para recorrer los elementos de una secuencia o repetir una acción un
+  número determinado de veces;
+- `while`, para repetir una acción mientras se cumpla una condición.
 
-`for` recorre elementos de un iterable:
+El bloque que se repite se escribe indentado debajo de la línea del bucle.
+
+### 3.1 El bucle `for`
+
+El bucle `for` repite un bloque de instrucciones **una vez por cada elemento**
+de una colección o secuencia. En Python, esta es la forma habitual de recorrer
+una cadena o una lista. No se indica un contador ni se avanza manualmente: el
+propio `for` toma el siguiente elemento en cada vuelta.
+
+La forma general es:
 
 ```python
-for letra in "Python":
+for variable in secuencia:
+	# instrucciones que se repiten
+	pass
+```
+
+`variable` es un nombre que se elige para representar el elemento actual.
+`secuencia` es aquello que se quiere recorrer. Las instrucciones indentadas se
+ejecutan en cada vuelta. Cuando ya no quedan elementos, el bucle termina.
+
+Por ejemplo:
+
+```python
+for letra in "Sol":
 	print(letra)
 ```
 
-Con `range()`:
+Primero `letra` vale `"S"` y se ejecuta `print(letra)`. Después vale `"o"` y
+se vuelve a ejecutar la instrucción; por último vale `"l"`. El resultado son
+tres líneas: `S`, `o` y `l`.
+
+```python
+frutas = ["pera", "uva", "manzana"]
+
+for fruta in frutas:
+	print(fruta)
+```
+
+En este caso, `fruta` toma primero el valor `"pera"`, luego `"uva"` y después
+`"manzana"`. Como la lista tiene tres elementos, el bloque se ejecuta tres
+veces. Este uso de `for` es parecido al `foreach` de otros lenguajes: se
+recorren directamente los elementos, sin trabajar con sus posiciones.
+
+#### Repetir con `range()`
+
+Si no se necesita recorrer una lista concreta y solo se quiere repetir una
+acción cierta cantidad de veces, se usa `range()`:
 
 ```python
 for numero in range(5):
-	print(numero)  # 0, 1, 2, 3, 4
+	print(numero)
+```
 
+`range(5)` proporciona los números `0`, `1`, `2`, `3` y `4`; por eso el bloque
+se ejecuta cinco veces. En cada vuelta, `numero` recibe uno de esos valores.
+El número final (`5`) no se incluye.
+
+También se pueden indicar el inicio y el final:
+
+```python
+for numero in range(1, 4):
+	print(numero)  # 1, 2, 3
+```
+
+Y, si hace falta, cuánto avanzar entre un número y el siguiente:
+
+```python
 for numero in range(2, 10, 2):
 	print(numero)  # 2, 4, 6, 8
 ```
 
-El límite final de `range()` no se incluye.
+En `range(inicio, fin, paso)`, el recorrido empieza en `inicio`, avanza según
+`paso` y se detiene antes de `fin`. Si solo se da el final, se empieza en `0`
+y se avanza de uno en uno. El paso también puede ser negativo para contar hacia
+atrás:
 
-### 3.2 Recorrer listas y diccionarios
+```python
+for numero in range(3, 0, -1):
+	print(numero)  # 3, 2, 1
+```
+
+Por tanto, `for` y `foreach` no son dos tipos de bucle de Python: Python tiene
+la instrucción `for`, que recorre los valores que se le proporcionan. Para
+recorrer los elementos se escribe `for elemento in coleccion`; para repetir un
+número de veces, se combina con `range()`. La forma `for...of` pertenece a
+JavaScript, no a Python.
+
+#### Usar `for` para procesar elementos
+
+Un bucle puede ir procesando los valores y guardar un resultado en una
+variable. Por ejemplo, para sumar los precios de una lista:
 
 ```python
 precios = [10.5, 8.0, 12.25]
 total = 0
 
 for precio in precios:
-	total += precio
+	total = total + precio
 
-for clave, valor in {"a": 1, "b": 2}.items():
-	print(clave, valor)
+print(total)  # 30.75
 ```
 
-`enumerate()` aporta índice y valor:
+`total` empieza en `0`; en cada iteración se le añade el precio actual.
+También se puede escribir `total += precio`.
 
-```python
-for indice, fruta in enumerate(["pera", "uva"], start=1):
-	print(indice, fruta)
-```
+### 3.2 El bucle `while`
 
-`zip()` recorre varias secuencias a la vez:
-
-```python
-nombres = ["Ana", "Luis"]
-edades = [22, 30]
-
-for nombre, edad in zip(nombres, edades):
-	print(f"{nombre}: {edad}")
-```
-
-### 3.3 Bucle `while`
-
-Se repite mientras una condición sea verdadera:
+`while` repite un bloque **mientras** su condición sea verdadera. La condición
+se comprueba antes de cada iteración:
 
 ```python
 contador = 3
+
 while contador > 0:
 	print(contador)
-	contador -= 1
+	contador = contador - 1
+
 print("Fin")
 ```
 
-Hay que modificar alguna variable de control o usar una salida para evitar bucles infinitos.
+Se muestran `3`, `2` y `1`. En cada vuelta se resta uno a `contador`; cuando
+llega a `0`, la condición `contador > 0` es falsa y el bucle termina. Si la
+condición es falsa desde el principio, el bloque no se ejecuta.
 
-### 3.4 Menús repetitivos
+Usa `while` cuando no sepas de antemano cuántas repeticiones harán falta, por
+ejemplo, si quieres seguir pidiendo una respuesta hasta que sea válida. Es
+importante que algo dentro del bucle permita que la condición cambie. Si nunca
+cambia y no hay otra forma de terminar, el programa se queda en un **bucle
+infinito**.
+
+### 3.3 Repetir una pregunta o mostrar un menú
+
+Un valor especial puede servir para indicar que se quiere terminar. Se suele
+llamar **valor de salida** o **centinela**:
 
 ```python
-while True:
-	opcion = input("1) Saludar  2) Salir: ").strip()
+respuesta = input("Escribe algo (o 'fin' para terminar): ")
+
+while respuesta != "fin":
+	print(f"Has escrito: {respuesta}")
+	respuesta = input("Escribe algo (o 'fin' para terminar): ")
+```
+
+La pregunta aparece antes del bucle y al final de cada iteración. Así se
+comprueba la respuesta nueva y se puede salir cuando se escribe `"fin"`.
+
+Un menú también puede repetirse usando una condición en el `while`. En este
+ejemplo, la variable `opcion` se actualiza después de cada respuesta y el
+menú termina cuando se escribe `"3"`:
+
+```python
+opcion = ""
+
+while opcion != "3":
+	print("1) Saludar")
+	print("2) Mostrar ayuda")
+	print("3) Salir")
+	opcion = input("Elige una opción: ")
+
 	if opcion == "1":
 		print("Hola")
 	elif opcion == "2":
-		break
-	else:
+		print("Selecciona una opción del menú.")
+	elif opcion != "3":
 		print("Opción no válida")
 ```
 
-### 3.5 Comprensiones
+### 3.4 Resumen: ¿qué bucle elegir?
 
-```python
-pares = [numero for numero in range(20) if numero % 2 == 0]
-```
+- Elige `for` para recorrer los elementos de una secuencia o repetir una acción
+  una cantidad conocida de veces con `range()`.
+- Elige `while` para repetir mientras se cumpla una condición, cuando todavía
+  no sabes cuántas vueltas serán necesarias.
 
-Una comprensión equivale conceptualmente a un bucle que construye una colección, pero debe mantenerse sencilla.
-
-### 3.6 `else` en bucles
-
-El `else` de un bucle se ejecuta si el bucle termina normalmente, no si se interrumpe con `break`:
-
-```python
-for numero in range(2, 10):
-	if numero == 7:
-		print("Encontrado")
-		break
-else:
-	print("No encontrado")
-```
-
-### 3.7 Evitar modificar una colección mientras se recorre
-
-Puede provocar resultados inesperados. Es más seguro construir otra colección:
-
-```python
-numeros = [1, 2, 3, 4, 5]
-pares = [numero for numero in numeros if numero % 2 == 0]
-print(pares)
-```
+En cualquier bucle, comprueba qué hace que avance y qué condición hace que
+termine. Esto evita repetir trabajo innecesariamente o crear un bucle que no
+acaba.
 
 ### Actividades 3
 
-#### Actividad 1: estadísticas
+Resuelve los siguientes problemas diseñando el orden de las instrucciones, las
+condiciones y la repetición necesarias. No uses clases ni excepciones. Cuando
+un enunciado indique que los datos introducidos son válidos, no hace falta
+programar su validación.
 
-Pide números hasta que se escriba `fin`. Guarda los válidos y muestra cantidad, suma, media, mínimo y máximo. Decide qué debe ocurrir si no se introduce ningún número.
+#### Actividad 1: control de acceso
+
+Un sistema permite hasta tres intentos para introducir un código. El código
+correcto es `"4826"`.
+
+Pide el código y comunica si el acceso está autorizado. Si no es correcto,
+permite intentarlo de nuevo y avisa de cuántos intentos quedan. Después del
+tercer error, muestra que el acceso se ha bloqueado. Cuando el código sea
+correcto, no vuelvas a pedirlo.
+
+Prueba el caso en que se acierta en el primer intento, en el último intento y
+en ninguno. Resuelve el ejercicio usando un bucle y condicionales.
+
+#### Actividad 2: comprobar si un número es primo
+
+Pide un número entero mayor que `1` y determina si es primo. Un número primo
+solo se puede dividir exactamente entre `1` y entre sí mismo.
+
+Prueba, si algún número entre `2` y el número anterior al
+introducido lo divide exactamente. Si encuentras un divisor, el número no es
+primo, si terminas las comprobaciones sin encontrar ninguno, sí lo es.
+Muestra el resultado. Comprueba el programa con un número primo, uno compuesto
+y el `2`, que es el menor número primo.
+
+#### Actividad 3: máquina expendedora
+
+Una máquina vende un producto que cuesta `170` céntimos. Solicita el valor de
+cada moneda en céntimos, de una en una; acepta `10`, `20`, `50` y `100`. La
+persona puede introducir monedas hasta completar el precio.
+
+Si se introduce una moneda no aceptada, informa del problema y vuelve a
+solicitar una moneda sin aumentar el importe pagado. Cuando se haya alcanzado
+o superado el precio, indica que entrega el producto y cuánto cambio debe
+devolver. El programa debe terminar en cuanto la compra se pueda completar.
+
+No hace falta validar que la entrada se pueda convertir a número. Al final,
+muestra el cambio tanto en céntimos como en euros.
+
+#### Actividad 4: control de aforo de una sala
+
+Una sala admite como máximo `8` personas. El programa debe llevar la cuenta de
+cuántas hay dentro. En cada turno, pide una acción: `entra`, `sale` o `fin`.
+
+- Si la acción es `entra` y aún hay plazas, aumenta el aforo ocupado en uno.
+- Si la sala está llena, no admitas a nadie más e informa de ello.
+- Si la acción es `sale` y hay personas dentro, reduce el aforo ocupado en
+  uno.
+- Si la sala está vacía, no permitas que salga una persona y avisa de que no
+  hay nadie dentro.
+- Si se escribe `fin`, termina el control e informa de cuántas personas quedan
+  en la sala.
+
+Después de cada acción distinta de `fin`, muestra el aforo actual. Supón que
+las acciones introducidas son válidas. Prueba entradas y salidas en los
+límites, como intentar entrar con la sala llena y salir cuando está vacía.
+
+#### Actividad 5: simulación de operaciones bancarias
+
+Simula el uso de una cuenta bancaria mediante un menú que se repite hasta que
+se elija `salir`. La cuenta empieza activa, tiene un titular y un saldo inicial
+aleatorio entre `0 €` y `1.000 €`. Puedes usar el módulo `random` para generar
+el saldo. En cada vuelta, pide una operación: `ingresar`, `retirar`, `consultar`,
+`cerrar cuenta`, `abrir cuenta` o `salir`.
+
+Aplica estas reglas:
+
+- **Ingresar**: solicita una cantidad positiva y súmala al saldo. Solo se
+  puede operar con una cuenta activa.
+- **Retirar**: solicita una cantidad positiva. Solo permite la retirada si la
+  cuenta está activa y hay saldo suficiente.
+- **Consultar**: muestra el titular, el saldo y si la cuenta está activa o
+  cerrada.
+- **Cerrar cuenta**: solo se puede cerrar si está activa y el saldo es `0`.
+- **Abrir cuenta**: solo se puede abrir si está cerrada. Al abrirla, el saldo
+  empieza en `0 €`.
+- **Salir**: termina el menú y muestra el estado final de la cuenta.
+
+Si una operación no se puede realizar, explica el motivo y vuelve a mostrar
+el menú. Normaliza el texto de la operación para aceptar mayúsculas y espacios
+sobrantes. Supón que las cantidades introducidas son números positivos; no
+hace falta gestionar errores de conversión. Prueba una secuencia que incluya
+un ingreso, una retirada superior al saldo disponible, una consulta, un intento
+de cierre con saldo, una retirada que deje el saldo en cero, el cierre, una
+nueva apertura y la salida.
 
 ---
 
