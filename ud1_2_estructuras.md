@@ -11,6 +11,7 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
    - [Actividades 2](#actividades-2)
 3. [Repetición y estructuras de repetición](#3-repetición-y-estructuras-de-repetición)
    - [Actividades 3](#actividades-3)
+   - [Actividades extra](#actividades-extra)
 4. [Estructuras de salto](#4-estructuras-de-salto)
 5. [Control de excepciones](#5-control-de-excepciones)
    - [Actividades 5](#actividades-5)
@@ -879,6 +880,97 @@ hace falta gestionar errores de conversión. Prueba una secuencia que incluya
 un ingreso, una retirada superior al saldo disponible, una consulta, un intento
 de cierre con saldo, una retirada que deje el saldo en cero, el cierre, una
 nueva apertura y la salida.
+
+### Actividades extra
+
+#### Actividad 6: promedio de notas por alumno
+
+Dispones de una lista bidimensional con el nombre de cada alumno y sus tres
+notas. Cada fila contiene primero el nombre y, a continuación, las notas; por
+ejemplo:
+
+```python
+alumnos = [
+	["Ana", 8, 7.5, 9],
+	["Luis", 6, 8, 7],
+	["Marta", 9.5, 10, 8.5],
+]
+```
+
+Recorre la lista y calcula el promedio de las tres notas de cada alumno.
+Muestra el nombre y el promedio de cada uno en una tabla clara, con encabezados
+para las columnas. Presenta los promedios con dos decimales.
+
+#### Actividad 7: contar las letras de una palabra
+
+Pide al usuario una palabra y cuenta cuántas veces aparece cada letra. El
+conteo no debe distinguir entre mayúsculas y minúsculas: por ejemplo, en
+`"Casa"` la `a` aparece dos veces. Usa un diccionario para guardar cada letra
+y su cantidad.
+
+Muestra los resultados en una tabla con una columna para la letra y otra para
+su frecuencia. Cada letra debe aparecer una sola vez en la tabla.
+
+#### Actividad 8: sucesión de valores enteros
+
+Pide un valor inicial, un valor final mayor que el inicial y cuántos valores
+intermedios se desean. Genera y muestra la lista de valores enteros que empieza
+en el valor inicial y termina en el final, repartiendo los valores de forma
+equidistante. Elige valores que permitan obtener saltos enteros. No cuentes
+los extremos como valores intermedios. Por ejemplo, con los valores `10`,
+`25` y `2`, la lista debe ser `[10, 15, 20, 25]`.
+
+#### Actividad 9: detectar números pares
+
+Pregunta cuántos números se van a introducir y pide esa cantidad de números.
+Al terminar, indica si se ha escrito al menos un número par. Prueba tanto una
+serie que incluya un número par como otra en la que todos sean impares.
+
+#### Actividad 10: crear una lista de letras
+
+Pide una palabra o frase y crea una lista con sus caracteres, manteniendo el
+orden original e incluyendo los espacios. Muestra la lista resultante.
+
+#### Actividad 11: sustituir las vocales de una frase
+
+Pide una frase y una vocal. Crea una nueva frase sustituyendo todas las
+vocales de la frase original por la vocal indicada. Conserva los espacios y
+las consonantes, y muestra el resultado. Por ejemplo, con la frase
+`"tengo una hormiguita"` y la vocal `a`, el resultado empieza por
+`"tanga ana..."`.
+
+#### Actividad 12: comprobar si una frase es palíndroma
+
+Pide una frase y comprueba si se lee igual de izquierda a derecha que de
+derecha a izquierda, ignorando los espacios y las diferencias entre
+mayúsculas y minúsculas. Muestra si es o no palíndroma. Prueba, por ejemplo,
+`"salta lenin el atlas"` y `"dabale arroz a la zorra el abad"`.
+
+#### Actividad 13: convertir un número a números romanos
+
+Pide un número entero positivo inferior a `5000` y muestra su representación
+en números romanos. Usa los valores `I=1`, `V=5`, `X=10`, `L=50`, `C=100`,
+`D=500` y `M=1000`. Para simplificar, se permite la notación romana antigua:
+pueden aparecer hasta cuatro símbolos iguales seguidos. Por ejemplo, `3799`
+se escribe `MMMDCCLXXXXVIIII`.
+
+#### Actividad 14: contar años bisiestos entre dos años
+
+Pide dos años y recorre todos los años del intervalo, incluyendo ambos
+extremos. Cuenta cuántos son bisiestos y suma el número de días de cada año
+del intervalo. Un año es bisiesto si es divisible por `400`, o si es divisible
+por `4` pero no por `100`. Muestra la cantidad de años bisiestos y el total
+de días. Si el primer año es posterior al segundo, intercambia los valores
+para recorrer el intervalo en orden.
+
+#### Actividad 15: jugar a adivinar una clave
+
+Crea una versión sencilla de Master Mind. Pide una longitud entre `2` y `9`
+y genera una clave secreta de esa longitud formada por cifras distintas. A
+continuación, pide intentos hasta que se adivine la clave. Después de cada
+intento, indica cuántas cifras coinciden con la clave tanto en valor como en
+posición. Cuando se acierten todas, muestra un mensaje de felicitación y
+termina el juego. Puedes utilizar el módulo `random` para generar la clave.
 
 ---
 
