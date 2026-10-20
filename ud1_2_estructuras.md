@@ -901,6 +901,21 @@ Recorre la lista y calcula el promedio de las tres notas de cada alumno.
 Muestra el nombre y el promedio de cada uno en una tabla clara, con encabezados
 para las columnas. Presenta los promedios con dos decimales.
 
+Ejemplo de datos y salida:
+
+```text
+Datos:
+Ana: 8, 7.5, 9
+Luis: 6, 8, 7
+Marta: 9.5, 10, 8.5
+
+Alumno  | Promedio
+--------|---------
+Ana     | 8.17
+Luis    | 7.00
+Marta   | 9.33
+```
+
 #### Actividad 7: contar las letras de una palabra
 
 Pide al usuario una palabra y cuenta cuántas veces aparece cada letra. El
@@ -911,6 +926,18 @@ y su cantidad.
 Muestra los resultados en una tabla con una columna para la letra y otra para
 su frecuencia. Cada letra debe aparecer una sola vez en la tabla.
 
+Ejemplo de ejecución:
+
+```text
+Dígame una palabra: Casa
+
+Letra | Frecuencia
+------+-----------
+c     | 1
+a     | 2
+s     | 1
+```
+
 #### Actividad 8: sucesión de valores enteros
 
 Pide un valor inicial, un valor final mayor que el inicial y cuántos valores
@@ -920,16 +947,44 @@ equidistante. Elige valores que permitan obtener saltos enteros. No cuentes
 los extremos como valores intermedios. Por ejemplo, con los valores `10`,
 `25` y `2`, la lista debe ser `[10, 15, 20, 25]`.
 
+Ejemplo de ejecución:
+
+```text
+Dígame el valor inicial: 10
+Dígame el valor final: 25
+Dígame el número de valores intermedios: 2
+La lista correspondiente es [10, 15, 20, 25]
+```
+
 #### Actividad 9: detectar números pares
 
 Pregunta cuántos números se van a introducir y pide esa cantidad de números.
 Al terminar, indica si se ha escrito al menos un número par. Prueba tanto una
 serie que incluya un número par como otra en la que todos sean impares.
 
+Ejemplo de ejecución:
+
+```text
+Dígame cuántos números va a escribir: 5
+Dígame el número 1: 17
+Dígame el número 2: 5
+Dígame el número 3: 7
+Dígame el número 4: 22
+Dígame el número 5: 19
+Ha escrito algún número par
+```
+
 #### Actividad 10: crear una lista de letras
 
 Pide una palabra o frase y crea una lista con sus caracteres, manteniendo el
 orden original e incluyendo los espacios. Muestra la lista resultante.
+
+Ejemplo de ejecución:
+
+```text
+Dígame algo: Una prueba
+La lista creada es ['U', 'n', 'a', ' ', 'p', 'r', 'u', 'e', 'b', 'a']
+```
 
 #### Actividad 11: sustituir las vocales de una frase
 
@@ -939,12 +994,27 @@ las consonantes, y muestra el resultado. Por ejemplo, con la frase
 `"tengo una hormiguita"` y la vocal `a`, el resultado empieza por
 `"tanga ana..."`.
 
+Ejemplo de ejecución:
+
+```text
+Dígame algo: tengo una hormiguita en la panchita
+Dígame una vocal: a
+La frase es ahora: tanga ana harmagaata an la panchata
+```
+
 #### Actividad 12: comprobar si una frase es palíndroma
 
 Pide una frase y comprueba si se lee igual de izquierda a derecha que de
 derecha a izquierda, ignorando los espacios y las diferencias entre
 mayúsculas y minúsculas. Muestra si es o no palíndroma. Prueba, por ejemplo,
 `"salta lenin el atlas"` y `"dabale arroz a la zorra el abad"`.
+
+Ejemplo de ejecución:
+
+```text
+Dígame algo: Salta Lenin el Atlas
+Salta Lenin el Atlas es palíndroma
+```
 
 #### Actividad 13: convertir un número a números romanos
 
@@ -953,6 +1023,13 @@ en números romanos. Usa los valores `I=1`, `V=5`, `X=10`, `L=50`, `C=100`,
 `D=500` y `M=1000`. Para simplificar, se permite la notación romana antigua:
 pueden aparecer hasta cuatro símbolos iguales seguidos. Por ejemplo, `3799`
 se escribe `MMMDCCLXXXXVIIII`.
+
+Ejemplo de ejecución:
+
+```text
+Dígame un número: 3799
+En números romanos, 3799 se escribe MMMDCCLXXXXVIIII
+```
 
 #### Actividad 14: contar años bisiestos entre dos años
 
@@ -963,6 +1040,15 @@ por `4` pero no por `100`. Muestra la cantidad de años bisiestos y el total
 de días. Si el primer año es posterior al segundo, intercambia los valores
 para recorrer el intervalo en orden.
 
+Ejemplo de ejecución:
+
+```text
+Dígame un año: 1999
+Dígame otro año: 2001
+Entre 1999 y 2001 (ambos incluidos) hubo 1 año bisiesto
+y en total 1096 días.
+```
+
 #### Actividad 15: jugar a adivinar una clave
 
 Crea una versión sencilla de Master Mind. Pide una longitud entre `2` y `9`
@@ -971,6 +1057,16 @@ continuación, pide intentos hasta que se adivine la clave. Después de cada
 intento, indica cuántas cifras coinciden con la clave tanto en valor como en
 posición. Cuando se acierten todas, muestra un mensaje de felicitación y
 termina el juego. Puedes utilizar el módulo `random` para generar la clave.
+
+Ejemplo de ejecución (la clave generada en esta partida es `2431`):
+
+```text
+Dígame la longitud de la cadena: 4
+Intente adivinar la cadena: 1234
+Con 1234 ha adivinado 1 valores. Intente adivinar la cadena: 2435
+Con 2435 ha adivinado 3 valores. Intente adivinar la cadena: 2431
+Con 2431 ha adivinado 4 valores. Felicidades
+```
 
 ---
 
