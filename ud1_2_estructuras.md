@@ -886,11 +886,15 @@ nueva apertura y la salida.
 
 [⬆ Volver al índice](#índice)
 
-Las estructuras de salto modifican el flujo habitual de un bucle o una función.
+En esta sección veremos dos instrucciones que cambian el recorrido de un bucle:
+`break` y `continue`. Ambas afectan al bucle más cercano en el que aparecen,
+pero de forma distinta.
 
 ### 4.1 `break`
 
-Termina el bucle más cercano:
+`break` termina inmediatamente el bucle más cercano. El programa continúa con
+la primera instrucción que haya después de ese bucle. No termina el programa
+completo ni, si hay bucles anidados, los bucles exteriores.
 
 ```python
 for numero in range(100):
@@ -899,9 +903,14 @@ for numero in range(100):
 	print(numero)
 ```
 
+En este ejemplo se muestran los números del `0` al `9`. Cuando `numero` vale
+`10`, se ejecuta `break`, por lo que no se muestra ese número y el bucle acaba.
+
 ### 4.2 `continue`
 
-Salta el resto de la iteración actual y continúa con la siguiente:
+`continue` no termina el bucle: interrumpe solo la iteración actual. Se omiten
+las instrucciones que quedan en esa vuelta y el bucle pasa a la siguiente
+iteración.
 
 ```python
 for numero in range(1, 11):
@@ -910,58 +919,16 @@ for numero in range(1, 11):
 	print(numero)  # solo impares
 ```
 
-### 4.3 `pass`
-
-No hace nada; sirve como marcador sintáctico temporal:
-
-```python
-def funcionalidad_pendiente():
-	pass
-```
-
-No debe utilizarse para ocultar errores ni como sustituto permanente de una implementación requerida.
-
-### 4.4 `return`
-
-Termina una función y puede entregar un valor:
-
-```python
-def es_par(numero):
-	return numero % 2 == 0
-```
-
-Un `return` sin valor devuelve `None`.
-
-### 4.5 `raise`
-
-Lanza una excepción de manera explícita:
-
-```python
-def dividir(a, b):
-	if b == 0:
-		raise ValueError("El divisor no puede ser cero")
-	return a / b
-```
-
-### 4.6 `yield`
-
-`yield` convierte una función en generador y produce valores de uno en uno:
-
-```python
-def contar_hasta(limite):
-	for numero in range(1, limite + 1):
-		yield numero
-
-
-for numero in contar_hasta(3):
-	print(numero)
-```
-
-Los generadores pueden ahorrar memoria cuando la secuencia es grande.
+El ejemplo muestra los números impares del `1` al `9`: para cada número par,
+`continue` salta `print(numero)`, pero el bucle sigue con el siguiente número.
 
 ### Criterio de diseño
 
-Los saltos son herramientas útiles, pero demasiados `break`, `continue` y retornos dispersos pueden dificultar la lectura. Cada salto debería hacer evidente qué condición lo provoca y por qué mejora el algoritmo.
+Usa estas instrucciones cuando hagan más claro el recorrido del bucle. La
+condición que provoca el salto debe ser fácil de identificar: `break` sirve
+para salir del bucle y `continue` para descartar solo la vuelta actual. Si
+aparecen muchos saltos, puede resultar más difícil entender qué instrucciones
+se ejecutan y en qué orden.
 
 ---
 
