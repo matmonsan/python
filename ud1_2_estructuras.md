@@ -1002,18 +1002,17 @@ Dígame una vocal: a
 La frase es ahora: tanga ana harmagaata an la panchata
 ```
 
-#### Actividad 12: comprobar si una frase es palíndroma
+#### Actividad 12: calcular la letra del DNI
 
-Pide una frase y comprueba si se lee igual de izquierda a derecha que de
-derecha a izquierda, ignorando los espacios y las diferencias entre
-mayúsculas y minúsculas. Muestra si es o no palíndroma. Prueba, por ejemplo,
-`"salta lenin el atlas"` y `"dabale arroz a la zorra el abad"`.
+Pide el número de un DNI sin letra y calcula la letra correspondiente. Para
+obtenerla, divide el número entre `23` y usa el resto como índice en esta
+cadena: `TRWAGMYFPDXBNJZSQVHLCKE`. Muestra el número seguido de su letra.
 
 Ejemplo de ejecución:
 
 ```text
-Dígame algo: Salta Lenin el Atlas
-Salta Lenin el Atlas es palíndroma
+Dígame su DNI (sin letra): 31415926
+Su DNI (con letra) es: 31415926L
 ```
 
 #### Actividad 13: convertir un número a números romanos
