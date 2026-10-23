@@ -1257,8 +1257,6 @@ información nueva.
 
 ### 5.6 Generación automática
 
-#### 3 herramientas para documentar Python
-
 Las herramientas de generación reúnen docstrings y páginas escritas en
 Markdown para producir documentación fácil de consultar. Cada una se adapta
 a necesidades distintas: `pydoc` permite empezar rápidamente, Sphinx ofrece
