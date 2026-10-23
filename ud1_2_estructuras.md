@@ -1257,10 +1257,39 @@ información nueva.
 
 ### 5.6 Generación automática
 
-Herramientas como Sphinx, pydoc y MkDocs pueden construir documentación a
-partir de docstrings y archivos Markdown. La generación automática no
-sustituye la escritura cuidadosa: solo publica lo que se ha expresado en el
-código y no comprueba por sí misma que las explicaciones sigan siendo ciertas.
+#### 3 herramientas para documentar Python
+
+Las herramientas de generación reúnen docstrings y páginas escritas en
+Markdown para producir documentación fácil de consultar. Cada una se adapta
+a necesidades distintas: `pydoc` permite empezar rápidamente, Sphinx ofrece
+más opciones para proyectos Python y MkDocs facilita crear un sitio a partir
+de páginas Markdown.
+
+##### 1. `pydoc`
+
+Es la opción más sencilla y viene incluida con Python. Puede mostrar la
+documentación de módulos en el navegador o generar un archivo HTML. Para
+probarlo, desde la terminal ejecuta:
+
+```console
+python -m pydoc -b
+```
+
+Se iniciará un servidor local y se abrirá el navegador con la documentación
+de los módulos disponibles. Para generar un archivo HTML con la información
+de un módulo propio, sitúate en la carpeta desde la que se puede importar y
+ejecuta:
+
+```console
+python -m pydoc -w mi_programa
+```
+
+El comando crea `mi_programa.html` a partir de los docstrings del módulo.
+
+La generación automática no sustituye la escritura cuidadosa: publica lo que
+se ha expresado en los docstrings y las páginas, pero no comprueba por sí
+misma que sus explicaciones sigan siendo ciertas. Revisa los ejemplos y
+actualiza la documentación cuando cambie el programa.
 
 ### Actividades 5
 
