@@ -13,12 +13,12 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
    - [Actividades 3](#actividades-3)
    - [Actividades extra](#actividades-extra)
 4. [Estructuras de salto](#4-estructuras-de-salto)
-5. [Control de excepciones](#5-control-de-excepciones)
+5. [Documentación de programas](#5-documentación-de-programas)
    - [Actividades 5](#actividades-5)
-6. [Depuración y depurador](#6-depuración-y-depurador)
-7. [El depurador como herramienta de control de errores](#7-el-depurador-como-herramienta-de-control-de-errores)
-   - [Actividades 7](#actividades-7)
-8. [Documentación y documentación de programas](#8-documentación-y-documentación-de-programas)
+6. [Control de excepciones](#6-control-de-excepciones)
+   - [Actividades 6](#actividades-6)
+7. [Depuración y depurador](#7-depuración-y-depurador)
+8. [El depurador como herramienta de control de errores](#8-el-depurador-como-herramienta-de-control-de-errores)
    - [Actividades 8](#actividades-8)
 9. [Programación orientada a objetos](#9-programación-orientada-a-objetos)
    - [Actividades 9](#actividades-9)
@@ -1119,13 +1119,191 @@ se ejecutan y en qué orden.
 
 ---
 
-## 5. Control de excepciones
+## 5. Documentación de programas
+
+[⬆ Volver al índice](#índice)
+
+Documentar un programa consiste en dejar por escrito la información que otras
+personas —incluida quien lo creó meses después— necesitan para utilizarlo,
+entenderlo y mantenerlo. La documentación complementa al código: explica su
+propósito y sus contratos, mientras que el código muestra exactamente cómo se
+ejecuta.
+
+No toda la documentación debe estar en el mismo lugar. El `README.md` orienta
+sobre el proyecto completo; los docstrings describen módulos, clases y
+funciones desde el propio código; las anotaciones de tipo muestran qué datos
+se esperan; y los comentarios aclaran decisiones que no resultan evidentes al
+leer las instrucciones. Elegir el lugar adecuado evita repetir información y
+facilita encontrarla.
+
+Una regla útil es documentar lo que una persona necesita saber y no puede
+deducir fácilmente del código. Hay que explicar el propósito, los pasos de
+uso, las restricciones, los resultados y los errores relevantes. No conviene
+describir línea por línea una operación sencilla: si el código cambia, ese
+comentario puede quedar desactualizado y confundir.
+
+### 5.1 README
+
+El archivo `README.md` es la puerta de entrada al proyecto. Debe permitir que
+alguien que no conoce el código sepa qué resuelve y pueda ponerlo en marcha.
+Según el tamaño del proyecto, puede incluir:
+
+- **Propósito:** qué problema resuelve y para quién.
+- **Requisitos:** versión de Python y dependencias necesarias.
+- **Instalación:** cómo preparar el entorno y las dependencias.
+- **Ejecución:** comando para iniciar el programa.
+- **Uso:** ejemplo de entrada y salida o una descripción de las opciones.
+- **Pruebas:** cómo ejecutarlas, si el proyecto las incluye.
+- **Configuración:** opciones necesarias, sin publicar contraseñas ni claves.
+- **Estructura y mantenimiento:** dónde están las partes principales y cómo
+  contribuir, cuando sea pertinente.
+
+Por ejemplo, no basta con indicar «ejecuta `main.py`» si antes hay que crear
+un entorno virtual o instalar paquetes. Es preferible escribir los pasos en
+el orden en que se deben realizar y comprobarlos en una instalación limpia.
+
+Ejemplo de estructura habitual de un proyecto:
+
+```text
+mi_proyecto/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── src/
+│   └── mi_app/
+│       ├── __init__.py
+│       └── main.py
+└── tests/
+	└── test_main.py
+```
+
+### 5.2 Docstrings de funciones
+
+Un docstring es una cadena de texto situada al principio de un módulo, una
+clase o una función. Describe su propósito y forma parte de la información que
+las herramientas de Python pueden mostrar, por ejemplo mediante `help()`.
+Para una función, conviene explicar los parámetros, el valor que devuelve y
+las excepciones que puede producir en condiciones relevantes.
+
+```python
+def convertir_kilometros_a_millas(kilometros):
+	"""Convierte una distancia de kilómetros a millas.
+
+	Args:
+		kilometros: Distancia no negativa en kilómetros.
+
+	Returns:
+		La distancia equivalente en millas.
+
+	Raises:
+		ValueError: Si la distancia es negativa.
+	"""
+	if kilometros < 0:
+		raise ValueError("La distancia no puede ser negativa")
+	return kilometros * 0.621371
+```
+
+El docstring describe el contrato de la función: qué espera, qué garantiza y
+qué error comunica cuando no se cumple una condición. Debe coincidir con el
+código; por ejemplo, no se debe prometer aceptar valores negativos si la
+función los rechaza.
+
+### 5.3 Docstrings de clases
+
+El docstring de una clase debe describir qué representa y, cuando no sea
+obvio, cómo se crea o qué invariantes mantiene. Los métodos públicos también
+pueden documentarse si tienen reglas de uso propias.
+
+```python
+class Cuenta:
+	"""Representa una cuenta con saldo y operaciones básicas."""
+
+	def __init__(self, titular, saldo=0):
+		self.titular = titular
+		self.saldo = saldo
+```
+
+### 5.4 Documentar decisiones
+
+Los comentarios son adecuados para explicar el motivo de una decisión, una
+restricción externa o un comportamiento que no se deduce del código. Si el
+motivo es relevante para el mantenimiento, debe actualizarse junto con el
+código al cambiar esa decisión.
+
+```python
+# Se conserva el orden de llegada porque el informe se revisa cronológicamente.
+eventos = list(eventos_recibidos)
+```
+
+### 5.5 Calidad de la documentación
+
+Una documentación útil permite completar una tarea concreta —por ejemplo,
+instalar el programa o llamar a una función— sin tener que adivinar pasos.
+Para conseguirlo, debe ser:
+
+- Exacta y actualizada.
+- Clara y organizada según quién la consulta: usuario, desarrollador o
+  persona que mantiene el proyecto.
+- Concisa cuando el comportamiento es obvio y detallada cuando hay reglas,
+  límites, efectos secundarios o errores importantes.
+- Accionable: permite instalar y ejecutar.
+- Verificable: los ejemplos funcionan.
+- Coherente con los nombres del código.
+
+Antes de publicar un cambio, revisa si también han cambiado las instrucciones
+de instalación, los ejemplos, los parámetros o los resultados descritos.
+Eliminar o corregir información obsoleta es tan importante como añadir
+información nueva.
+
+### 5.6 Generación automática
+
+Herramientas como Sphinx, pydoc y MkDocs pueden construir documentación a
+partir de docstrings y archivos Markdown. La generación automática no
+sustituye la escritura cuidadosa: solo publica lo que se ha expresado en el
+código y no comprueba por sí misma que las explicaciones sigan siendo ciertas.
+
+### Actividades 5
+
+#### Actividad 1: organiza tu día libre
+
+Desarrolla un programa que ayude al usuario a organizar un día libre
+según su presupuesto, el tiempo disponible y sus preferencias.
+
+El programa deberá mostrar las posibles actividades, como ir al
+cine, salir a comer, visitar un museo, hacer deporte o quedarse en casa. El
+usuario podrá elegir varias actividades y el programa comprobará si puede
+realizarlas teniendo en cuenta el dinero y el tiempo disponibles. Para ello el usuario debe indicar de cuánto tiempo dispone y cuál es su presupuesto.
+
+Cada actividad tendrá un precio y una duración. Si el usuario no dispone de
+suficiente dinero o tiempo, el programa deberá avisarle y ofrecerle la
+posibilidad de elegir otra actividad.
+
+Al finalizar, se mostrará un resumen del día con las actividades
+seleccionadas, el dinero gastado, el tiempo utilizado y el presupuesto
+restante.
+
+El programa deberá cumplir los siguientes requisitos:
+
+- Utilizar condicionales para comprobar si se puede   realizar cada actividad.
+- Utilizar bucles para permitir que el usuario seleccione varias actividades.
+- Crear funciones para mostrar el menú, comprobar el presupuesto, calcular
+  el tiempo disponible y mostrar el resumen final.
+- Validar los datos introducidos para evitar errores.
+- Documentar las funciones mediante docstrings y añadir comentarios cuando
+  sean necesarios.
+
+El programa deberá ejecutarse por consola, ser fácil de utilizar y estar
+organizado en funciones independientes.
+
+---
+
+## 6. Control de excepciones
 
 [⬆ Volver al índice](#índice)
 
 Una excepción es un evento que interrumpe el flujo normal porque se ha producido una situación excepcional: entrada inválida, archivo inexistente, división por cero o fallo de red.
 
-### 5.1 Excepción básica
+### 6.1 Excepción básica
 
 ```python
 numero = int("no es un número")  # ValueError
@@ -1133,7 +1311,7 @@ numero = int("no es un número")  # ValueError
 
 El intérprete muestra el tipo de excepción, el mensaje y el traceback, que indica la ruta de llamadas hasta el error.
 
-### 5.2 `try` y `except`
+### 6.2 `try` y `except`
 
 ```python
 try:
@@ -1144,7 +1322,7 @@ except ValueError:
 
 Se debe capturar la excepción concreta que se sabe manejar. Capturar `Exception` sin una razón clara puede ocultar errores de programación.
 
-### 5.3 `else`
+### 6.3 `else`
 
 El bloque `else` se ejecuta solo si no ocurrió una excepción:
 
@@ -1157,7 +1335,7 @@ else:
 	print(f"El doble es {numero * 2}")
 ```
 
-### 5.4 `finally`
+### 6.4 `finally`
 
 `finally` se ejecuta ocurra o no una excepción. Es útil para limpieza:
 
@@ -1183,7 +1361,7 @@ except FileNotFoundError:
 	contenido = ""
 ```
 
-### 5.5 Varias excepciones
+### 6.5 Varias excepciones
 
 ```python
 try:
@@ -1198,7 +1376,7 @@ else:
 	print(resultado)
 ```
 
-### 5.6 Capturar como variable
+### 6.6 Capturar como variable
 
 ```python
 try:
@@ -1207,7 +1385,7 @@ except ValueError as error:
 	print(f"Detalle: {error}")
 ```
 
-### 5.7 Lanzar excepciones propias
+### 6.7 Lanzar excepciones propias
 
 ```python
 def establecer_porcentaje(porcentaje):
@@ -1216,7 +1394,7 @@ def establecer_porcentaje(porcentaje):
 	return porcentaje
 ```
 
-### 5.8 Excepciones personalizadas
+### 6.8 Excepciones personalizadas
 
 ```python
 class SaldoInsuficienteError(Exception):
@@ -1229,7 +1407,7 @@ def retirar(saldo, cantidad):
 	return saldo - cantidad
 ```
 
-### 5.9 Encadenamiento de excepciones
+### 6.9 Encadenamiento de excepciones
 
 ```python
 def leer_entero_desde_texto(texto):
@@ -1241,7 +1419,7 @@ def leer_entero_desde_texto(texto):
 
 `from error` conserva la causa original y facilita el diagnóstico.
 
-### 5.10 Buenas prácticas
+### 6.10 Buenas prácticas
 
 - Capturar la excepción más específica posible.
 - Mantener el bloque `try` pequeño.
@@ -1251,7 +1429,7 @@ def leer_entero_desde_texto(texto):
 - No utilizar excepciones para sustituir todas las condiciones normales.
 - Liberar recursos con `with` o `finally`.
 
-### Actividades 5
+### Actividades 6
 
 #### Actividad 1: validador resistente
 
@@ -1259,13 +1437,13 @@ Implementa un conversor de temperatura que acepte Celsius y Fahrenheit, rechace 
 
 ---
 
-## 6. Depuración y depurador
+## 7. Depuración y depurador
 
 [⬆ Volver al índice](#índice)
 
 Depurar es localizar y corregir defectos. No consiste simplemente en leer el código al azar: requiere formular hipótesis, observar el comportamiento y comprobarlas con evidencia.
 
-### 6.1 Proceso sistemático
+### 7.1 Proceso sistemático
 
 1. Reproducir el error con una entrada concreta.
 2. Leer todo el mensaje y el traceback.
@@ -1276,7 +1454,7 @@ Depurar es localizar y corregir defectos. No consiste simplemente en leer el có
 7. Aplicar el cambio mínimo que corrija la causa.
 8. Repetir la prueba y ejecutar regresiones.
 
-### 6.2 `print()` como observación rápida
+### 7.2 `print()` como observación rápida
 
 ```python
 def calcular_total(precio, unidades):
@@ -1294,7 +1472,7 @@ print(repr(entrada))
 
 Los mensajes temporales deben retirarse o sustituirse por logging al terminar.
 
-### 6.3 Afirmaciones
+### 7.3 Afirmaciones
 
 `assert` comprueba una condición que se considera cierta durante el desarrollo:
 
@@ -1306,7 +1484,7 @@ def calcular_media(total, cantidad):
 
 No se debe usar `assert` para validar entradas externas en producción, porque las aserciones pueden desactivarse.
 
-### 6.4 Pruebas pequeñas
+### 7.4 Pruebas pequeñas
 
 ```python
 def es_par(numero):
@@ -1319,7 +1497,7 @@ assert es_par(3) is False
 
 Las pruebas deben incluir casos normales, límites y entradas inválidas.
 
-### 6.5 Logging
+### 7.5 Logging
 
 ```python
 import logging
@@ -1333,7 +1511,7 @@ logger.warning("El archivo de configuración no existe")
 
 Los niveles habituales son `DEBUG`, `INFO`, `WARNING`, `ERROR` y `CRITICAL`.
 
-### 6.6 Errores lógicos
+### 7.6 Errores lógicos
 
 Un programa puede no producir excepciones y aun así estar mal:
 
@@ -1346,13 +1524,13 @@ Hay que decidir qué ocurre con una lista vacía. El problema no se resuelve sol
 
 ---
 
-## 7. El depurador como herramienta de control de errores
+## 8. El depurador como herramienta de control de errores
 
 [⬆ Volver al índice](#índice)
 
 El depurador permite ejecutar un programa paso a paso e inspeccionar su estado interno.
 
-### 7.1 Conceptos principales
+### 8.1 Conceptos principales
 
 - **Breakpoint o punto de interrupción:** línea donde se pausa la ejecución.
 - **Step over:** ejecuta la línea actual sin entrar en una función llamada.
@@ -1363,7 +1541,7 @@ El depurador permite ejecutar un programa paso a paso e inspeccionar su estado i
 - **Variables locales:** nombres disponibles en el contexto actual.
 - **Watch o expresión vigilada:** valor que se observa mientras se avanza.
 
-### 7.2 Depurar en Visual Studio Code
+### 8.2 Depurar en Visual Studio Code
 
 1. Abre el archivo Python.
 2. Haz clic a la izquierda de un número de línea para colocar un punto rojo.
@@ -1397,7 +1575,7 @@ if __name__ == "__main__":
 
 Colocar un breakpoint en `descuento` permite observar los parámetros y verificar cada iteración.
 
-### 7.3 Depurar desde la biblioteca estándar
+### 8.3 Depurar desde la biblioteca estándar
 
 Python incluye `pdb`:
 
@@ -1413,11 +1591,11 @@ print(calcular(5))
 
 En la consola de `pdb` se pueden usar comandos como `n` (next), `s` (step), `p` para imprimir una expresión, `l` para listar código y `c` para continuar.
 
-### 7.4 Depuración remota y configuración
+### 8.4 Depuración remota y configuración
 
 Para proyectos complejos se puede crear `.vscode/launch.json` con configuraciones de ejecución, argumentos, variables de entorno y directorio de trabajo. La configuración debe adaptarse al proyecto y no debe contener secretos.
 
-### 7.5 Estrategias para localizar un error
+### 8.5 Estrategias para localizar un error
 
 - Reducir el caso a la entrada mínima que falla.
 - Dividir el flujo y comprobar invariantes.
@@ -1427,7 +1605,7 @@ Para proyectos complejos se puede crear `.vscode/launch.json` con configuracione
 - Revisar índices y límites de rangos.
 - Probar los valores frontera: cero, vacío, uno, máximo y mínimo.
 
-### Actividades 7
+### Actividades 8
 
 #### Actividad 1: depuración guiada
 
@@ -1444,126 +1622,6 @@ print(total)
 ```
 
 El resultado esperado es 60. Coloca un breakpoint dentro del bucle, observa el valor en cada vuelta y corrige la instrucción.
-
----
-
-## 8. Documentación y documentación de programas
-
-[⬆ Volver al índice](#índice)
-
-Documentar es explicar cómo usar, mantener y comprender un programa. Una buena documentación reduce el tiempo de incorporación y evita que las decisiones importantes dependan de conversaciones informales.
-
-### 8.1 README
-
-Un `README.md` debería incluir, según el proyecto:
-
-- Propósito.
-- Requisitos.
-- Instalación.
-- Activación del entorno virtual.
-- Ejecución.
-- Uso con ejemplos.
-- Ejecución de pruebas.
-- Estructura de carpetas.
-- Configuración.
-- Limitaciones conocidas.
-- Contribución y licencia si corresponde.
-
-Ejemplo de estructura:
-
-```text
-mi_proyecto/
-├── README.md
-├── requirements.txt
-├── .gitignore
-├── src/
-│   └── mi_app/
-│       ├── __init__.py
-│       └── main.py
-└── tests/
-	└── test_main.py
-```
-
-### 8.2 Docstrings de funciones
-
-```python
-def convertir_kilometros_a_millas(kilometros):
-	"""Convierte una distancia de kilómetros a millas.
-
-	Args:
-		kilometros: Distancia no negativa en kilómetros.
-
-	Returns:
-		La distancia equivalente en millas.
-
-	Raises:
-		ValueError: Si la distancia es negativa.
-	"""
-	if kilometros < 0:
-		raise ValueError("La distancia no puede ser negativa")
-	return kilometros * 0.621371
-```
-
-La documentación debe describir el contrato: entradas, salida, efectos secundarios, errores y supuestos.
-
-### 8.3 Docstrings de clases
-
-```python
-class Cuenta:
-	"""Representa una cuenta con saldo y operaciones básicas."""
-
-	def __init__(self, titular, saldo=0):
-		self.titular = titular
-		self.saldo = saldo
-```
-
-### 8.4 Type hints
-
-Las anotaciones de tipo documentan la intención y ayudan a herramientas:
-
-```python
-def sumar(a: int, b: int) -> int:
-	return a + b
-```
-
-En Python no obligan por sí solas a que se reciban esos tipos durante la ejecución.
-
-Para colecciones:
-
-```python
-def promedio(valores: list[float]) -> float:
-	return sum(valores) / len(valores)
-```
-
-### 8.5 Documentar decisiones
-
-La documentación debe explicar el porqué cuando el código no lo hace evidente:
-
-```python
-# Se conserva el orden de llegada porque el informe se revisa cronológicamente.
-eventos = list(eventos_recibidos)
-```
-
-### 8.6 Calidad de la documentación
-
-Una documentación útil es:
-
-- Exacta y actualizada.
-- Concisa cuando el comportamiento es obvio.
-- Detallada cuando hay reglas o efectos importantes.
-- Accionable: permite instalar y ejecutar.
-- Verificable: los ejemplos funcionan.
-- Coherente con los nombres del código.
-
-### 8.7 Generación automática
-
-Herramientas como Sphinx, pydoc y MkDocs pueden construir documentación a partir de docstrings y archivos Markdown. La generación automática no sustituye la escritura cuidadosa: solo publica lo que se ha expresado en el código.
-
-### Actividades 8
-
-#### Actividad 1: documentar una API
-
-Escribe tres funciones relacionadas con una agenda. Añade anotaciones de tipo, docstrings con parámetros, valor de retorno y excepciones. Después redacta un ejemplo de uso para el `README.md`.
 
 ---
 
