@@ -17,14 +17,13 @@ description: "<strong>Módulo:</strong> Programación y Automatización en Siste
    - [Actividades 5](#actividades-5)
 6. [Control de excepciones](#6-control-de-excepciones)
    - [Actividades 6](#actividades-6)
-7. [Depuración y depurador](#7-depuración-y-depurador)
-8. [El depurador como herramienta de control de errores](#8-el-depurador-como-herramienta-de-control-de-errores)
+7. [Depuración y uso del depurador](#7-depuración)
+   - [Actividades 7](#actividad-7-el-total-que-no-suma)
+8. [Programación orientada a objetos](#8-programación-orientada-a-objetos)
    - [Actividades 8](#actividades-8)
-9. [Programación orientada a objetos](#9-programación-orientada-a-objetos)
-   - [Actividades 9](#actividades-9)
-10. [Proyecto práctico integrador: gestor de tareas en consola](#10-proyecto-práctico-integrador-gestor-de-tareas-en-consola)
-11. [Ejercicios y actividades](#11-ejercicios-y-actividades)
-12. [Soluciones orientativas](#12-soluciones-orientativas)
+9. [Proyecto práctico integrador: gestor de tareas en consola](#9-proyecto-práctico-integrador-gestor-de-tareas-en-consola)
+10. [Ejercicios y actividades](#10-ejercicios-y-actividades)
+11. [Soluciones orientativas](#11-soluciones-orientativas)
 
 ---
 
@@ -1328,337 +1327,432 @@ organizado en funciones independientes.
 
 [⬆ Volver al índice](#índice)
 
-Una excepción es un evento que interrumpe el flujo normal porque se ha producido una situación excepcional: entrada inválida, archivo inexistente, división por cero o fallo de red.
+Una excepción es un evento que interrumpe el flujo normal del programa porque se ha producido una situación excepcional: entrada inválida, archivo inexistente, división por cero o fallo de red. Python representa cada una de estas situaciones como un objeto de excepción que "sube" por la pila de llamadas hasta que alguien lo captura. Si nadie lo hace, el programa se detiene y el intérprete muestra el *traceback*.
+
+Gestionar excepciones permite que un programa falle de forma controlada: informar al usuario, reintentar, liberar recursos o registrar el problema en lugar de terminar abruptamente.
 
 ### 6.1 Excepción básica
+
+La conversión con `int()` solo funciona si el texto representa un número entero válido. Como `"no es un número"` no cumple ese formato, Python no puede realizar la conversión y genera una excepción `ValueError`. Si no se gestiona, el programa se detiene y muestra el traceback.
 
 ```python
 numero = int("no es un número")  # ValueError
 ```
 
-El intérprete muestra el tipo de excepción, el mensaje y el traceback, que indica la ruta de llamadas hasta el error.
+Salida:
+
+```text
+Traceback (most recent call last):
+  File "ejemplo.py", line 1, in <module>
+    numero = int("no es un número")
+ValueError: invalid literal for int() with base 10: 'no es un número'
+```
+
+El traceback se lee de arriba abajo: primero la ruta de llamadas (de la más antigua a la más reciente) y, en la última línea, el **tipo de excepción** y su **mensaje**. La línea señalada suele ser donde el error se manifiesta; conviene leer también las llamadas anteriores para entender cómo se llegó hasta ella.
 
 ### 6.2 `try` y `except`
 
+El bloque `try` contiene las instrucciones que podrían fallar. Si la conversión de la entrada no es posible, Python interrumpe ese bloque (las líneas restantes de `try` no se ejecutan) y ejecuta el `except` asociado a `ValueError`, en lugar de finalizar el programa. Si la conversión tiene éxito, el bloque `except` se omite.
+
 ```python
 try:
-	edad = int(input("Edad: "))
+    edad = int(input("Edad: "))
 except ValueError:
-	print("Debes introducir un entero")
+    print("Debes introducir un entero")
 ```
 
-Se debe capturar la excepción concreta que se sabe manejar. Capturar `Exception` sin una razón clara puede ocultar errores de programación.
+Se debe capturar la excepción concreta que se sabe manejar. Capturar `Exception` sin una razón clara puede ocultar errores de programación, porque también atraparía fallos que este código no sabe resolver. Evita además el `except:` sin tipo, que captura incluso `KeyboardInterrupt` y `SystemExit` y hace imposible interrumpir el programa con `Ctrl+C`.
+
+Un patrón habitual es repetir la petición hasta que la entrada sea válida:
+
+```python
+while True:
+    try:
+        edad = int(input("Edad: "))
+        break
+    except ValueError:
+        print("Debes introducir un entero")
+```
 
 ### 6.3 `else`
 
-El bloque `else` se ejecuta solo si no ocurrió una excepción:
+El bloque `else` se ejecuta solo si el bloque `try` termina sin excepciones. En este ejemplo, el cálculo se realiza únicamente cuando la entrada se ha convertido correctamente; si no, se muestra el mensaje del bloque `except`.
 
 ```python
 try:
-	numero = int(input("Número: "))
+    numero = int(input("Número: "))
 except ValueError:
-	print("Entrada inválida")
+    print("Entrada inválida")
 else:
-	print(f"El doble es {numero * 2}")
+    print(f"El doble es {numero * 2}")
 ```
+
+Poner el código dependiente en `else` y no dentro de `try` tiene una ventaja: las excepciones que se produzcan en `else` **no** son capturadas por los `except` anteriores, de modo que `try` queda limitado a las instrucciones que realmente se quieren vigilar.
 
 ### 6.4 `finally`
 
-`finally` se ejecuta ocurra o no una excepción. Es útil para limpieza:
+`finally` se ejecuta tanto si el bloque `try` termina correctamente como si se produce una excepción (e incluso si dentro de `try` hay un `return`, `break` o `continue`). Por eso se utiliza para liberar recursos, como cerrar un archivo que se haya abierto. La comprobación de `archivo is not None` evita intentar cerrar una variable que nunca llegó a recibir un archivo, por ejemplo si `open()` falló.
 
 ```python
 archivo = None
 try:
-	archivo = open("datos.txt", encoding="utf-8")
-	contenido = archivo.read()
+    archivo = open("datos.txt", encoding="utf-8")
+    contenido = archivo.read()
 except FileNotFoundError:
-	print("No existe el archivo")
+    print("No existe el archivo")
 finally:
-	if archivo is not None:
-		archivo.close()
+    if archivo is not None:
+        archivo.close()
 ```
 
-Para archivos se recomienda `with`, que gestiona el cierre automáticamente:
+En este caso, si el archivo no existe, se captura `FileNotFoundError` y la variable `contenido` queda sin definir, de modo que usarla después provocaría un `NameError`. Conviene asignarle siempre un valor en el camino de error.
+
+Cuando se usa `with`, Python cierra el archivo automáticamente al salir del bloque, incluso si ocurre un error durante la lectura; por eso suele ser la opción preferible a `finally` para recursos que lo admiten.
 
 ```python
 try:
-	with open("datos.txt", encoding="utf-8") as archivo:
-		contenido = archivo.read()
+    with open("datos.txt", encoding="utf-8") as archivo:
+        contenido = archivo.read()
 except FileNotFoundError:
-	contenido = ""
+    contenido = ""
 ```
+
+El valor vacío asignado en `except` permite que el programa continúe, pero se debe elegir una respuesta adecuada para cada aplicación: también podría ser mejor informar del error o volver a solicitar el archivo.
+
+> **Cuidado:** un `return` dentro de `finally` descarta cualquier excepción pendiente y la silencia. Evítalo.
 
 ### 6.5 Varias excepciones
 
+Una operación puede fallar por motivos distintos. Aquí se gestionan por separado una entrada que no puede convertirse a entero (`ValueError`) y un divisor igual a cero (`ZeroDivisionError`), de modo que cada caso recibe un mensaje específico. Si ambas conversiones y la división terminan correctamente, se ejecuta `else` y se muestra el resultado.
+
 ```python
 try:
-	valor = int(input("Dividendo: "))
-	divisor = int(input("Divisor: "))
-	resultado = valor / divisor
+    valor = int(input("Dividendo: "))
+    divisor = int(input("Divisor: "))
+    resultado = valor / divisor
 except ValueError:
-	print("Los dos valores deben ser enteros")
+    print("Los dos valores deben ser enteros")
 except ZeroDivisionError:
-	print("No se puede dividir entre cero")
+    print("No se puede dividir entre cero")
 else:
-	print(resultado)
+    print(resultado)
 ```
+
+Si varios errores distintos se resuelven de la misma manera, se pueden agrupar en una **tupla**:
+
+```python
+try:
+    resultado = int(texto) / int(divisor)
+except (ValueError, ZeroDivisionError):
+    print("Datos no válidos")
+```
+
+Python revisa los `except` **de arriba abajo** y ejecuta el primero que coincide. Por eso las excepciones más específicas deben ir antes que las más generales: si `except OSError` aparece antes que `except FileNotFoundError`, este último nunca se ejecutará, porque `FileNotFoundError` es una subclase de `OSError`.
 
 ### 6.6 Capturar como variable
 
+Al escribir `as error`, el programa guarda el objeto de excepción en una variable. Su mensaje puede aportar información adicional para diagnosticar el problema o elaborar una respuesta más precisa. En una aplicación dirigida a usuarios, conviene no mostrar detalles internos si no son apropiados.
+
 ```python
 try:
-	numero = int("abc")
+    numero = int("abc")
 except ValueError as error:
-	print(f"Detalle: {error}")
+    print(f"Detalle: {error}")
 ```
+
+La variable `error` solo existe dentro del bloque `except`; Python la elimina al salir de él. Si necesitas conservar la excepción, guárdala en otra variable.
 
 ### 6.7 Lanzar excepciones propias
 
+`raise` permite señalar que una función ha recibido un valor que incumple su contrato. Esta función solo acepta porcentajes entre 0 y 100, incluidos ambos extremos; ante cualquier otro valor, genera `ValueError`. Quien llame a la función puede capturar esa excepción y decidir cómo informar o recuperarse.
+
 ```python
 def establecer_porcentaje(porcentaje):
-	if not 0 <= porcentaje <= 100:
-		raise ValueError("El porcentaje debe estar entre 0 y 100")
-	return porcentaje
+    if not 0 <= porcentaje <= 100:
+        raise ValueError("El porcentaje debe estar entre 0 y 100")
+    return porcentaje
 ```
 
-### 6.8 Excepciones personalizadas
+Es habitual elegir el tipo de excepción según la causa: `ValueError` si el tipo es correcto pero el valor no, y `TypeError` si el tipo es incorrecto.
+
+Dentro de un `except`, un `raise` sin argumentos **vuelve a lanzar** la excepción actual. Es útil cuando se quiere hacer algo (por ejemplo, registrar el error) pero sin resolverlo:
 
 ```python
-class SaldoInsuficienteError(Exception):
-	"""Indica que una operación supera el saldo disponible."""
-
-
-def retirar(saldo, cantidad):
-	if cantidad > saldo:
-		raise SaldoInsuficienteError("Saldo insuficiente")
-	return saldo - cantidad
+try:
+    procesar_pedido(pedido)
+except ValueError:
+    print("Pedido inválido, se registra el error")
+    raise  # la excepción sigue subiendo al código que llamó
 ```
 
-### 6.9 Encadenamiento de excepciones
+### 6.8 Encadenamiento de excepciones
+
+Al convertir un valor de texto, `int()` puede generar `ValueError`. El ejemplo captura ese error y genera otro con un mensaje más adecuado para la función. La parte `from error` conserva explícitamente la excepción original como causa, por lo que el traceback permite consultar tanto el nuevo contexto como el fallo inicial.
 
 ```python
 def leer_entero_desde_texto(texto):
-	try:
-		return int(texto)
-	except ValueError as error:
-		raise ValueError("El texto no contiene un entero") from error
+    try:
+        return int(texto)
+    except ValueError as error:
+        raise ValueError("El texto no contiene un entero") from error
 ```
 
-`from error` conserva la causa original y facilita el diagnóstico.
+Si se lanza una excepción dentro de un `except` **sin** usar `from`, Python también las enlaza de forma implícita y muestra el mensaje *"During handling of the above exception, another exception occurred"*. Con `from None` se suprime esa cadena cuando el error original no aporta información útil al usuario:
 
-### 6.10 Buenas prácticas
+```python
+raise ValueError("El texto no contiene un entero") from None
+```
 
-- Capturar la excepción más específica posible.
-- Mantener el bloque `try` pequeño.
-- No usar `except: pass` salvo casos muy justificados.
-- Mostrar mensajes útiles para la persona usuaria.
-- Registrar detalles técnicos cuando el programa sea una aplicación real.
-- No utilizar excepciones para sustituir todas las condiciones normales.
-- Liberar recursos con `with` o `finally`.
+### 6.10 Jerarquía de excepciones integradas
+
+Las excepciones forman una jerarquía de clases. Capturar una clase captura también todas sus subclases. Un fragmento de la jerarquía de uso más común:
+
+```text
+BaseException
+ ├── KeyboardInterrupt
+ ├── SystemExit
+ └── Exception
+      ├── ArithmeticError
+      │    └── ZeroDivisionError
+      ├── LookupError
+      │    ├── IndexError
+      │    └── KeyError
+      ├── OSError
+      │    ├── FileNotFoundError
+      │    └── PermissionError
+      ├── ValueError
+      ├── TypeError
+      ├── AttributeError
+      └── NameError
+```
+
+Excepciones frecuentes y cuándo aparecen:
+
+| Excepción | Causa típica | Ejemplo |
+|---|---|---|
+| `ValueError` | Tipo correcto, valor inadecuado | `int("abc")` |
+| `TypeError` | Operación con un tipo incorrecto | `"a" + 1` |
+| `ZeroDivisionError` | División o módulo entre cero | `10 / 0` |
+| `IndexError` | Índice fuera de rango | `[1, 2][5]` |
+| `KeyError` | Clave inexistente en un diccionario | `{"a": 1}["b"]` |
+| `AttributeError` | El objeto no tiene ese atributo | `None.append(1)` |
+| `FileNotFoundError` | El archivo no existe | `open("no_existe.txt")` |
+| `PermissionError` | Sin permisos sobre el archivo | Escribir en una ruta protegida |
+
+`Exception` es la raíz de las excepciones de programa habituales; `KeyboardInterrupt` y `SystemExit` heredan directamente de `BaseException` precisamente para que `except Exception` no las atrape.
 
 ### Actividades 6
 
-#### Actividad 1: validador resistente
+### Actividad 6: la caja del supermercado
 
-Implementa un conversor de temperatura que acepte Celsius y Fahrenheit, rechace unidades desconocidas y controle entradas no numéricas sin finalizar abruptamente.
+Programa una caja de supermercado con un carrito. El programa **no debe terminar por errores del usuario**: cada fallo se gestiona con un mensaje claro.
+
+```python
+productos = ["pan", "leche", "huevos"]
+precios = [0.85, 1.20, 2.50]   # el precio de productos[0] es precios[0], etc.
+carrito = []                   # aquí se guardan los precios de lo que se compra
+```
+
+El usuario elige los productos por su **número** (0 = pan, 1 = leche, 2 = huevos) y quita del carrito por su **posición** (la primera es la 0).
+
+#### Parte A: funciones (sin `input()` ni `print()`)
+
+1. `convertir_numero(texto)`: devuelve el entero. Si `int()` falla, captura el `ValueError` y lanza otro con un mensaje claro usando `raise ... from error`. Si el número es negativo, lanza `ValueError` (en las listas, `-1` sería válido y no queremos que lo sea).
+2. `anadir(carrito, numero)`: añade `precios[numero]` al carrito. Deja que salte el `IndexError` si el producto no existe.
+3. `quitar(carrito, posicion)`: elimina esa posición del carrito con `carrito.pop(posicion)`. Deja que salte el `IndexError` si no existe.
+4. `calcular_total(carrito)`: devuelve la suma de los precios del carrito.
+5. `repartir(total, personas)`: devuelve `total / personas`. No compruebes el cero: deja que salte `ZeroDivisionError`.
+
+#### Parte B: programa principal
+
+Un menú en bucle: **1. Añadir, 2. Quitar, 3. Repartir la cuenta, 4. Salir**. Cada operación va en su `try` y debe cumplir:
+
+- `IndexError` y `ValueError` se gestionan en `except` **separados** (en `ValueError`, muestra el mensaje con `as error`).
+- En el reparto, agrupa `(ValueError, ZeroDivisionError)` en un solo `except`.
+- `else`: muestra `"Operación realizada"`.
+- `finally`: muestra siempre el carrito y el total actual.
+- **Relanzar:** cuenta los `ValueError` seguidos (una operación correcta reinicia el contador). Al tercero, usa `raise` dentro del `except`. Un `try/except ValueError` exterior que rodea el bucle muestra `"Demasiados errores. Se cierra la caja"` y termina. En ese mismo `try` exterior captura `KeyboardInterrupt` con un mensaje de despedida.
+
+#### Casos de prueba
+
+| Acción | Resultado esperado |
+|---|---|
+| Añadir producto `0` | Carrito `[0.85]` |
+| Añadir producto `7` | "Ese producto no existe" |
+| Añadir producto `dos` o `-1` | Error de número no válido |
+| Quitar posición `5` con 1 producto | "Esa posición no existe" |
+| Quitar posición `0` con el carrito vacío | "Esa posición no existe" |
+| Repartir entre `0` o `hola` | Mismo mensaje agrupado |
+| Tres `ValueError` seguidos | La caja se cierra |
 
 ---
 
-## 7. Depuración y depurador
+## 7. Depuración
 
 [⬆ Volver al índice](#índice)
 
-Depurar es localizar y corregir defectos. No consiste simplemente en leer el código al azar: requiere formular hipótesis, observar el comportamiento y comprobarlas con evidencia.
+Depurar es **encontrar y corregir errores** en un programa. No consiste en mirar el código esperando ver el fallo, sino en observar qué hace realmente el programa y compararlo con lo que debería hacer.
 
-### 7.1 Proceso sistemático
+### 7.1 Tipos de error
 
-1. Reproducir el error con una entrada concreta.
-2. Leer todo el mensaje y el traceback.
-3. Identificar la línea donde se manifiesta el problema.
-4. Distinguir síntoma de causa.
-5. Formular una hipótesis.
-6. Inspeccionar valores y flujo.
-7. Aplicar el cambio mínimo que corrija la causa.
-8. Repetir la prueba y ejecutar regresiones.
+| Tipo | Qué ocurre | Ejemplo |
+|---|---|---|
+| **Sintaxis** | El programa ni siquiera arranca. Python indica `SyntaxError`. | Olvidar los dos puntos en un `if` |
+| **Ejecución** | El programa se detiene con una excepción y un traceback. | `int("hola")` |
+| **Lógico** | No hay ningún mensaje, pero el resultado es incorrecto. | Sumar `total = precio` en lugar de acumular |
 
-### 7.2 `print()` como observación rápida
+Los errores lógicos son los más difíciles de encontrar, porque Python no avisa. Para ellos es especialmente útil el depurador.
 
-```python
-def calcular_total(precio, unidades):
-	subtotal = precio * unidades
-	print(f"DEBUG subtotal={subtotal!r}")
-	return subtotal
-```
+### 7.2 Método para depurar
 
-`repr()` muestra una representación útil para detectar espacios, saltos de línea o tipos inesperados:
+1. **Reproduce el error** con unos datos concretos.
+2. **Lee el mensaje** completo, si lo hay. Indica el tipo de error y la línea.
+3. **Compara** el resultado esperado con el obtenido.
+4. **Observa los valores** de las variables mientras se ejecuta el programa.
+5. **Corrige una sola cosa** y vuelve a probar.
 
-```python
-entrada = input("Texto: ")
-print(repr(entrada))
-```
+> **Importante:** no cambies varias cosas a la vez. Si lo haces, no sabrás cuál ha arreglado (o estropeado) el programa.
 
-Los mensajes temporales deben retirarse o sustituirse por logging al terminar.
+### 7.3 Observar con `print()`
 
-### 7.3 Afirmaciones
-
-`assert` comprueba una condición que se considera cierta durante el desarrollo:
+La forma más sencilla de ver qué ocurre es imprimir valores:
 
 ```python
-def calcular_media(total, cantidad):
-	assert cantidad > 0, "La cantidad debe ser positiva"
-	return total / cantidad
+precio = 10
+unidades = 3
+subtotal = precio * unidades
+print("DEBUG subtotal:", subtotal)
 ```
 
-No se debe usar `assert` para validar entradas externas en producción, porque las aserciones pueden desactivarse.
+Es útil, pero tiene inconvenientes: hay que escribir y borrar líneas, y solo ves lo que has decidido imprimir. **Recuerda eliminar los `print` de depuración al terminar.**
 
-### 7.4 Pruebas pequeñas
+### 7.4 El depurador de Visual Studio Code
 
-```python
-def es_par(numero):
-	return numero % 2 == 0
+El depurador permite **ejecutar el programa línea a línea** y ver el valor de todas las variables en cada momento, sin modificar el código.
 
+**Requisito:** tener instalada la extensión **Python** de VS Code.
 
-assert es_par(2) is True
-assert es_par(3) is False
-```
+#### Conceptos básicos
 
-Las pruebas deben incluir casos normales, límites y entradas inválidas.
+- **Breakpoint (punto de interrupción):** marca una línea donde el programa se detendrá.
+- **Paso a paso:** ejecutar el programa avanzando de una línea en una línea.
+- **Variables:** panel donde se ve el valor actual de cada variable.
 
-### 7.5 Logging
+#### Cómo depurar, paso a paso
 
-```python
-import logging
+1. Abre el archivo `.py`.
+2. **Coloca un breakpoint:** haz clic a la izquierda del número de la línea. Aparece un punto rojo.
+3. **Inicia la depuración:** pulsa `F5` (o *Run and Debug* en el menú lateral). Si te lo pide, elige **Python Debugger** y **Python File**.
+4. El programa se detiene en el breakpoint. La línea queda marcada en **amarillo**.
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+> **Ojo:** la línea amarilla es la que **todavía no se ha ejecutado**. Los valores que ves son los de *antes* de ejecutarla.
 
-logger.info("Aplicación iniciada")
-logger.warning("El archivo de configuración no existe")
-```
+5. Avanza con `F10` y observa cómo cambian las variables.
+6. Para terminar, pulsa `F5` (continuar hasta el final) o `Shift + F5` (detener).
 
-Los niveles habituales son `DEBUG`, `INFO`, `WARNING`, `ERROR` y `CRITICAL`.
+#### Paneles que debes mirar
 
-### 7.6 Errores lógicos
+| Panel | Para qué sirve |
+|---|---|
+| **Variables** | Muestra las variables y su valor actual. Los valores que cambian se resaltan. |
+| **Watch** | Permite vigilar una variable o una expresión. Pulsa `+` y escribe, por ejemplo, `total`. |
+| **Call Stack** | Muestra en qué función estás y desde dónde se la llamó. |
+| **Breakpoints** | Lista de todos los puntos de interrupción. |
 
-Un programa puede no producir excepciones y aun así estar mal:
+#### Botones y atajos
 
-```python
-def calcular_media(numeros):
-	return sum(numeros) / len(numeros)
-```
+| Acción | Atajo | Qué hace |
+|---|---|---|
+| **Continue** | `F5` | Sigue hasta el siguiente breakpoint o hasta el final. |
+| **Step Over** | `F10` | Ejecuta la línea actual **sin entrar** en las funciones que llame. |
+| **Step Into** | `F11` | Si la línea llama a una función, **entra** en ella. |
+| **Step Out** | `Shift + F11` | Termina la función actual y vuelve a quien la llamó. |
+| **Stop** | `Shift + F5` | Detiene la depuración. |
 
-Hay que decidir qué ocurre con una lista vacía. El problema no se resuelve solo capturando excepciones; se debe definir el contrato de la función.
-
----
-
-## 8. El depurador como herramienta de control de errores
-
-[⬆ Volver al índice](#índice)
-
-El depurador permite ejecutar un programa paso a paso e inspeccionar su estado interno.
-
-### 8.1 Conceptos principales
-
-- **Breakpoint o punto de interrupción:** línea donde se pausa la ejecución.
-- **Step over:** ejecuta la línea actual sin entrar en una función llamada.
-- **Step into:** entra en la función llamada.
-- **Step out:** termina la función actual y vuelve al llamador.
-- **Continue:** continúa hasta el siguiente punto de interrupción.
-- **Call stack:** cadena de funciones activas.
-- **Variables locales:** nombres disponibles en el contexto actual.
-- **Watch o expresión vigilada:** valor que se observa mientras se avanza.
-
-### 8.2 Depurar en Visual Studio Code
-
-1. Abre el archivo Python.
-2. Haz clic a la izquierda de un número de línea para colocar un punto rojo.
-3. Inicia `Run and Debug`.
-4. Elige el depurador de Python si se solicita.
-5. Cuando se detenga, observa `Variables`, `Watch` y `Call Stack`.
-6. Avanza con `Step Over` y observa cuándo cambia cada valor.
-7. Usa `Continue` para comprobar otros puntos.
-
-Ejemplo preparado para depuración:
+#### Ejemplo guiado
 
 ```python
 def aplicar_descuento(precio, porcentaje):
-	descuento = precio * porcentaje / 100
-	total = precio - descuento
-	return total
+    descuento = precio * porcentaje / 100
+    total = precio - descuento
+    return total
 
 
-def main():
-	precios = [10.0, 25.0, 40.0]
-	porcentaje = 10
-	totales = []
-	for precio in precios:
-		totales.append(aplicar_descuento(precio, porcentaje))
-	print(totales)
+precios = [10.0, 25.0, 40.0]
+totales = []
 
+for precio in precios:
+    totales.append(aplicar_descuento(precio, 10))
 
-if __name__ == "__main__":
-	main()
+print(totales)
 ```
 
-Colocar un breakpoint en `descuento` permite observar los parámetros y verificar cada iteración.
+Resultado esperado: `[9.0, 22.5, 36.0]`.
 
-### 8.3 Depurar desde la biblioteca estándar
+1. Pon un breakpoint en la línea `totales.append(...)` y pulsa `F5`.
+2. En **Variables** verás `precio = 10.0` y `totales = []`.
+3. Pulsa `F11` para **entrar** en la función. En **Call Stack** aparece `aplicar_descuento`.
+4. Pulsa `F10` dos veces y observa cómo se calculan `descuento` (`1.0`) y `total` (`9.0`).
+5. Pulsa `Shift + F11` para salir de la función y comprueba cómo se añade `9.0` a `totales`.
+6. Pulsa `F5` para pasar a la siguiente vuelta del bucle y repite la observación.
 
-Python incluye `pdb`:
+### 7.5 Qué observar al depurar
 
-```python
-def calcular(numero):
-	resultado = numero * 2
-	breakpoint()
-	return resultado + 1
+- ¿Cada variable tiene el **valor** que esperabas en cada vuelta?
+- ¿Tiene el **tipo** adecuado? Recuerda que `input()` siempre devuelve texto (`str`).
+- ¿El bucle da el **número de vueltas** correcto?
+- ¿Qué pasa con los **casos límite**: cero, lista vacía, un solo elemento?
 
+### Actividad 7: el total que no suma
 
-print(calcular(5))
-```
-
-En la consola de `pdb` se pueden usar comandos como `n` (next), `s` (step), `p` para imprimir una expresión, `l` para listar código y `c` para continuar.
-
-### 8.4 Depuración remota y configuración
-
-Para proyectos complejos se puede crear `.vscode/launch.json` con configuraciones de ejecución, argumentos, variables de entorno y directorio de trabajo. La configuración debe adaptarse al proyecto y no debe contener secretos.
-
-### 8.5 Estrategias para localizar un error
-
-- Reducir el caso a la entrada mínima que falla.
-- Dividir el flujo y comprobar invariantes.
-- Comparar un resultado esperado con el real.
-- Revisar tipos con `type()` o `isinstance()`.
-- Inspeccionar espacios con `repr()`.
-- Revisar índices y límites de rangos.
-- Probar los valores frontera: cero, vacío, uno, máximo y mínimo.
-
-### Actividades 8
-
-#### Actividad 1: depuración guiada
-
-Depura este programa y explica qué ocurre con `total`:
+Este programa debería mostrar `60`, pero no lo hace:
 
 ```python
 precios = [10, 20, 30]
 total = 0
 
 for precio in precios:
-	total = precio
+    total = precio
 
 print(total)
 ```
 
-El resultado esperado es 60. Coloca un breakpoint dentro del bucle, observa el valor en cada vuelta y corrige la instrucción.
+**Sigue estos pasos:**
+
+1. **Reproduce el error.** Copia el código en un archivo, ejecútalo y anota lo que muestra. ¿Coincide con lo esperado (`60`)?
+2. **Coloca un breakpoint** en la línea `total = precio`.
+3. **Inicia la depuración** con `F5`.
+4. **Vigila `total`.** En el panel *Watch*, añade `total`.
+5. **Rellena la tabla.** Cada vez que el programa se detenga, anota los valores *antes* de ejecutar la línea. Después pulsa `F10` y anota el valor de `total` *después*. Usa `F5` para pasar a la siguiente vuelta.
+
+| Vuelta | `precio` | `total` antes | `total` después |
+|---|---|---|---|
+| 1 | | | |
+| 2 | | | |
+| 3 | | | |
+
+6. **Responde:** ¿qué le ocurre al valor anterior de `total` en cada vuelta? ¿Se suma o se sustituye?
+7. **Corrige** la instrucción para que acumule la suma. *Pista: el nuevo valor de `total` debe calcularse a partir del valor anterior de `total`.*
+8. **Comprueba** con el depurador que ahora `total` vale `10`, `30` y `60` en cada vuelta.
+9. **Prueba otros casos** cambiando la lista:
+
+| Lista | Resultado esperado |
+|---|---|
+| `[]` | `0` |
+| `[5]` | `5` |
+| `[1, 2, 3, 4]` | `10` |
+
+**Cuando termines**, escribe en un comentario al final del programa una frase que explique cuál era el error y cómo lo encontraste.
 
 ---
 
-## 9. Programación orientada a objetos
+## 8. Programación orientada a objetos
 
 [⬆ Volver al índice](#índice)
 
 La programación orientada a objetos (POO) organiza un programa mediante objetos que combinan estado (datos) y comportamiento (operaciones). Una clase define cómo serán sus objetos; cada objeto concreto creado a partir de ella se denomina instancia.
 
-### 9.1 Clases, instancias, atributos y métodos
+### 8.1 Clases, instancias, atributos y métodos
 
 Los atributos describen el estado de una instancia y los métodos definen operaciones que puede realizar. El método especial `__init__` inicializa el objeto cuando se crea. El parámetro `self` representa la instancia actual y aparece como primer parámetro de los métodos de instancia; Python lo proporciona al llamar al método.
 
@@ -1680,7 +1774,7 @@ print(rectangulo.calcular_area())  # 15
 
 `Rectangulo` es la clase; `rectangulo` es una instancia. `ancho` y `alto` son atributos de instancia, y `calcular_area()` es un método. Cada instancia mantiene sus propios valores.
 
-### 9.2 Encapsulación y propiedades
+### 8.2 Encapsulación y propiedades
 
 La encapsulación consiste en mantener juntos el estado y las operaciones que lo modifican, ofreciendo una interfaz clara. En Python, un atributo sin prefijo especial se considera público. Un guion bajo inicial, como `_saldo`, indica por convención que se trata de un detalle interno; no lo hace inaccesible.
 
@@ -1711,7 +1805,7 @@ print(cuenta.saldo)  # 125
 
 Se consulta `cuenta.saldo` sin paréntesis porque es una propiedad. La modificación del saldo se realiza mediante un método que puede comprobar la cantidad recibida.
 
-### 9.3 Atributos de clase y de instancia
+### 8.3 Atributos de clase y de instancia
 
 Un atributo de instancia pertenece a un objeto concreto. Un atributo de clase se define en la clase y se comparte como valor común entre sus instancias mientras no se sobrescriba:
 
@@ -1731,7 +1825,7 @@ print(ana.centro, luis.centro)
 
 Conviene usar atributos de clase para datos realmente comunes. El estado que cambia de una instancia a otra debe guardarse en atributos de instancia.
 
-### 9.4 Herencia y polimorfismo
+### 8.4 Herencia y polimorfismo
 
 La herencia permite definir una clase especializada a partir de otra. La clase hija puede reutilizar métodos de la clase base, añadir comportamiento y redefinir métodos. `super()` permite llamar a la implementación de la clase base.
 
@@ -1761,7 +1855,7 @@ print(coche.descripcion())
 
 El polimorfismo permite utilizar objetos de distintas clases a través de una operación común, como `descripcion()`. La herencia resulta útil cuando existe una relación «es un tipo de»; no conviene crear jerarquías solo para compartir unas pocas líneas.
 
-### 9.5 Composición
+### 8.5 Composición
 
 La composición representa una relación «tiene un»: un objeto utiliza otro objeto como parte de su funcionamiento. A menudo es una alternativa más sencilla y flexible que la herencia.
 
@@ -1784,7 +1878,7 @@ coche = CocheConMotor("Ejemplo")
 print(coche.arrancar())
 ```
 
-### 9.6 Métodos especiales y representaciones
+### 8.6 Métodos especiales y representaciones
 
 Los métodos especiales permiten definir cómo interactúan los objetos con operaciones y funciones de Python. Por ejemplo, `__str__` proporciona una representación legible para las personas cuando se usa `print()`:
 
@@ -1804,7 +1898,7 @@ print(producto)
 
 Otros métodos especiales habituales son `__repr__`, para una representación útil durante el desarrollo, y `__eq__`, para definir cómo se comparan dos instancias con `==`. No se deben confundir con métodos normales llamados directamente: Python los invoca al realizar determinadas operaciones.
 
-### 9.7 Clases de datos
+### 8.7 Clases de datos
 
 Cuando una clase sirve principalmente para agrupar datos, `dataclasses` puede generar automáticamente métodos habituales como `__init__`, `__repr__` y `__eq__`:
 
@@ -1824,7 +1918,7 @@ print(punto)  # Coordenada(x=3, y=4)
 
 `@dataclass` reduce código repetitivo, pero no sustituye el diseño de la clase ni añade validaciones automáticamente. Se pueden añadir métodos propios cuando el objeto necesita comportamiento.
 
-### Actividades 9
+### Actividades 8
 
 #### Actividad 1: clase Rectangulo
 
@@ -1832,13 +1926,13 @@ Implementa una clase `Rectangulo` que reciba ancho y alto, calcule el área y el
 
 ---
 
-## 10. Proyecto práctico integrador: gestor de tareas en consola
+## 9. Proyecto práctico integrador: gestor de tareas en consola
 
 [⬆ Volver al índice](#índice)
 
 El siguiente proyecto combina variables, tipos, funciones, listas, diccionarios, selección, repetición, excepciones, documentación y depuración. Permite añadir, listar, completar y eliminar tareas.
 
-### 10.1 Diseño
+### 9.1 Diseño
 
 Cada tarea será un diccionario:
 
@@ -1857,7 +1951,7 @@ El programa tendrá estas operaciones:
 - Eliminar una tarea.
 - Salir.
 
-### 10.2 Implementación completa
+### 9.2 Implementación completa
 
 ```python
 """Gestor de tareas sencillo para la terminal."""
@@ -1953,7 +2047,7 @@ if __name__ == "__main__":
 	ejecutar()
 ```
 
-### 10.3 Mejoras propuestas
+### 9.3 Mejoras propuestas
 
 Amplía el proyecto con:
 
@@ -1970,7 +2064,7 @@ Amplía el proyecto con:
 
 ---
 
-## 11. Ejercicios y actividades
+## 10. Ejercicios y actividades
 
 [⬆ Volver al índice](#índice)
 
@@ -2048,7 +2142,7 @@ Desarrolla una aplicación de consola para gestionar calificaciones. Debe permit
 
 ---
 
-## 12. Soluciones orientativas
+## 11. Soluciones orientativas
 
 [⬆ Volver al índice](#índice)
 
