@@ -1555,9 +1555,9 @@ El usuario elige los productos por su **número** (0 = pan, 1 = leche, 2 = huevo
 
 #### Parte A: funciones (sin `input()` ni `print()`)
 
-1. `convertir_numero(texto)`: devuelve el entero. Si `int()` falla, captura el `ValueError` y lanza otro con un mensaje claro usando `raise ... from error`. Si el número es negativo, lanza `ValueError` (en las listas, `-1` sería válido y no queremos que lo sea).
-2. `anadir(carrito, numero)`: añade `precios[numero]` al carrito. Deja que salte el `IndexError` si el producto no existe.
-3. `quitar(carrito, posicion)`: elimina esa posición del carrito con `carrito.pop(posicion)`. Deja que salte el `IndexError` si no existe.
+1. `convertir_numero(texto)`: devuelve el entero. No uses `try`: si `int()` falla, deja que salte su `ValueError`. Si el número es negativo, lanza `ValueError` con `raise` (en las listas, `-1` sería válido y no queremos que lo sea).
+2. `anadir(carrito, numero)`: añade `precios[numero]` al carrito. Si el producto no existe, lanza `IndexError` con `raise` y un mensaje claro.
+3. `quitar(carrito, posicion)`: elimina esa posición del carrito con `carrito.pop(posicion)`. Si la posición no existe, lanza `IndexError` con `raise` y un mensaje claro.
 4. `calcular_total(carrito)`: devuelve la suma de los precios del carrito.
 5. `repartir(total, personas)`: devuelve `total / personas`. No compruebes el cero: deja que salte `ZeroDivisionError`.
 
@@ -1569,7 +1569,6 @@ Un menú en bucle: **1. Añadir, 2. Quitar, 3. Repartir la cuenta, 4. Salir**. C
 - En el reparto, agrupa `(ValueError, ZeroDivisionError)` en un solo `except`.
 - `else`: muestra `"Operación realizada"`.
 - `finally`: muestra siempre el carrito y el total actual.
-- **Relanzar:** cuenta los `ValueError` seguidos (una operación correcta reinicia el contador). Al tercero, usa `raise` dentro del `except`. Un `try/except ValueError` exterior que rodea el bucle muestra `"Demasiados errores. Se cierra la caja"` y termina. En ese mismo `try` exterior captura `KeyboardInterrupt` con un mensaje de despedida.
 
 #### Casos de prueba
 
@@ -1581,7 +1580,6 @@ Un menú en bucle: **1. Añadir, 2. Quitar, 3. Repartir la cuenta, 4. Salir**. C
 | Quitar posición `5` con 1 producto | "Esa posición no existe" |
 | Quitar posición `0` con el carrito vacío | "Esa posición no existe" |
 | Repartir entre `0` o `hola` | Mismo mensaje agrupado |
-| Tres `ValueError` seguidos | La caja se cierra |
 
 ---
 
